@@ -49,7 +49,7 @@
 				{fbvElement type="keyword" id="subjects" multilingual=true current=$subjects disabled=$readOnly}
 			{/fbvFormSection}
 		{/if}
-		{if $disciplineEnabled}
+		{if $disciplinesEnabled}
 			{fbvFormSection label="search.discipline"}
 				{fbvElement type="keyword" id="disciplines" multilingual=true current=$disciplines disabled=$readOnly}
 			{/fbvFormSection}
