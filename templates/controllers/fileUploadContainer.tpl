@@ -1,8 +1,8 @@
 {**
  * controllers/fileUploadContainer.tpl
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * Markup for file uploader widget.
@@ -70,7 +70,7 @@
 		<div class="pkpUploaderError"></div>
 
 		{* Button to add/change file *}
-		<button id="{$browseButton|escape}" class="pkp_uploader_button pkp_button">
+		<button id="{$browseButton|escape}" class="pkp_uploader_button pkp_button" tabindex="-1">
 			<span class="pkp_uploader_button_add">
 				{translate key=$stringAddFile}
 			</span>

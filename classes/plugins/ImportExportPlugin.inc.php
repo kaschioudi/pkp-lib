@@ -3,8 +3,8 @@
 /**
  * @file classes/plugins/ImportExportPlugin.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class ImportExportPlugin
@@ -22,8 +22,8 @@ abstract class ImportExportPlugin extends Plugin {
 	/**
 	 * Constructor
 	 */
-	function ImportExportPlugin() {
-		parent::Plugin();
+	function __construct() {
+		parent::__construct();
 	}
 
 	/**
@@ -115,6 +115,54 @@ abstract class ImportExportPlugin extends Plugin {
 			if (substr($url, 0, strlen($prefix)) === $prefix) return true;
 		}
 		return false;
+	}
+
+	/**
+	 * Get the plugin ID used as plugin settings prefix.
+	 * @return string
+	 */
+	function getPluginSettingsPrefix() {
+		return '';
+	}
+
+	/**
+	 * Return the plugin export directory.
+	 * @return string The export directory path.
+	 */
+	function getExportPath() {
+		return Config::getVar('files', 'files_dir') . '/temp/';
+	}
+
+	/**
+	 * Return the whole export file name.
+	 * @param $basePath string Base path for temporary file storage
+	 * @param $objectsFileNamePart string Part different for each object type.
+	 * @param $context Context
+	 * @param $extension string
+	 * @return string
+	 */
+	function getExportFileName($basePath, $objectsFileNamePart, $context, $extension = '.xml') {
+		return $basePath . $this->getPluginSettingsPrefix() . '-' . date('Ymd-His') .'-' . $objectsFileNamePart .'-' . $context->getId() . $extension;
+	}
+
+	/**
+	 * Display XML validation errors.
+	 * @param $errors array
+	 * @param $xml string
+	 */
+	function displayXMLValidationErrors($errors, $xml) {
+		echo '<h2>' . __('plugins.importexport.common.validationErrors') . '</h2>';
+
+		foreach ($errors as $error) {
+			switch ($error->level) {
+				case LIBXML_ERR_ERROR:
+				case LIBXML_ERR_FATAL:
+					echo '<p>' . trim($error->message) . '</p>';
+			}
+		}
+		libxml_clear_errors();
+		echo '<h3>' . __('plugins.importexport.common.invalidXML') . '</h3>';
+		echo '<p><pre>' . htmlspecialchars($xml) . '</pre></p>';
 	}
 
 }

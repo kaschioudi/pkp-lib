@@ -3,8 +3,8 @@
 /**
  * @file controllers/grid/users/queries/form/QueryForm.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class QueryForm
@@ -40,8 +40,8 @@ class QueryForm extends Form {
 	 * @param $queryId int Optional query ID to edit. If none provided, a
 	 *  (potentially temporary) query will be created.
 	 */
-	function QueryForm($request, $assocType, $assocId, $stageId, $queryId = null) {
-		parent::Form('controllers/grid/queries/form/queryForm.tpl');
+	function __construct($request, $assocType, $assocId, $stageId, $queryId = null) {
+		parent::__construct('controllers/grid/queries/form/queryForm.tpl');
 		$this->setStageId($stageId);
 
 		$queryDao = DAORegistry::getDAO('QueryDAO');
@@ -70,7 +70,7 @@ class QueryForm extends Form {
 			$noteDao->insertObject($headNote);
 		} else {
 			$query = $queryDao->getById($queryId, $assocType, $assocId);
-			assert($query);
+			assert(isset($query));
 			// New queries will not have a head note.
 			$this->_isNew = !$query->getHeadNote();
 		}

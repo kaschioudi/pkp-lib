@@ -3,8 +3,8 @@
 /**
  * @file controllers/grid/users/queries/form/QueryNoteForm.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class QueryNoteForm
@@ -35,8 +35,8 @@ class QueryNoteForm extends Form {
 	 * @param $user User The current user ID
 	 * @param $noteId int The note ID to edit, or null for new.
 	 */
-	function QueryNoteForm($actionArgs, $query, $user, $noteId = null) {
-		parent::Form('controllers/grid/queries/form/queryNoteForm.tpl');
+	function __construct($actionArgs, $query, $user, $noteId = null) {
+		parent::__construct('controllers/grid/queries/form/queryNoteForm.tpl');
 		$this->_actionArgs = $actionArgs;
 		$this->setQuery($query);
 

@@ -3,8 +3,8 @@
 /**
  * @file controllers/wizard/fileUpload/form/SubmissionFilesMetadataForm.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class SubmissionFilesMetadataForm
@@ -33,9 +33,9 @@ class SubmissionFilesMetadataForm extends Form {
 	 * @param $reviewRound ReviewRound (optional) Current review round, if any.
 	 * @param $template string Path and filename to template file (optional).
 	 */
-	function SubmissionFilesMetadataForm($submissionFile, $stageId, $reviewRound = null, $template = null) {
+	function __construct($submissionFile, $stageId, $reviewRound = null, $template = null) {
 		if ($template === null) $template = 'controllers/wizard/fileUpload/form/submissionFileMetadataForm.tpl';
-		parent::Form($template);
+		parent::__construct($template);
 		AppLocale::requireComponents(LOCALE_COMPONENT_PKP_SUBMISSION);
 
 		// Initialize the object.
@@ -45,8 +45,11 @@ class SubmissionFilesMetadataForm extends Form {
 			$this->_reviewRound = $reviewRound;
 		}
 
+		$submissionLocale = $submissionFile->getSubmissionLocale();
+		$this->setDefaultFormLocale($submissionLocale);
+
 		// Add validation checks.
-		$this->addCheck(new FormValidatorLocale($this, 'name', 'required', 'submission.submit.fileNameRequired'));
+		$this->addCheck(new FormValidatorLocale($this, 'name', 'required', 'submission.submit.fileNameRequired', $submissionLocale));
 		$this->addCheck(new FormValidatorPost($this));
 		$this->addCheck(new FormValidatorCSRF($this));
 	}

@@ -3,8 +3,8 @@
 /**
  * @file classes/security/UserGroupDAO.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class UserGroupDAO
@@ -28,8 +28,8 @@ class UserGroupDAO extends DAO {
 	/**
 	 * Constructor.
 	 */
-	function UserGroupDAO() {
-		parent::DAO();
+	function __construct() {
+		parent::__construct();
 		$this->userDao = DAORegistry::getDAO('UserDAO');
 		$this->userGroupAssignmentDao = DAORegistry::getDAO('UserGroupAssignmentDAO');
 	}
@@ -686,6 +686,10 @@ class UserGroupDAO extends DAO {
 		$xmlParser = new XMLParser();
 		$tree = $xmlParser->parse($filename);
 
+		$siteDao = DAORegistry::getDAO('SiteDAO');
+		$site = $siteDao->getSite();
+		$installedLocales = $site->getInstalledLocales();
+
 		if (!$tree) {
 			$xmlParser->destroy();
 			return false;
@@ -724,7 +728,9 @@ class UserGroupDAO extends DAO {
 			$this->updateSetting($userGroup->getId(), 'abbrevLocaleKey', $abbrevKey);
 
 			// install the settings in the current locale for this context
-			$this->installLocale(AppLocale::getLocale(), $contextId);
+			foreach ($installedLocales as $locale) {
+				$this->installLocale($locale, $contextId);
+			}
 		}
 
 		return true;
@@ -841,36 +847,31 @@ class UserGroupDAO extends DAO {
 	//
 
 	/**
-	 * Get the user groups assigned to each stage. Provide the ability to omit authors and reviewers
-	 * Since these are typically stored differently and displayed in different circumstances
-	 * @param Integer $contextId
-	 * @param Integer $stageId
-	 * @param boolean (optional) $omitAuthors
-	 * @param boolean (optional) $omitReviewers
-	 * @param Integer (optional) $roleId
+	 * Get the user groups assigned to each stage.
+	 * @param int $contextId Context ID
+	 * @param int $stageId WORKFLOW_STAGE_ID_...
+	 * @param int $roleId Optional ROLE_ID_... to filter results by
 	 * @param DBResultRange (optional) $dbResultRange
 	 * @return DAOResultFactory
 	 */
-	function getUserGroupsByStage($contextId, $stageId, $omitAuthors = false, $omitReviewers = false, $roleId = null, $dbResultRange = null) {
+	function getUserGroupsByStage($contextId, $stageId, $roleId = null, $dbResultRange = null) {
 		$params = array((int) $contextId, (int) $stageId);
-		if ($omitAuthors) $params[] = ROLE_ID_AUTHOR;
-		if ($omitReviewers) $params[] = ROLE_ID_REVIEWER;
-		if ($roleId) $params[] = $roleId;
-		$result = $this->retrieveRange(
-			'SELECT	ug.*
-			FROM	user_groups ug
-			JOIN user_group_stage ugs ON (ug.user_group_id = ugs.user_group_id AND ug.context_id = ugs.context_id)
-			WHERE	ugs.context_id = ? AND
-			ugs.stage_id = ?' .
-			($omitAuthors?' AND ug.role_id <> ?':'') .
-			($omitReviewers?' AND ug.role_id <> ?':'') .
-			($roleId?' AND ug.role_id = ?':'') .
-			' ORDER BY ug.role_id ASC',
-			$params,
-			$dbResultRange
+		if ($roleId) $params[] = (int) $roleId;
+		return new DAOResultFactory(
+			$this->retrieveRange(
+				'SELECT	ug.*
+				FROM	user_groups ug
+					JOIN user_group_stage ugs ON (ug.user_group_id = ugs.user_group_id AND ug.context_id = ugs.context_id)
+				WHERE	ugs.context_id = ? AND
+					ugs.stage_id = ?
+					' . ($roleId?'AND ug.role_id = ?':'') . '
+				ORDER BY ug.role_id ASC',
+				$params,
+				$dbResultRange
+			),
+			$this,
+			'_returnFromRow'
 		);
-
-		return new DAOResultFactory($result, $this, '_returnFromRow');
 	}
 
 	/**

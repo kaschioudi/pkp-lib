@@ -3,8 +3,8 @@
 /**
  * @file controllers/tab/settings/siteSetup/form/SiteSetupForm.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class SiteSetupForm
@@ -20,18 +20,10 @@ import('lib.pkp.classes.admin.form.PKPSiteSettingsForm');
 class SiteSetupForm extends PKPSiteSettingsForm {
 	/**
 	 * Constructor.
+	 * @param $template string? Optional name of template file to use for form presentation
 	 */
-	function SiteSetupForm() {
-		parent::Form('controllers/tab/settings/siteSetup/form/siteSetupForm.tpl');
-		$this->siteSettingsDao = DAORegistry::getDAO('SiteSettingsDAO');
-
-		// Validation checks for this form
-		$this->addCheck(new FormValidatorLocale($this, 'title', 'required', 'admin.settings.form.titleRequired'));
-		$this->addCheck(new FormValidatorLocale($this, 'contactName', 'required', 'admin.settings.form.contactNameRequired'));
-		$this->addCheck(new FormValidatorLocaleEmail($this, 'contactEmail', 'required', 'admin.settings.form.contactEmailRequired'));
-		$this->addCheck(new FormValidatorCustom($this, 'minPasswordLength', 'required', 'admin.settings.form.minPasswordLengthRequired', create_function('$l', sprintf('return $l >= %d;', SITE_MIN_PASSWORD_LENGTH))));
-		$this->addCheck(new FormValidatorPost($this));
-		$this->addCheck(new FormValidatorCSRF($this));
+	function __construct($template = null) {
+		parent::__construct($template?$template:'controllers/tab/settings/siteSetup/form/siteSetupForm.tpl');
 
 		$themes = PluginRegistry::getPlugins('themes');
 		if (is_null($themes)) {
@@ -67,18 +59,19 @@ class SiteSetupForm extends PKPSiteSettingsForm {
 		$cssView = $this->renderFileView($cssSettingName, $request);
 		$imageView = $this->renderFileView($imageSettingName, $request);
 
-		$templateMgr = TemplateManager::getManager($request);
-		$templateMgr->assign('locale', AppLocale::getLocale());
-		$templateMgr->assign('siteStyleFileExists', file_exists($siteStyleFilename));
-		$templateMgr->assign('uploadCssLinkAction', $uploadCssLinkAction);
-		$templateMgr->assign('uploadImageLinkAction', $uploadImageLinkAction);
-		$templateMgr->assign('cssView', $cssView);
-		$templateMgr->assign('imageView', $imageView);
-		$templateMgr->assign('redirectOptions', $contexts);
-		$templateMgr->assign('pageHeaderTitleImage', $site->getSetting($imageSettingName));
-
 		$application = Application::getApplication();
-		$templateMgr->assign('availableMetricTypes', $application->getMetricTypes(true));
+		$templateMgr = TemplateManager::getManager($request);
+		$templateMgr->assign(array(
+			'locale' => AppLocale::getLocale(),
+			'siteStyleFileExists' => file_exists($siteStyleFilename),
+			'uploadCssLinkAction' => $uploadCssLinkAction,
+			'uploadImageLinkAction' => $uploadImageLinkAction,
+			'cssView' => $cssView,
+			'imageView' => $imageView,
+			'redirectOptions' => $contexts,
+			'pageHeaderTitleImage' => $site->getSetting($imageSettingName),
+			'availableMetricTypes' => $application->getMetricTypes(true),
+		));
 
 		$themePlugins = PluginRegistry::getPlugins('themes');
 		$enabledThemes = array();
@@ -143,7 +136,7 @@ class SiteSetupForm extends PKPSiteSettingsForm {
 	function readInputData() {
 		$this->readUserVars(
 			array('pageHeaderTitleType', 'title', 'about', 'redirect', 'contactName',
-				'contactEmail', 'minPasswordLength', 'themePluginPath', 'defaultMetricType',)
+				'contactEmail', 'minPasswordLength', 'themePluginPath', 'defaultMetricType','pageFooter',)
 		);
 	}
 
@@ -170,6 +163,11 @@ class SiteSetupForm extends PKPSiteSettingsForm {
 		$site->updateSetting('themePluginPath', $selectedThemePluginPath);
 
 		$siteDao->updateObject($site);
+
+		// Save block plugins context positions.
+		import('lib.pkp.classes.controllers.listbuilder.ListbuilderHandler');
+		ListbuilderHandler::unpack($request, $request->getUserVar('blocks'), array($this, 'deleteEntry'), array($this, 'insertEntry'), array($this, 'updateEntry'));
+
 		return true;
 	}
 
@@ -211,12 +209,12 @@ class SiteSetupForm extends PKPSiteSettingsForm {
 			}
 
 			$publicFileManager = $publicFileManager = new PublicFileManager();
-
-			$templateMgr->assign('publicFilesDir', $request->getBasePath() . '/' . $publicFileManager->getSiteFilesPath());
-			$templateMgr->assign('file', $file);
-			$templateMgr->assign('deleteLinkAction', $deleteLinkAction);
-			$templateMgr->assign('fileSettingName', $fileSettingName);
-
+			$templateMgr->assign(array(
+				'publicFilesDir' => $request->getBasePath() . '/' . $publicFileManager->getSiteFilesPath(),
+				'file' => $file,
+				'deleteLinkAction' => $deleteLinkAction,
+				'fileSettingName' => $fileSettingName,
+			));
 			return $templateMgr->fetch($template);
 		} else {
 			return null;
@@ -252,6 +250,43 @@ class SiteSetupForm extends PKPSiteSettingsForm {
 		} else {
 			return false;
 		}
+	}
+
+	/**
+	 * Overriden method from ListbuilderHandler.
+	 * @param $request Request
+	 * @param $rowId mixed
+	 * @param $newRowId array
+	 */
+	function updateEntry($request, $rowId, $newRowId) {
+		$plugins =& PluginRegistry::loadCategory('blocks');
+		$plugin =& $plugins[$rowId]; // Ref hack
+		switch ($newRowId['listId']) {
+			case 'unselected':
+				$plugin->setEnabled(false, 0);
+				break;
+			case 'sidebarContext':
+				$plugin->setEnabled(true, 0);
+				$plugin->setBlockContext(BLOCK_CONTEXT_SIDEBAR, 0);
+				$plugin->setSeq((int) $newRowId['sequence'], 0);
+				break;
+			default:
+				assert(false);
+		}
+	}
+
+	/**
+	 * Avoid warnings when Listbuilder::unpack tries to call this method.
+	 */
+	function deleteEntry() {
+		return false;
+	}
+
+	/**
+	 * Avoid warnings when Listbuilder::unpack tries to call this method.
+	 */
+	function insertEntry() {
+		return false;
 	}
 
 

@@ -3,8 +3,8 @@
 /**
  * @file classes/install/form/InstallForm.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class InstallForm
@@ -41,8 +41,8 @@ class InstallForm extends MaintenanceForm {
 	 * Constructor.
 	 * @param $request PKPRequest
 	 */
-	function InstallForm($request) {
-		parent::MaintenanceForm($request, 'install/install.tpl');
+	function __construct($request) {
+		parent::__construct($request, 'install/install.tpl');
 
 		// FIXME Move the below options to an external configuration file?
 		$this->supportedLocales = AppLocale::getAllLocales();
@@ -96,25 +96,27 @@ class InstallForm extends MaintenanceForm {
 	}
 
 	/**
-	 * Display the form.
+	 * @copydoc Form::display
 	 */
-	function display() {
-		$templateMgr = TemplateManager::getManager($this->_request);
-		$templateMgr->assign('localeOptions', $this->supportedLocales);
-		$templateMgr->assign('localesComplete', $this->localesComplete);
-		$templateMgr->assign('clientCharsetOptions', $this->supportedClientCharsets);
-		$templateMgr->assign('connectionCharsetOptions', $this->supportedConnectionCharsets);
-		$templateMgr->assign('databaseCharsetOptions', $this->supportedDatabaseCharsets);
-		$templateMgr->assign('allowFileUploads', get_cfg_var('file_uploads') ? __('common.yes') : __('common.no'));
-		$templateMgr->assign('maxFileUploadSize', get_cfg_var('upload_max_filesize'));
-		$templateMgr->assign('databaseDriverOptions', $this->checkDBDrivers());
-		$templateMgr->assign('supportsMBString', PKPString::hasMBString() ? __('common.yes') : __('common.no'));
-		$templateMgr->assign('phpIsSupportedVersion', version_compare(PHP_REQUIRED_VERSION, PHP_VERSION) != 1);
+	function display($template = null) {
 		import('lib.pkp.classes.xslt.XSLTransformer');
-		$templateMgr->assign('xslEnabled', XSLTransformer::checkSupport());
-		$templateMgr->assign('xslRequired', REQUIRES_XSL);
-		$templateMgr->assign('phpRequiredVersion', PHP_REQUIRED_VERSION);
-		$templateMgr->assign('phpVersion', PHP_VERSION);
+		$templateMgr = TemplateManager::getManager($this->_request);
+		$templateMgr->assign(array(
+			'localeOptions' => $this->supportedLocales,
+			'localesComplete' => $this->localesComplete,
+			'clientCharsetOptions' => $this->supportedClientCharsets,
+			'connectionCharsetOptions' => $this->supportedConnectionCharsets,
+			'databaseCharsetOptions' => $this->supportedDatabaseCharsets,
+			'allowFileUploads' => get_cfg_var('file_uploads') ? __('common.yes') : __('common.no'),
+			'maxFileUploadSize' => get_cfg_var('upload_max_filesize'),
+			'databaseDriverOptions' => $this->checkDBDrivers(),
+			'supportsMBString' => PKPString::hasMBString() ? __('common.yes') : __('common.no'),
+			'phpIsSupportedVersion' => version_compare(PHP_REQUIRED_VERSION, PHP_VERSION) != 1,
+			'xslEnabled' => XSLTransformer::checkSupport(),
+			'xslRequired' => REQUIRES_XSL,
+			'phpRequiredVersion' => PHP_REQUIRED_VERSION,
+			'phpVersion' => PHP_VERSION,
+		));
 
 		parent::display();
 	}

@@ -2,8 +2,8 @@
 /**
  * @file controllers/grid/users/reviewer/form/UnassignReviewerForm.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class UnassignReviewerForm
@@ -30,12 +30,12 @@ class UnassignReviewerForm extends Form {
 	 * @param mixed $reviewRound ReviewRound
 	 * @param mixed $submission Submission
 	 */
-	function UnassignReviewerForm($reviewAssignment, $reviewRound, $submission) {
+	function __construct($reviewAssignment, $reviewRound, $submission) {
 		$this->setReviewAssignment($reviewAssignment);
 		$this->setReviewRound($reviewRound);
 		$this->setSubmission($submission);
 
-		parent::Form('controllers/grid/users/reviewer/form/unassignReviewerForm.tpl');
+		parent::__construct('controllers/grid/users/reviewer/form/unassignReviewerForm.tpl');
 	}
 
 	//

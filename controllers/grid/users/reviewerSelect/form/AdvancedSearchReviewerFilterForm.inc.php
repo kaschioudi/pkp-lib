@@ -3,8 +3,8 @@
 /**
  * @file controllers/grid/users/reviewerSelect/form/AdvancedSearchReviewerFilterForm.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class AdvancedSearchReviewerFilterForm
@@ -34,8 +34,8 @@ class AdvancedSearchReviewerFilterForm extends Form {
 	 * @param $stageId int
 	 * @param $reviewRoundId int
 	 */
-	function AdvancedSearchReviewerFilterForm($submission, $stageId, $reviewRoundId, $reviewRound) {
-		parent::Form();
+	function __construct($submission, $stageId, $reviewRoundId, $reviewRound) {
+		parent::__construct();
 		$this->_submission = $submission;
 		$this->_stageId = $stageId;
 		$this->_reviewRoundId = $reviewRoundId;

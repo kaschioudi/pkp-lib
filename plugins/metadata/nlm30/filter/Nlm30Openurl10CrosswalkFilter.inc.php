@@ -3,8 +3,8 @@
 /**
  * @file plugins/metadata/nlm30/filter/Nlm30Openurl10CrosswalkFilter.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class Nlm30Openurl10CrosswalkFilter
@@ -30,8 +30,8 @@ class Nlm30Openurl10CrosswalkFilter extends CrosswalkFilter {
 	 * @param $fromSchema string fully qualified class name of supported input meta-data schema
 	 * @param $toSchema string fully qualified class name of supported output meta-data schema
 	 */
-	function Nlm30Openurl10CrosswalkFilter($fromSchema, $toSchema) {
-		parent::CrosswalkFilter($fromSchema, $toSchema);
+	function __construct($fromSchema, $toSchema) {
+		parent::__construct($fromSchema, $toSchema);
 	}
 
 	//

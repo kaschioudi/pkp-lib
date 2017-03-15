@@ -2,8 +2,8 @@
 /**
  * @file classes/security/authorization/ContextAccessPolicy.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class ContextAccessPolicy
@@ -20,8 +20,8 @@ class ContextAccessPolicy extends ContextPolicy {
 	 * @param $request PKPRequest
 	 * @param $roleAssignments array
 	 */
-	function ContextAccessPolicy($request, $roleAssignments) {
-		parent::ContextPolicy($request);
+	function __construct($request, $roleAssignments) {
+		parent::__construct($request);
 
 		// On context level we don't have role-specific conditions
 		// so we can simply add all role assignments. It's ok if

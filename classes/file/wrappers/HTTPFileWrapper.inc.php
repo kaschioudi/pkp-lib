@@ -3,8 +3,8 @@
 /**
  * @file classes/file/wrappers/HTTPFileWrapper.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @package file.wrappers
@@ -27,8 +27,8 @@ class HTTPFileWrapper extends FileWrapper {
 	var $proxyUsername;
 	var $proxyPassword;
 
-	function HTTPFileWrapper($url, &$info, $redirects = 5) {
-		parent::FileWrapper($url, $info);
+	function __construct($url, &$info, $redirects = 5) {
+		parent::__construct($url, $info);
 		$this->setDefaultPort(80);
 		$this->setDefaultHost('localhost');
 		$this->setDefaultPath('/');

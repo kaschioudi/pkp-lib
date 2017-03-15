@@ -1,8 +1,8 @@
 {**
  * templates/controllers/wizard/fileUpload/form/uploadedFileSummary.tpl
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @brief Summary of the file name, type, size and dimensions.
@@ -19,7 +19,7 @@
 		</div>
 		<div class="input" data-pkp-editable-view="input">
 			{fbvFormSection title="submission.form.name" required=true}
-				{fbvElement type="text" id="name" value=$submissionFile->getName(null) multilingual=true maxlength="255"}
+				{fbvElement type="text" id="name" value=$submissionFile->getName(null) multilingual=true maxlength="255" required=true}
 			{/fbvFormSection}
 		</div>
 	</div>

@@ -3,8 +3,8 @@
 /**
  * @file controllers/grid/files/query/QueryNoteFilesGridDataProvider.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class QueryNoteFilesGridDataProvider
@@ -24,8 +24,8 @@ class QueryNoteFilesGridDataProvider extends SubmissionFilesGridDataProvider {
 	 * Constructor
 	 * @param $noteId int Note ID
 	 */
-	function QueryNoteFilesGridDataProvider($noteId) {
-		parent::SubmissionFilesGridDataProvider(SUBMISSION_FILE_QUERY);
+	function __construct($noteId) {
+		parent::__construct(SUBMISSION_FILE_QUERY);
 		$this->_noteId = $noteId;
 	}
 

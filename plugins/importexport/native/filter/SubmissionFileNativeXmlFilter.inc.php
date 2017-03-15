@@ -3,8 +3,8 @@
 /**
  * @file plugins/importexport/native/filter/SubmissionFileNativeXmlFilter.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class SubmissionFileNativeXmlFilter
@@ -20,9 +20,9 @@ class SubmissionFileNativeXmlFilter extends NativeExportFilter {
 	 * Constructor
 	 * @param $filterGroup FilterGroup
 	 */
-	function SubmissionFileNativeXmlFilter($filterGroup) {
+	function __construct($filterGroup) {
 		$this->setDisplayName('Native XML submission file export');
-		parent::NativeExportFilter($filterGroup);
+		parent::__construct($filterGroup);
 	}
 
 
@@ -48,6 +48,8 @@ class SubmissionFileNativeXmlFilter extends NativeExportFilter {
 	function &process(&$submissionFile) {
 		// Create the XML document
 		$doc = new DOMDocument('1.0');
+		$doc->preserveWhiteSpace = false;
+		$doc->formatOutput = true;
 		$deployment = $this->getDeployment();
 		$rootNode = $this->createSubmissionFileNode($doc, $submissionFile);
 		$doc->appendChild($rootNode);
@@ -92,8 +94,8 @@ class SubmissionFileNativeXmlFilter extends NativeExportFilter {
 
 		$revisionNode->setAttribute('filename', $submissionFile->getOriginalFileName());
 		$revisionNode->setAttribute('viewable', $submissionFile->getViewable()?'true':'false');
-		$revisionNode->setAttribute('date_uploaded', strftime('%F', strtotime($submissionFile->getDateUploaded())));
-		$revisionNode->setAttribute('date_modified', strftime('%F', strtotime($submissionFile->getDateModified())));
+		$revisionNode->setAttribute('date_uploaded', strftime('%Y-%m-%d', strtotime($submissionFile->getDateUploaded())));
+		$revisionNode->setAttribute('date_modified', strftime('%Y-%m-%d', strtotime($submissionFile->getDateModified())));
 		if ($submissionFile->getDirectSalesPrice() !== null) {
 			$revisionNode->setAttribute('direct_sales_price', $submissionFile->getDirectSalesPrice());
 		}
@@ -102,12 +104,12 @@ class SubmissionFileNativeXmlFilter extends NativeExportFilter {
 
 		$userGroupDao = DAORegistry::getDAO('UserGroupDAO');
 		$userGroup = $userGroupDao->getById($submissionFile->getUserGroupId());
-		assert($userGroup);
+		assert(isset($userGroup));
 		$revisionNode->setAttribute('user_group_ref', $userGroup->getName($context->getPrimaryLocale()));
 
 		$userDao = DAORegistry::getDAO('UserDAO');
 		$uploaderUser = $userDao->getById($submissionFile->getUploaderUserId());
-		assert($uploaderUser);
+		assert(isset($uploaderUser));
 		$revisionNode->setAttribute('uploader', $uploaderUser->getUsername());
 		$this->addIdentifiers($doc, $revisionNode, $submissionFile);
 		$this->createLocalizedNodes($doc, $revisionNode, 'name', $submissionFile->getName(null));
@@ -135,7 +137,7 @@ class SubmissionFileNativeXmlFilter extends NativeExportFilter {
 
 		// Add public ID
 		if ($pubId = $submissionFile->getStoredPubId('publisher-id')) {
-			$revisionNode->appendChild($node = $doc->createElementNS($deployment->getNamespace(), 'id', $pubId));
+			$revisionNode->appendChild($node = $doc->createElementNS($deployment->getNamespace(), 'id', htmlspecialchars($pubId, ENT_COMPAT, 'UTF-8')));
 			$node->setAttribute('type', 'public');
 			$node->setAttribute('advice', 'update');
 		}
@@ -159,7 +161,7 @@ class SubmissionFileNativeXmlFilter extends NativeExportFilter {
 		$pubId = $submissionFile->getStoredPubId($pubIdPlugin->getPubIdType());
 		if ($pubId) {
 			$deployment = $this->getDeployment();
-			$revisionNode->appendChild($node = $doc->createElementNS($deployment->getNamespace(), 'id', $pubId));
+			$revisionNode->appendChild($node = $doc->createElementNS($deployment->getNamespace(), 'id', htmlspecialchars($pubId, ENT_COMPAT, 'UTF-8')));
 			$node->setAttribute('type', $pubIdPlugin->getPubIdType());
 			$node->setAttribute('advice', 'update');
 			return $node;

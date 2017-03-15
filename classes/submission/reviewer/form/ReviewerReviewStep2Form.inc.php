@@ -3,8 +3,8 @@
 /**
  * @file classes/submission/reviewer/form/ReviewerReviewStep2Form.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class ReviewerReviewStep2Form
@@ -20,8 +20,8 @@ class ReviewerReviewStep2Form extends ReviewerReviewForm {
 	 * Constructor.
 	 * @param $reviewerSubmission ReviewerSubmission
 	 */
-	function ReviewerReviewStep2Form($request, $reviewerSubmission, $reviewAssignment) {
-		parent::ReviewerReviewForm($request, $reviewerSubmission, $reviewAssignment, 2);
+	function __construct($request, $reviewerSubmission, $reviewAssignment) {
+		parent::__construct($request, $reviewerSubmission, $reviewAssignment, 2);
 	}
 
 

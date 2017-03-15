@@ -3,8 +3,8 @@
 /**
  * @file controllers/grid/pubIds/form/PKPAssignPublicIdentifiersForm.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class PKPAssignPublicIdentifiersForm
@@ -42,8 +42,8 @@ class PKPAssignPublicIdentifiersForm extends Form {
 	 * @param $approval boolean
 	 * @param $confirmationText string
 	 */
-	function PKPAssignPublicIdentifiersForm($template, $pubObject, $approval, $confirmationText) {
-		parent::Form($template);
+	function __construct($template, $pubObject, $approval, $confirmationText) {
+		parent::__construct($template);
 
 		$this->_pubObject = $pubObject;
 		$this->_approval = $approval;
@@ -63,10 +63,12 @@ class PKPAssignPublicIdentifiersForm extends Form {
 	function fetch($request) {
 		$templateMgr = TemplateManager::getManager($request);
 		$pubIdPlugins = PluginRegistry::loadCategory('pubIds', true, $this->getContextId());
-		$templateMgr->assign('pubIdPlugins', $pubIdPlugins);
-		$templateMgr->assign('pubObject', $this->getPubObject());
-		$templateMgr->assign('approval', $this->getApproval());
-		$templateMgr->assign('confirmationText', $this->getConfirmationText());
+		$templateMgr->assign(array(
+			'pubIdPlugins' => $pubIdPlugins,
+			'pubObject' => $this->getPubObject(),
+			'approval' => $this->getApproval(),
+			'confirmationText' => $this->getConfirmationText(),
+		));
 		return parent::fetch($request);
 	}
 

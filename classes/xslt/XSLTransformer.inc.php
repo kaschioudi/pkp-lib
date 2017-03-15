@@ -3,8 +3,8 @@
 /**
  * @file classes/xslt/XSLTransformer.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class XSLTransformer
@@ -46,7 +46,7 @@ class XSLTransformer {
 	 * Initialize transformer and set parser options.
 	 * @return boolean returns false if no XSLT processor could be created
 	 */
-	function XSLTransformer() {
+	function __construct() {
 		// Necessary to fetch configuration.
 		self::checkSupport();
 

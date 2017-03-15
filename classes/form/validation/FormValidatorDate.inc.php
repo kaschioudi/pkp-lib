@@ -3,8 +3,8 @@
 /**
  * @file classes/form/validation/FormValidatorDate.inc.php
  *
- * Copyright (c) 2013-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2013-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class FormValidatorDate
@@ -38,11 +38,11 @@ class FormValidatorDate extends FormValidator {
 	 * @param $dateScope string the minimum resolution of a date to allow
 	 * @param $dateScope string the maximum resolution of a date to allow
 	 */
-	function FormValidatorDate(&$form, $field, $type, $message, $dateFormat = DATE_FORMAT_ISO, $dateScopeMin = VALIDATOR_DATE_SCOPE_YEAR, $dateScopeMax = VALIDATOR_DATE_SCOPE_DAY) {
+	function __construct(&$form, $field, $type, $message, $dateFormat = DATE_FORMAT_ISO, $dateScopeMin = VALIDATOR_DATE_SCOPE_YEAR, $dateScopeMax = VALIDATOR_DATE_SCOPE_DAY) {
 		$validator = new ValidatorDate($dateFormat);
 		$this->_scopeMin = $dateScopeMin;
 		$this->_scopeMax = $dateScopeMax;
-		parent::FormValidator($form, $field, $type, $message, $validator);
+		parent::__construct($form, $field, $type, $message, $validator);
 	}
 
 	//

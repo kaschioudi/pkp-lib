@@ -3,8 +3,8 @@
 /**
  * @file controllers/grid/settings/submissionChecklist/form/SubmissionChecklistForm.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class SubmissionChecklistForm
@@ -23,9 +23,9 @@ class SubmissionChecklistForm extends Form {
 	/**
 	 * Constructor.
 	 */
-	function SubmissionChecklistForm($submissionChecklistId = null) {
+	function __construct($submissionChecklistId = null) {
 		$this->submissionChecklistId = $submissionChecklistId;
-		parent::Form('controllers/grid/settings/submissionChecklist/form/submissionChecklistForm.tpl');
+		parent::__construct('controllers/grid/settings/submissionChecklist/form/submissionChecklistForm.tpl');
 
 		// Validation checks for this form
 		$this->addCheck(new FormValidatorLocale($this, 'checklistItem', 'required', 'maganer.setup.submissionChecklistItemRequired'));

@@ -3,8 +3,8 @@
 /**
  * @file plugins/generic/usageStats/PKPUsageStatsPlugin.inc.php
  *
- * Copyright (c) 2013-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2013-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class PKPUsageStatsPlugin
@@ -32,8 +32,8 @@ class PKPUsageStatsPlugin extends GenericPlugin {
 	/**
 	 * Constructor.
 	 */
-	function PKPUsageStatsPlugin() {
-		parent::GenericPlugin();
+	function __construct() {
+		parent::__construct();
 
 		// The upgrade and install processes will need access
 		// to constants defined in that report plugin.
@@ -142,7 +142,7 @@ class PKPUsageStatsPlugin extends GenericPlugin {
 	 * @copydoc Plugin::getTemplatePath()
 	 */
 	function getTemplatePath($inCore = false) {
-		return parent::getTemplatePath($inCore) . 'templates' .  DIRECTORY_SEPARATOR;
+		return parent::getTemplatePath($inCore) . 'templates/';
 	}
 
 	/**
@@ -275,6 +275,17 @@ class PKPUsageStatsPlugin extends GenericPlugin {
 	}
 
 	/**
+	 * Get all hooks that define the
+	 * finished file download.
+	 * @return array
+	 */
+	protected function getDownloadFinishedEventHooks() {
+		return array(
+			'FileManager::downloadFileFinished'
+		);
+	}
+
+	/**
 	 * Log the usage event into a file.
 	 * @param $hookName string
 	 * @param $args array
@@ -287,7 +298,7 @@ class PKPUsageStatsPlugin extends GenericPlugin {
 		// Check the statistics opt-out.
 		if ($this->_optedOut) return false;
 
-		if ($hookName == 'FileManager::downloadFileFinished' && !$usageEvent && $this->_currentUsageEvent) {
+		if (in_array($hookName, $this->getDownloadFinishedEventHooks()) && !$usageEvent && $this->_currentUsageEvent) {
 			// File download is finished, try to log the current usage event.
 			$downloadSuccess = $args[2];
 			if ($downloadSuccess && !connection_aborted()) {

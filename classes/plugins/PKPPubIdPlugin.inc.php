@@ -3,8 +3,8 @@
 /**
  * @file classes/plugins/PKPPubIdPlugin.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class PKPPubIdPlugin
@@ -20,8 +20,8 @@ abstract class PKPPubIdPlugin extends LazyLoadPlugin {
 	/**
 	 * Constructor
 	 */
-	function PKPPubIdPlugin() {
-		parent::LazyLoadPlugin();
+	function __construct() {
+		parent::__construct();
 	}
 
 
@@ -95,7 +95,6 @@ abstract class PKPPubIdPlugin extends LazyLoadPlugin {
 				if (!$request->checkCSRF()) return new JSONMessage(false);
 				$contextDao = Application::getContextDAO();
 				$contextDao->deleteAllPubIds($context->getId(), $this->getPubIdType());
-				$notificationManager->createTrivialNotification($user->getId(), NOTIFICATION_TYPE_SUCCESS);
 				return new JSONMessage(true);
 			default:
 				$form->initData();
@@ -408,10 +407,6 @@ abstract class PKPPubIdPlugin extends LazyLoadPlugin {
 	 * Set and store a public identifier.
 	 * @param $pubObject object
 	 * @param $pubId string
-	 * @return string
-	 *
-	 * This function is currently only used in the pubId import/export plugin.
-	 * After the migration of that plugin, check if this function is still needed.
 	 */
 	function setStoredPubId(&$pubObject, $pubId) {
 		$dao = $pubObject->getDAO();

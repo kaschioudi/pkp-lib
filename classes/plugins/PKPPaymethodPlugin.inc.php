@@ -3,7 +3,7 @@
 /**
  * @file classes/plugins/PKPPaymethodPlugin.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
+ * Copyright (c) 2014-2017 Simon Fraser University
  * Copyright (c) 2006-2009 Gunther Eysenbach, Juan Pablo Alperin, MJ Suhonos
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
@@ -19,8 +19,8 @@ abstract class PKPPaymethodPlugin extends Plugin {
 	/**
 	 * Constructor
 	 */
-	function PKPPaymethodPlugin() {
-		parent::Plugin();
+	function __construct() {
+		parent::__construct();
 	}
 
 	/**
@@ -38,10 +38,10 @@ abstract class PKPPaymethodPlugin extends Plugin {
 	}
 
 	/**
-	 * @see Plugin::getTemplatePath($inCore)
+	 * @copydoc Plugin::getTemplatePath($inCore)
 	 */
 	function getTemplatePath($inCore = false) {
-		return parent::getTemplatePath($inCore) . 'templates' . DIRECTORY_SEPARATOR ;
+		return parent::getTemplatePath($inCore) . 'templates/';
 	}
 
 	/**

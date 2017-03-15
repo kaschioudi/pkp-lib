@@ -3,8 +3,8 @@
 /**
  * @file classes/controllers/grid/CategoryGridHandler.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class CategoryGridHandler
@@ -35,8 +35,8 @@ class CategoryGridHandler extends GridHandler {
 	/**
 	 * Constructor.
 	 */
-	function CategoryGridHandler($dataProvider = null) {
-		parent::GridHandler($dataProvider);
+	function __construct($dataProvider = null) {
+		parent::__construct($dataProvider);
 
 		import('lib.pkp.classes.controllers.grid.NullGridCellProvider');
 		$this->addColumn(new GridColumn('indent', null, null, null,
@@ -218,8 +218,8 @@ class CategoryGridHandler extends GridHandler {
 	/**
 	 * @copydoc GridHandler::initialize()
 	 */
-	function initialize($request) {
-		parent::initialize($request);
+	function initialize($request, $args = null) {
+		parent::initialize($request, $args);
 
 		if (!is_null($request->getUserVar('rowCategoryId'))) {
 			$this->_currentCategoryId = (string) $request->getUserVar('rowCategoryId');

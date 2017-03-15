@@ -3,8 +3,8 @@
 /**
  * @file classes/file/EditableLocaleFile.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class EditableLocaleFile
@@ -24,8 +24,8 @@ class EditableLocaleFile extends LocaleFile {
 	 * @param $locale string Locale code
 	 * @param $filename string Filename
 	 */
-	function EditableLocaleFile($locale, $filename) {
-		parent::LocaleFile($locale, $filename);
+	function __construct($locale, $filename) {
+		parent::__construct($locale, $filename);
 		$this->editableFile = new EditableFile($this->filename);
 	}
 

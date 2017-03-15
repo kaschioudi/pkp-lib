@@ -2,8 +2,8 @@
 /**
  * @file controllers/api/file/linkAction/EditFileLinkAction.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class EditFileLinkAction
@@ -21,7 +21,7 @@ class EditFileLinkAction extends FileLinkAction {
 	 * @param $submissionFile SubmissionFile the submission file to edit.
 	 * @param $stageId int Stage ID
 	 */
-	function EditFileLinkAction($request, $submissionFile, $stageId) {
+	function __construct($request, $submissionFile, $stageId) {
 		// Instantiate the AJAX modal request.
 		$router = $request->getRouter();
 		$dispatcher = $router->getDispatcher();
@@ -38,7 +38,7 @@ class EditFileLinkAction extends FileLinkAction {
 		);
 
 		// Configure the file link action.
-		parent::FileLinkAction(
+		parent::__construct(
 			'editFile', $modal, __('common.edit'), 'edit'
 		);
 	}

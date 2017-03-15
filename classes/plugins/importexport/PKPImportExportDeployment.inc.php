@@ -6,8 +6,8 @@
 /**
  * @file classes/plugins/importexport/PKPImportExportDeployment.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class PKPImportExportDeployment
@@ -27,6 +27,9 @@ class PKPImportExportDeployment {
 	/** @var Submission The current import/export submission */
 	var $_submission;
 
+	/** @var array The processed import objects IDs */
+	var $_processedObjectsIds;
+
 	/** @var array Connection between the file and revision IDs from the XML import file and the DB file IDs */
 	var $_fileDBIds;
 
@@ -35,11 +38,12 @@ class PKPImportExportDeployment {
 	 * @param $context Context
 	 * @param $user User optional
 	 */
-	function PKPImportExportDeployment($context, $user=null) {
+	function __construct($context, $user=null) {
 		$this->setContext($context);
 		$this->setUser($user);
 		$this->setSubmission(null);
 		$this->setFileDBIds(array());
+		$this->_processedObjectsIds = array();
 	}
 
 	//
@@ -110,6 +114,7 @@ class PKPImportExportDeployment {
 	 */
 	function setSubmission($submission) {
 		$this->_submission = $submission;
+		if ($submission) $this->addProcessedObjectId(ASSOC_TYPE_SUBMISSION, $submission->getId());
 	}
 
 	/**
@@ -118,6 +123,55 @@ class PKPImportExportDeployment {
 	 */
 	function getSubmission() {
 		return $this->_submission;
+	}
+
+	/**
+	 * Add the processed object ID.
+	 * @param $assocType integer ASSOC_TYPE_...
+	 * @param $assocId integer
+	 */
+	function addProcessedObjectId($assocType, $assocId) {
+		$this->_processedObjectsIds[$assocType][$assocId] = array();
+	}
+
+	/**
+	 * Add the error message to the processed object ID.
+	 * @param $assocType integer ASSOC_TYPE_...
+	 * @param $assocId integer
+	 * @param $errorMsg string
+	 */
+	function addError($assocType, $assocId, $errorMsg) {
+		$this->_processedObjectsIds[$assocType][$assocId][] = $errorMsg;
+	}
+
+	/**
+	 * Get the processed objects IDs.
+	 * @param $assocType integer ASSOC_TYPE_...
+	 * @return array Associative array (assoc object Id => array of errors)
+	 */
+	function getProcessedObjectsIds($assocType) {
+		if (array_key_exists($assocType, $this->_processedObjectsIds)) {
+			return $this->_processedObjectsIds[$assocType];
+		}
+		return null;
+	}
+
+	/**
+	 * Remove the processed objects.
+	 * @param $assocType integer ASSOC_TYPE_...
+	 */
+	function removeImportedObjects($assocType) {
+		switch ($assocType) {
+			case ASSOC_TYPE_SUBMISSION:
+				$processedSubmisssionsIds = $this->getProcessedObjectsIds(ASSOC_TYPE_SUBMISSION);
+				if (!empty($processedSubmisssionsIds)) {
+					$submissionDao = Application::getSubmissionDAO();
+					foreach ($processedSubmisssionsIds as $submissionId => $errorMessages) {
+						$submissionDao->deleteById($submissionId);
+					}
+				}
+				break;
+		}
 	}
 
 	/**
@@ -158,9 +212,20 @@ class PKPImportExportDeployment {
 	 * @param $revisionId integer
 	 * @return integer
 	 */
-	function getFileDBId($fileId, $revisionId) {
-		if (array_key_exists($fileId, $this->_fileDBIds) && array_key_exists($revisionId, $this->_fileDBIds[$fileId])) {
-			return $this->_fileDBIds[$fileId][$revisionId];
+	function getFileDBId($fileId, $revisionId = null) {
+		if (array_key_exists($fileId, $this->_fileDBIds)) {
+			// is there already the revisionId?
+			if ($revisionId) {
+				if (array_key_exists($revisionId, $this->_fileDBIds[$fileId])) {
+					return $this->_fileDBIds[$fileId][$revisionId];
+				} else {
+					return null;
+				}
+			} else {
+				// the revisionId is not important, but the fileId
+				// the DB Id is unique for a fileId
+				return current($this->_fileDBIds[$fileId]);
+			}
 		}
 		return null;
 	}

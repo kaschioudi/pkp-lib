@@ -3,8 +3,8 @@
 /**
  * @file plugins/metadata/nlm30/filter/Nlm30CitationSchemaOpenurl10CrosswalkFilter.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class Nlm30CitationSchemaOpenurl10CrosswalkFilter
@@ -24,9 +24,9 @@ class Nlm30CitationSchemaOpenurl10CrosswalkFilter extends Nlm30Openurl10Crosswal
 	/**
 	 * Constructor
 	 */
-	function Nlm30CitationSchemaOpenurl10CrosswalkFilter() {
+	function __construct() {
 		$this->setDisplayName('Crosswalk from NLM Citation to Open URL');
-		parent::Nlm30Openurl10CrosswalkFilter('lib.pkp.plugins.metadata.nlm30.schema.Nlm30CitationSchema',
+		parent::__construct('lib.pkp.plugins.metadata.nlm30.schema.Nlm30CitationSchema',
 				'lib.pkp.plugins.metadata.openurl10.schema.Openurl10BaseSchema');
 	}
 
@@ -78,7 +78,7 @@ class Nlm30CitationSchemaOpenurl10CrosswalkFilter extends Nlm30Openurl10Crosswal
 			$aulast .= $authors[0]->getStatement('surname');
 			if (!empty($aulast)) {
 				$success = $output->addStatement('aulast', $aulast);
-				assert($success);
+				assert((boolean) $success);
 			}
 
 			$givenNames = $authors[0]->getStatement('given-names');
@@ -86,7 +86,7 @@ class Nlm30CitationSchemaOpenurl10CrosswalkFilter extends Nlm30Openurl10Crosswal
 				$aufirst = implode(' ', $givenNames);
 				if (!empty($aufirst)) {
 					$success = $output->addStatement('aufirst', $aufirst);
-					assert($success);
+					assert((boolean) $success);
 				}
 
 				$initials = array();
@@ -97,26 +97,26 @@ class Nlm30CitationSchemaOpenurl10CrosswalkFilter extends Nlm30Openurl10Crosswal
 				$auinit1 = array_shift($initials);
 				if (!empty($auinit1)) {
 					$success = $output->addStatement('auinit1', $auinit1);
-					assert($success);
+					assert((boolean) $success);
 				}
 
 				$auinitm = implode('', $initials);
 				if (!empty($auinitm)) {
 					$success = $output->addStatement('auinitm', $auinitm);
-					assert($success);
+					assert((boolean) $success);
 				}
 
 				$auinit = $auinit1.$auinitm;
 				if (!empty($auinit)) {
 					$success = $output->addStatement('auinit', $auinit);
-					assert($success);
+					assert((boolean) $success);
 				}
 			}
 
 			$ausuffix = $authors[0]->getStatement('suffix');
 			if (!empty($ausuffix)) {
 				$success = $output->addStatement('ausuffix', $ausuffix);
-				assert($success);
+				assert((boolean) $success);
 			}
 
 			foreach ($authors as $author) {
@@ -126,7 +126,7 @@ class Nlm30CitationSchemaOpenurl10CrosswalkFilter extends Nlm30Openurl10Crosswal
 					$au = $personStringFilter->execute($author);
 				}
 				$success = $output->addStatement('au', $au);
-				assert($success);
+				assert((boolean) $success);
 				unset($au);
 			}
 		}
@@ -148,7 +148,7 @@ class Nlm30CitationSchemaOpenurl10CrosswalkFilter extends Nlm30Openurl10Crosswal
 			}
 			assert(!empty($genre));
 			$success = $output->addStatement('genre', $genre);
-			assert($success);
+			assert((boolean) $success);
 		}
 
 		// Map remaining properties (NLM => OpenURL)
@@ -158,7 +158,7 @@ class Nlm30CitationSchemaOpenurl10CrosswalkFilter extends Nlm30Openurl10Crosswal
 		foreach ($propertyMap as $nlm30Property => $openurl10Property) {
 			if ($input->hasStatement($nlm30Property)) {
 				$success = $output->addStatement($openurl10Property, $input->getStatement($nlm30Property));
-				assert($success);
+				assert((boolean) $success);
 			}
 		}
 

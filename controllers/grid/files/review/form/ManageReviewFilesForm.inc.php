@@ -3,8 +3,8 @@
 /**
  * @file controllers/grid/files/review/form/ManageReviewFilesForm.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class ManageReviewFilesForm
@@ -27,8 +27,8 @@ class ManageReviewFilesForm extends ManageSubmissionFilesForm {
 	/**
 	 * Constructor.
 	 */
-	function ManageReviewFilesForm($submissionId, $stageId, $reviewRoundId) {
-		parent::ManageSubmissionFilesForm($submissionId, 'controllers/grid/files/review/manageReviewFiles.tpl');
+	function __construct($submissionId, $stageId, $reviewRoundId) {
+		parent::__construct($submissionId, 'controllers/grid/files/review/manageReviewFiles.tpl');
 		$this->_stageId = (int)$stageId;
 		$this->_reviewRoundId = (int)$reviewRoundId;
 	}

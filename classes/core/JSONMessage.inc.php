@@ -3,8 +3,8 @@
 /**
  * @file classes/core/JSONMessage.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class JSONMessage
@@ -38,7 +38,7 @@ class JSONMessage {
 	 * @param $elementId string The DOM element to be replaced.
 	 * @param $additionalAttributes array Additional data to be returned.
 	 */
-	function JSONMessage($status = true, $content = '', $elementId = '0', $additionalAttributes = null) {
+	function __construct($status = true, $content = '', $elementId = '0', $additionalAttributes = null) {
 		// Set internal state.
 		$this->setStatus($status);
 		$this->setContent($content);
@@ -159,7 +159,13 @@ class JSONMessage {
 		}
 
 		// Encode the object.
-		return json_encode($jsonObject);
+		$json = json_encode($jsonObject);
+
+		if ($json === false) {
+			error_log(json_last_error_msg());
+		}
+
+		return $json;
 	}
 }
 

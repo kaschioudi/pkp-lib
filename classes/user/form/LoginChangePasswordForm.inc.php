@@ -3,8 +3,8 @@
 /**
  * @file classes/user/form/LoginChangePasswordForm.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class LoginChangePasswordForm
@@ -20,8 +20,8 @@ class LoginChangePasswordForm extends Form {
 	/**
 	 * Constructor.
 	 */
-	function LoginChangePasswordForm($site) {
-		parent::Form('user/loginChangePassword.tpl');
+	function __construct($site) {
+		parent::__construct('user/loginChangePassword.tpl');
 
 		// Validation checks for this form
 		$this->addCheck(new FormValidatorCustom($this, 'oldPassword', 'required', 'user.profile.form.oldPasswordInvalid', create_function('$password,$form', 'return Validation::checkCredentials($form->getData(\'username\'),$password);'), array($this)));

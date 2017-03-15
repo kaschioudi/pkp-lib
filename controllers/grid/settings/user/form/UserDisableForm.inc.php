@@ -3,8 +3,8 @@
 /**
  * @file controllers/grid/settings/user/form/UserDisableForm.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class UserDisableForm
@@ -26,8 +26,8 @@ class UserDisableForm extends Form {
 	/**
 	 * Constructor.
 	 */
-	function UserDisableForm($userId, $enable = false) {
-		parent::Form('controllers/grid/settings/user/form/userDisableForm.tpl');
+	function __construct($userId, $enable = false) {
+		parent::__construct('controllers/grid/settings/user/form/userDisableForm.tpl');
 
 		$this->_userId = (int) $userId;
 		$this->_enable = (bool) $enable;
@@ -70,9 +70,10 @@ class UserDisableForm extends Form {
 	 */
 	function display($args, $request) {
 		$templateMgr = TemplateManager::getManager($request);
-		$templateMgr->assign('userId', $this->_userId);
-		$templateMgr->assign('enable', $this->_enable);
-
+		$templateMgr->assign(array(
+			'userId' => $this->_userId,
+			'enable' => $this->_enable,
+		));
 		return $this->fetch($request);
 	}
 

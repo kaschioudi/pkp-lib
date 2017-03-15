@@ -3,8 +3,8 @@
 /**
  * @file controllers/grid/settings/user/form/UserRoleForm.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class UserRoleForm
@@ -25,8 +25,8 @@ class UserRoleForm extends UserForm {
 	 * @param int $userId
 	 * @param string $userFullName
 	 */
-	function UserRoleForm($userId, $userFullName) {
-		parent::UserForm('controllers/grid/settings/user/form/userRoleForm.tpl', $userId);
+	function __construct($userId, $userFullName) {
+		parent::__construct('controllers/grid/settings/user/form/userRoleForm.tpl', $userId);
 
 		$this->_userFullName = $userFullName;
 		$this->addCheck(new FormValidatorPost($this));
@@ -40,10 +40,10 @@ class UserRoleForm extends UserForm {
 	 */
 	function display($args, $request) {
 		$templateMgr = TemplateManager::getManager($request);
-
-		$templateMgr->assign('userId', $this->userId);
-		$templateMgr->assign('userFullName', $this->_userFullName);
-
+		$templateMgr->assign(array(
+			'userId' => $this->userId,
+			'userFullName' => $this->_userFullName,
+		));
 		return $this->fetch($request);
 	}
 

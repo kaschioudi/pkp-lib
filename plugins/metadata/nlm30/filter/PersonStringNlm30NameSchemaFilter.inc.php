@@ -3,8 +3,8 @@
 /**
  * @file plugins/metadata/nlm30/filter/PersonStringNlm30NameSchemaFilter.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class PersonStringNlm30NameSchemaFilter
@@ -30,7 +30,7 @@ class PersonStringNlm30NameSchemaFilter extends Nlm30PersonStringFilter {
 	/**
 	 * Constructor
 	 */
-	function PersonStringNlm30NameSchemaFilter($assocType, $filterMode = PERSON_STRING_FILTER_SINGLE, $filterTitle = false, $filterDegrees = false) {
+	function __construct($assocType, $filterMode = PERSON_STRING_FILTER_SINGLE, $filterTitle = false, $filterDegrees = false) {
 		$this->setDisplayName('String to NLM Name Schema conversion');
 
 		assert(in_array($assocType, array(ASSOC_TYPE_AUTHOR, ASSOC_TYPE_EDITOR)));
@@ -42,7 +42,7 @@ class PersonStringNlm30NameSchemaFilter extends Nlm30PersonStringFilter {
 		$outputType = 'metadata::lib.pkp.plugins.metadata.nlm30.schema.Nlm30NameSchema(*)';
 		if ($filterMode == PERSON_STRING_FILTER_MULTIPLE) $outputType .= '[]';
 
-		parent::Nlm30PersonStringFilter($inputType, $outputType, $filterMode);
+		parent::__construct($inputType, $outputType, $filterMode);
 	}
 
 	//
@@ -180,7 +180,7 @@ class PersonStringNlm30NameSchemaFilter extends Nlm30PersonStringFilter {
 				if ($matched = PKPString::regexp_match($complexPersonsPattern[0], $personsString)) {
 					// Retrieve names.
 					$success = PKPString::regexp_match_all($complexPersonsPattern[1], $personsString, $personStrings);
-					assert($success && count($personStrings) == 1);
+					assert((boolean) $success && count($personStrings) == 1);
 					$personStrings = $personStrings[0];
 					break;
 				}

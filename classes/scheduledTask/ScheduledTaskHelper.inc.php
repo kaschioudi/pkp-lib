@@ -3,8 +3,8 @@
 /**
  * @file classes/scheduledTask/ScheduledTaskHelper.inc.php
  *
- * Copyright (c) 2013-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2013-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class ScheduledTaskHelper
@@ -33,7 +33,7 @@ class ScheduledTaskHelper {
 	 * @param $email string (optional)
 	 * @param $contactName string (optional)
 	 */
-	function ScheduledTaskHelper($email = '', $contactName = '') {
+	function __construct($email = '', $contactName = '') {
 		if (!$email || !$contactName) {
 			$siteDao = DAORegistry::getDAO('SiteDAO'); /* @var $siteDao SiteDAO */
 			$site = $siteDao->getSite(); /* @var $site Site */

@@ -3,8 +3,8 @@
 /**
  * @file controllers/grid/files/form/LibraryFileForm.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class LibraryFileForm
@@ -28,10 +28,10 @@ class LibraryFileForm extends Form {
 	 * @param $template string
 	 * @param $contextId int
 	 */
-	function LibraryFileForm($template, $contextId) {
+	function __construct($template, $contextId) {
 		$this->contextId = $contextId;
 
-		parent::Form($template);
+		parent::__construct($template);
 		$this->libraryFileManager = new LibraryFileManager($contextId);
 
 		$this->addCheck(new FormValidatorLocale($this, 'libraryFileName', 'required', 'settings.libraryFiles.nameRequired'));

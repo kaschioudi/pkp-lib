@@ -7,8 +7,8 @@
 /**
  * @file plugins/citationLookup/isbndb/filter/IsbndbNlm30CitationSchemaFilter.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class IsbndbNlm30CitationSchemaFilter
@@ -28,14 +28,14 @@ class IsbndbNlm30CitationSchemaFilter extends Nlm30CitationSchemaFilter {
 	 * Constructor
 	 * @param $filterGroup FilterGroup
 	 */
-	function IsbndbNlm30CitationSchemaFilter($filterGroup) {
+	function __construct($filterGroup) {
 		// Instantiate the settings of this filter
 		$apiKeySetting = new FilterSetting('apiKey',
 				'metadata.filters.isbndb.settings.apiKey.displayName',
 				'metadata.filters.isbndb.settings.apiKey.validationMessage');
 		$this->addSetting($apiKeySetting);
 
-		parent::Nlm30CitationSchemaFilter($filterGroup, array(NLM30_PUBLICATION_TYPE_BOOK));
+		parent::__construct($filterGroup, array(NLM30_PUBLICATION_TYPE_BOOK));
 	}
 
 	//

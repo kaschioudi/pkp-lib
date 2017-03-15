@@ -3,19 +3,19 @@
 /**
  * @file lib/pkp/controllers/grid/users/stageParticipant/form/PKPStageParticipantNotifyForm.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
- * @class InformationCenterNotifyForm
- * @ingroup informationCenter_form
+ * @class PKPStageParticipantNotifyForm
+ * @ingroup controllers_grid_users_stageParticipant_form
  *
  * @brief Form to notify a user regarding a file
  */
 
 import('lib.pkp.classes.form.Form');
 
-class PKPStageParticipantNotifyForm extends Form {
+abstract class PKPStageParticipantNotifyForm extends Form {
 	/** @var int The file/submission ID this form is for */
 	var $_itemId;
 
@@ -31,9 +31,9 @@ class PKPStageParticipantNotifyForm extends Form {
 	/**
 	 * Constructor.
 	 */
-	function PKPStageParticipantNotifyForm($itemId, $itemType, $stageId, $template = null) {
+	function __construct($itemId, $itemType, $stageId, $template = null) {
 		$template = ($template != null) ? $template : 'controllers/grid/users/stageParticipant/form/notify.tpl';
-		parent::Form($template);
+		parent::__construct($template);
 		$this->_itemId = $itemId;
 		$this->_itemType = $itemType;
 		$this->_stageId = $stageId;
@@ -267,6 +267,7 @@ class PKPStageParticipantNotifyForm extends Form {
 			case 'EDITOR_ASSIGN': return array(
 				'editorUsername' => __('user.username'),
 				'editorialContactName' => __('user.role.editor'),
+				'submissionUrl' => __('common.url'),
 			);
 		}
 	}
@@ -322,9 +323,7 @@ class PKPStageParticipantNotifyForm extends Form {
 	 * return app-specific stage templates.
 	 * @return array
 	 */
-	protected function _getStageTemplates() {
-		assert(false); // Must be overridden in sub classs.
-	}
+	abstract protected function _getStageTemplates();
 
 	/**
 	 * Return app-specific mail template.
@@ -333,9 +332,7 @@ class PKPStageParticipantNotifyForm extends Form {
 	 * @param $includeSignature boolean
 	 * @return array
 	 */
-	protected function _getMailTemplate($submission, $templateKey, $includeSignature = true) {
-		assert(false); // Must be overridden in sub classs.
-	}
+	abstract protected function _getMailTemplate($submission, $templateKey, $includeSignature = true);
 }
 
 ?>

@@ -3,8 +3,8 @@
 /**
  * @file classes/site/Version.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class Version
@@ -19,10 +19,10 @@ class Version extends DataObject {
 	/**
 	 * Constructor.
 	 */
-	function Version($major, $minor, $revision, $build, $dateInstalled, $current,
+	function __construct($major, $minor, $revision, $build, $dateInstalled, $current,
 			$productType, $product, $productClassName, $lazyLoad, $sitewide) {
 
-		parent::DataObject();
+		parent::__construct();
 
 		// Initialize object
 		$this->setMajor($major);
@@ -64,7 +64,7 @@ class Version extends DataObject {
 	 * @param $sitewide integer
 	 * @return Version
 	 */
-	function &fromString($versionString, $productType = null, $product = null, $productClass = '', $lazyLoad = 0, $sitewide = 1) {
+	static function fromString($versionString, $productType = null, $product = null, $productClass = '', $lazyLoad = 0, $sitewide = 1) {
 		$versionArray = explode('.', $versionString);
 
 		if(!$product && !$productType) {

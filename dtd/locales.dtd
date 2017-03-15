@@ -1,8 +1,8 @@
 <!--
   * dtd/locales.dtd
   *
-  * Copyright (c) 2014-2016 Simon Fraser University Library
-  * Copyright (c) 2000-2016 John Willinsky
+  * Copyright (c) 2014-2017 Simon Fraser University
+  * Copyright (c) 2000-2017 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * DTD for locale lists.
@@ -16,4 +16,5 @@
 		iso639-2b CDATA #REQUIRED
 		iso639-3 CDATA #REQUIRED
 		complete (true | false) #IMPLIED
-		stylesheet CDATA #IMPLIED>
+		stylesheet CDATA #IMPLIED
+		direction CDATA #IMPLIED>

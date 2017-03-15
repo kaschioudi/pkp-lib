@@ -3,8 +3,8 @@
 /**
  * @file classes/user/form/IdentityForm.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class PKPProfileForm
@@ -22,8 +22,8 @@ class IdentityForm extends BaseProfileForm {
 	 * @param $template string
 	 * @param $user PKPUser
 	 */
-	function IdentityForm($user) {
-		parent::BaseProfileForm('user/identityForm.tpl', $user);
+	function __construct($user) {
+		parent::__construct('user/identityForm.tpl', $user);
 
 		// Validation checks for this form
 		$this->addCheck(new FormValidator($this, 'firstName', 'required', 'user.profile.form.firstNameRequired'));

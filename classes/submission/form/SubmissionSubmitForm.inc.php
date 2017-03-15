@@ -6,8 +6,8 @@
 /**
  * @file classes/submission/form/SubmissionSubmitForm.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class SubmissionSubmitForm
@@ -36,8 +36,8 @@ class SubmissionSubmitForm extends Form {
 	 * @param $submission object
 	 * @param $step int
 	 */
-	function SubmissionSubmitForm($context, $submission, $step) {
-		parent::Form(sprintf('submission/form/step%d.tpl', $step));
+	function __construct($context, $submission, $step) {
+		parent::__construct(sprintf('submission/form/step%d.tpl', $step));
 		$this->addCheck(new FormValidatorPost($this));
 		$this->addCheck(new FormValidatorCSRF($this));
 		$this->step = (int) $step;

@@ -1,8 +1,8 @@
 {**
- * submission/submissionMetadataFormFields.tpl
+ * templates/submission/submissionMetadataFormFields.tpl
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * Submission's metadata form fields. To be included in any form that wants to handle
@@ -39,7 +39,7 @@
 	{/fbvFormArea}
 {/if}
 
-{if $languagesEnabled || $subjectEnabled || $keywordsEnabled || $agenciesEnabled || $referencesEnabled}
+{if $languagesEnabled || $subjectEnabled || $keywordsEnabled || $agenciesEnabled || $referencesEnabled || $disciplinesEnabled}
 	{fbvFormArea id="tagitFields" title="submission.submit.metadataForm"}
 		{if $languagesEnabled}
 			{$languagesField}
@@ -49,14 +49,14 @@
 				{fbvElement type="keyword" id="subjects" multilingual=true current=$subjects disabled=$readOnly}
 			{/fbvFormSection}
 		{/if}
-		{if $disciplineEnabled}
+		{if $disciplinesEnabled}
 			{fbvFormSection label="search.discipline"}
 				{fbvElement type="keyword" id="disciplines" multilingual=true current=$disciplines disabled=$readOnly}
 			{/fbvFormSection}
 		{/if}
 		{if $keywordsEnabled}
 			{fbvFormSection label="common.keywords"}
-				{fbvElement type="keyword" id="keyword" multilingual=true current=$keywords disabled=$readOnly}
+				{fbvElement type="keyword" id="keywords" multilingual=true current=$keywords disabled=$readOnly}
 			{/fbvFormSection}
 		{/if}
 		{if $agenciesEnabled}

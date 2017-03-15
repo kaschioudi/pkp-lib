@@ -3,8 +3,8 @@
 /**
  * @file controllers/grid/announcements/form/AnnouncementForm.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class AnnouncementForm
@@ -32,12 +32,12 @@ class AnnouncementForm extends Form {
 	 * @param announcementId int leave as default for new announcement
 	 * @param $readOnly boolean
 	 */
-	function AnnouncementForm($contextId, $announcementId = null, $readOnly = false) {
+	function __construct($contextId, $announcementId = null, $readOnly = false) {
 
 		$this->_readOnly = $readOnly;
 		$this->_contextId = $contextId;
 		$this->announcementId = $announcementId?(int)$announcementId:null;
-		parent::Form('manager/announcement/announcementForm.tpl');
+		parent::__construct('manager/announcement/announcementForm.tpl');
 
 		// Title is provided
 		$this->addCheck(new FormValidatorLocale($this, 'title', 'required', 'manager.announcements.form.titleRequired'));

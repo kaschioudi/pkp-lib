@@ -3,8 +3,8 @@
 /**
  * @file plugins/generic/usageStats/UsageStatsSettingsForm.inc.php
  *
- * Copyright (c) 2013-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2013-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class UsageStatsSettingsForm
@@ -24,10 +24,10 @@ class UsageStatsSettingsForm extends Form {
 	 * Constructor
 	 * @param $plugin object
 	 */
-	function UsageStatsSettingsForm($plugin) {
+	function __construct($plugin) {
 		$this->plugin = $plugin;
 
-		parent::Form($plugin->getTemplatePath(true) . 'usageStatsSettingsForm.tpl');
+		parent::__construct($plugin->getTemplatePath(true) . 'usageStatsSettingsForm.tpl');
 		$this->addCheck(new FormValidatorCustom($this, 'dataPrivacyOption', FORM_VALIDATOR_OPTIONAL_VALUE, 'plugins.generic.usageStats.settings.dataPrivacyOption.requiresSalt', array(&$this, '_dependentFormFieldIsSet'), array(&$this, 'saltFilepath')));
 		$this->addCheck(new FormValidatorCustom($this, 'dataPrivacyOption', FORM_VALIDATOR_OPTIONAL_VALUE, 'plugins.generic.usageStats.settings.dataPrivacyOption.excludesRegion', array(&$this, '_dependentFormFieldIsSet'), array(&$this, 'selectedOptionalColumns', STATISTICS_DIMENSION_REGION), true));
 		$this->addCheck(new FormValidatorCustom($this, 'dataPrivacyOption', FORM_VALIDATOR_OPTIONAL_VALUE, 'plugins.generic.usageStats.settings.dataPrivacyOption.excludesCity', array(&$this, '_dependentFormFieldIsSet'), array(&$this, 'selectedOptionalColumns', STATISTICS_DIMENSION_CITY), true));

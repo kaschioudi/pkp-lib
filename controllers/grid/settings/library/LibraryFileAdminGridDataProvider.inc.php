@@ -3,8 +3,8 @@
 /**
  * @file controllers/grid/settings/library/LibraryFileAdminGridDataProvider.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class FilesGridDataProvider
@@ -27,9 +27,9 @@ class LibraryFileAdminGridDataProvider extends CategoryGridDataProvider {
 	/**
 	 * Constructor
 	 */
-	function LibraryFileAdminGridDataProvider($canEdit) {
+	function __construct($canEdit) {
 		$this->_canEdit = $canEdit;
-		parent::CategoryGridDataProvider();
+		parent::__construct();
 	}
 
 

@@ -1,8 +1,8 @@
 {**
  * templates/controllers/grid/queries/form/queryForm.tpl
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * Query grid form
@@ -33,11 +33,11 @@
 
 	{fbvFormArea id="queryContentsArea"}
 		{fbvFormSection title="common.subject" for="subject" required="true"}
-			{fbvElement type="text" id="subject" value=$subject}
+			{fbvElement type="text" id="subject" value=$subject required="true"}
 		{/fbvFormSection}
 
 		{fbvFormSection title="stageParticipants.notify.message" for="comment" required="true"}
-			{fbvElement type="textarea" id="comment" rich=true value=$comment}
+			{fbvElement type="textarea" id="comment" rich=true value=$comment required="true"}
 		{/fbvFormSection}
 	{/fbvFormArea}
 

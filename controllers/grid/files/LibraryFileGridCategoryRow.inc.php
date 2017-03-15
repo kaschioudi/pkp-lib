@@ -3,8 +3,8 @@
 /**
  * @file controllers/grid/files/LibraryFileGridCategoryRow.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class LibraryFileGridCategoryRow
@@ -23,9 +23,9 @@ class LibraryFileGridCategoryRow extends GridCategoryRow {
 	/**
 	 * Constructor
 	 */
-	function LibraryFileGridCategoryRow($context) {
+	function __construct($context) {
 		$this->_context =& $context;
-		parent::GridCategoryRow();
+		parent::__construct();
 	}
 
 	//

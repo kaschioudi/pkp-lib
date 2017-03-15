@@ -3,8 +3,8 @@
 /**
  * @file classes/core/ArrayItemIterator.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class ArrayItemIterator
@@ -38,7 +38,8 @@ class ArrayItemIterator extends ItemIterator {
 	 * @param $page int the current page number
 	 * @param $itemsPerPage int Number of items to display per page
 	 */
-	function ArrayItemIterator(&$theArray, $page=-1, $itemsPerPage=-1) {
+	function __construct(&$theArray, $page=-1, $itemsPerPage=-1) {
+		parent::__construct();
 		if ($page>=1 && $itemsPerPage>=1) {
 			$this->theArray = $this->array_slice_key($theArray, ($page-1) * $itemsPerPage, $itemsPerPage);
 			$this->page = $page;

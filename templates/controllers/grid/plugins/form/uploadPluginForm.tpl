@@ -1,8 +1,8 @@
 {**
  * controllers/grid/plugins/uploadPluginForm.tpl
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * Form to upload plugin files.
@@ -22,10 +22,10 @@
 	{rdelim});
 </script>
 
-<form class="pkp_form" id="uploadPluginForm" action="{url router=$smarty.const.ROUTE_COMPONENT op="saveUploadPlugin" function=$function}" method="post">
+<form class="pkp_form" id="uploadPluginForm" action="{url router=$smarty.const.ROUTE_COMPONENT op="saveUploadPlugin" function=$function category=$category plugin=$plugin}" method="post">
 	{csrf}
 	{include file="controllers/notification/inPlaceNotification.tpl" notificationId="uploadPluginNotification"}
-	
+
 	{fbvFormArea id="file"}
 		{if $function == 'install'}
 			<p>{translate key="manager.plugins.uploadDescription"}</p>
@@ -38,7 +38,7 @@
 			{include file="controllers/fileUploadContainer.tpl" id="plupload"}
 		{/fbvFormSection}
 	{/fbvFormArea}
-	
+
 	{fbvFormButtons id="mastheadFormSubmit" submitText="common.save"}
 </form>
 <p><span class="formRequired">{translate key="common.requiredField"}</span></p>

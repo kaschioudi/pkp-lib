@@ -3,8 +3,8 @@
 /**
  * @file classes/install/Installer.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class Installer
@@ -91,7 +91,7 @@ class Installer {
 	 * @param $params array installer parameters
 	 * @param $isPlugin boolean true iff a plugin is being installed
 	 */
-	function Installer($descriptor, $params = array(), $isPlugin = false) {
+	function __construct($descriptor, $params = array(), $isPlugin = false) {
 		// Load all plugins. If any of them use installer hooks,
 		// they'll need to be loaded here.
 		PluginRegistry::loadAllPlugins();

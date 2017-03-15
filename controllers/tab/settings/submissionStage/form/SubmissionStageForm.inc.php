@@ -3,8 +3,8 @@
 /**
  * @file controllers/tab/settings/submissionStage/form/SubmissionStageForm.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class SubmissionStageForm
@@ -24,7 +24,7 @@ class SubmissionStageForm extends ContextSettingsForm {
 	 * Constructor.
 	 * @param $wizardMode boolean True iff in wizard mode.
 	 */
-	function SubmissionStageForm($wizardMode = false) {
+	function __construct($wizardMode = false) {
 		$this->addCheck(new FormValidatorEmail($this, 'copySubmissionAckAddress'));
 
 		// Add the list of metadata field-related settings per the MetadataGridHandler
@@ -36,7 +36,7 @@ class SubmissionStageForm extends ContextSettingsForm {
 			array_map(function($n) {return $n.'Required';}, $metadataFieldNames)
 		);
 
-		parent::ContextSettingsForm(
+		parent::__construct(
 			array_merge(
 				array(
 					'copySubmissionAckPrimaryContact' => 'bool',

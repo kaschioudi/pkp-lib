@@ -3,8 +3,8 @@
 /**
  * @file controllers/informationCenter/linkAction/SubmissionInfoCenterLinkAction.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class SubmissionInfoCenterLinkAction
@@ -24,7 +24,7 @@ class SubmissionInfoCenterLinkAction extends LinkAction {
 	 * to show information about.
 	 * @param $linkKey string optional locale key to display for link
 	 */
-	function SubmissionInfoCenterLinkAction($request, $submissionId, $linkKey = 'informationCenter.editorialHistory') {
+	function __construct($request, $submissionId, $linkKey = 'informationCenter.editorialHistory') {
 		// Instantiate the information center modal.
 
 		$submissionDao = Application::getSubmissionDAO();
@@ -55,7 +55,7 @@ class SubmissionInfoCenterLinkAction extends LinkAction {
 		);
 
 		// Configure the link action.
-		parent::LinkAction(
+		parent::__construct(
 			'editorialHistory', $ajaxModal,
 			__($linkKey), 'more_info'
 		);

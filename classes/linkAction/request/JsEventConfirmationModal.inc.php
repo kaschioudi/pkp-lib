@@ -2,8 +2,8 @@
 /**
  * @file classes/linkAction/request/JsEventConfirmationModal.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class JsEventConfirmationModal
@@ -40,8 +40,8 @@ class JsEventConfirmationModal extends ConfirmationModal {
 	 * @param $canClose boolean (optional) Whether the modal will
 	 *  have a close button.
 	 */
-	function JsEventConfirmationModal($dialogText, $event = 'confirmationModalConfirmed', $extraArguments = null, $title = null, $titleIcon = null, $okButton = null, $cancelButton = null, $canClose = true) {
-		parent::ConfirmationModal($dialogText, $title, $titleIcon, $okButton, $cancelButton, $canClose);
+	function __construct($dialogText, $event = 'confirmationModalConfirmed', $extraArguments = null, $title = null, $titleIcon = null, $okButton = null, $cancelButton = null, $canClose = true) {
+		parent::__construct($dialogText, $title, $titleIcon, $okButton, $cancelButton, $canClose);
 
 		$this->_event = $event;
 		$this->_extraArguments = $extraArguments;

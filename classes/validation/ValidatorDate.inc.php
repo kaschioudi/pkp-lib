@@ -3,8 +3,8 @@
 /**
  * @file classes/validation/ValidatorDate.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class ValidatorDate
@@ -25,8 +25,8 @@ class ValidatorDate extends ValidatorRegExp {
 	/**
 	 * Constructor.
 	 */
-	function ValidatorDate($dateFormat = DATE_FORMAT_ISO) {
-		parent::ValidatorRegExp(ValidatorDate::getRegexp($dateFormat));
+	function __construct($dateFormat = DATE_FORMAT_ISO) {
+		parent::__construct(ValidatorDate::getRegexp($dateFormat));
 	}
 
 

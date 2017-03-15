@@ -2,8 +2,8 @@
 /**
  * @file controllers/api/file/linkAction/DeleteFileLinkAction.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class DeleteFileLinkAction
@@ -24,10 +24,10 @@ class DeleteFileLinkAction extends FileLinkAction {
 	 * @param $localeKey string (optional) Locale key to use for delete link
 	 *  be deleted.
 	 */
-	function DeleteFileLinkAction($request, $submissionFile, $stageId, $localeKey = 'grid.action.delete') {
+	function __construct($request, $submissionFile, $stageId, $localeKey = 'grid.action.delete') {
 		$router = $request->getRouter();
 		import('lib.pkp.classes.linkAction.request.RemoteActionConfirmationModal');
-		parent::FileLinkAction(
+		parent::__construct(
 			'deleteFile',
 			new RemoteActionConfirmationModal(
 				$request->getSession(),

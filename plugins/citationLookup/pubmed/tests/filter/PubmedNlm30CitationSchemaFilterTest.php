@@ -6,8 +6,8 @@
 /**
  * @file plugins/citationLookup/pubmed/tests/filter/PubmedNlm30CitationSchemaFilterTest.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class PubmedNlm30CitationSchemaFilterTest
@@ -26,6 +26,8 @@ class PubmedNlm30CitationSchemaFilterTest extends Nlm30CitationSchemaFilterTestC
 	 * @covers PubmedNlm30CitationSchemaFilter
 	 */
 	public function testExecuteWithPmid() {
+		$this->markTestSkipped('Web API authentication problem with older CURL/OpenSSL');
+
 		// Test article Pubmed lookup
 		$citationFilterTests = array(
 			array(
@@ -48,6 +50,8 @@ class PubmedNlm30CitationSchemaFilterTest extends Nlm30CitationSchemaFilterTestC
 	 * @covers PubmedNlm30CitationSchemaFilter
 	 */
 	public function testExecuteWithSearch() {
+		$this->markTestSkipped('Web API authentication problem with older CURL/OpenSSL');
+
 		// Build the test citations array
 		$citationFilterTests = array(
 			// strict search

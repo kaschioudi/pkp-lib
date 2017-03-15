@@ -3,8 +3,8 @@
 /**
  * @file controllers/modals/submissionMetadata/form/PKPSubmissionMetadataViewForm.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class PKPSubmissionMetadataViewForm
@@ -40,8 +40,8 @@ class PKPSubmissionMetadataViewForm extends Form {
 	 * @param $stageId integer
 	 * @param $formParams array
 	 */
-	function PKPSubmissionMetadataViewForm($submissionId, $stageId = null, $formParams = null, $templateName = 'controllers/modals/submissionMetadata/form/submissionMetadataViewForm.tpl') {
-		parent::Form($templateName);
+	function __construct($submissionId, $stageId = null, $formParams = null, $templateName = 'controllers/modals/submissionMetadata/form/submissionMetadataViewForm.tpl') {
+		parent::__construct($templateName);
 
 		$submissionDao = Application::getSubmissionDAO();
 		$submission = $submissionDao->getById((int) $submissionId);
@@ -54,6 +54,8 @@ class PKPSubmissionMetadataViewForm extends Form {
 		$this->_formParams = $formParams;
 
 		$this->_metadataFormImplem = new SubmissionMetadataFormImplementation($this);
+
+		$this->setDefaultFormLocale($submission->getLocale());
 
 		// Validation checks for this form
 		$this->_metadataFormImplem->addChecks($submission);
@@ -138,7 +140,18 @@ class PKPSubmissionMetadataViewForm extends Form {
 				$field . 'Required' => $context->getSetting($field . 'Required')
 			));
 		}
-
+		// Provide available submission languages. (Convert the array
+		// of locale symbolic names xx_XX into an associative array
+		// of symbolic names => readable names.)
+		$supportedSubmissionLocales = $context->getSetting('supportedSubmissionLocales');
+		if (empty($supportedSubmissionLocales)) $supportedSubmissionLocales = array($context->getPrimaryLocale());
+		$templateMgr->assign(
+			'supportedSubmissionLocaleNames',
+			array_flip(array_intersect(
+				array_flip(AppLocale::getAllLocales()),
+				$supportedSubmissionLocales
+			))
+		);
 		return parent::fetch($request);
 	}
 

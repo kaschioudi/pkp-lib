@@ -3,8 +3,8 @@
 /**
  * @file lib/pkp/controllers/page/PageHandler.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class PageHandler
@@ -20,8 +20,8 @@ class PageHandler extends Handler {
 	/**
 	 * Constructor
 	 */
-	function PageHandler() {
-		parent::Handler();
+	function __construct() {
+		parent::__construct();
 	}
 
 
@@ -39,7 +39,9 @@ class PageHandler extends Handler {
 			SITE_ACCESS_ALL_ROLES
 		));
 		if (!Config::getVar('general', 'installed')) define('SESSION_DISABLE_INIT', true);
-		return parent::authorize($request, $args, $roleAssignments, false);
+
+		$this->setEnforceRestrictedSite(false);
+		return parent::authorize($request, $args, $roleAssignments);
 	}
 
 
@@ -100,6 +102,7 @@ class PageHandler extends Handler {
 						die;
 					}
 				}
+				break;
 
 			default:
 
@@ -167,6 +170,7 @@ class PageHandler extends Handler {
 						}
 					}
 				}
+				break;
 		}
 
 		// Deliver the cached file

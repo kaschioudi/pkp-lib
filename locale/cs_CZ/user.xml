@@ -4,8 +4,8 @@
 <!--
   * locale/cs_CZ/user.xml
   *
-  * Copyright (c) 2014-2016 Simon Fraser University Library
-  * Copyright (c) 2000-2016 John Willinsky
+  * Copyright (c) 2014-2017 Simon Fraser University
+  * Copyright (c) 2000-2017 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * Localization strings for the cs_CZ (Čeština) locale.
@@ -14,7 +14,7 @@
   *
   -->
 
-<locale name="cs_CZ" full_name = "Čeština">
+<locale name="cs_CZ" full_name="Čeština">
 	<message key="user.affiliation">Pracoviště</message>
 	<message key="user.affiliation.description">(Vaše instituce, např. "Simon Fraser University")</message>
 	<message key="user.affiliations">Pracoviště</message>
@@ -50,7 +50,6 @@
 	<message key="user.login.lostPassword.invalidUser">Neexistuje žádný uživatel s uvedenou emailovou adresou.</message>
 	<message key="user.login.lostPassword.passwordSent">Nové heslo bylo odesláno na Vaši emailovou adresu. Nyní se můžete přihlásit pomocí nového hesla.</message>
 	<message key="user.login.registeredEmail">Email registrovaného uživatele</message>
-	<message key="user.login.rememberUsernameAndPassword">Zapamatovat moje uživatelské jméno a heslo</message>
 	<message key="user.login.resetPassword">Resetovat heslo</message>
 	<message key="user.logOut">Odhlásit</message>
 	<message key="user.mailingAddress">Poštovní adresa</message>

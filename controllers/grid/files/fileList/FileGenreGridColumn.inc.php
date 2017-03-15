@@ -2,8 +2,8 @@
 /**
  * @file controllers/grid/files/fileList/FileGenreGridColumn.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class FileGenreGridColumn
@@ -19,10 +19,10 @@ class FileGenreGridColumn extends GridColumn {
 	/**
 	 * Constructor
 	 */
-	function FileGenreGridColumn() {
+	function __construct() {
 		import('lib.pkp.classes.controllers.grid.ColumnBasedGridCellProvider');
 		$cellProvider = new ColumnBasedGridCellProvider();
-		parent::GridColumn('type', 'common.component', null, null, $cellProvider);
+		parent::__construct('type', 'common.component', null, null, $cellProvider);
 	}
 
 

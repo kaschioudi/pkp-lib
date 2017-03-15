@@ -2,8 +2,8 @@
 
 # @file tools/travis/run-tests.sh
 #
-# Copyright (c) 2014-2016 Simon Fraser University Library
-# Copyright (c) 2010-2016 John Willinsky
+# Copyright (c) 2014-2017 Simon Fraser University
+# Copyright (c) 2010-2017 John Willinsky
 # Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
 #
 # Script to run data build, unit, and integration tests.
@@ -39,7 +39,11 @@ if [[ "$TEST" == "pgsql" ]]; then
 elif [[ "$TEST" == "mysql" ]]; then
 	mysql -u root -e 'CREATE DATABASE `ojs-ci` DEFAULT CHARACTER SET utf8'
 	mysql -u root -e "GRANT ALL ON \`ojs-ci\`.* TO \`ojs-ci\`@localhost IDENTIFIED BY 'ojs-ci'"
-	export DBTYPE=MySQL
+	if [[ ${TRAVIS_PHP_VERSION:0:2} == "7." ]]; then
+		export DBTYPE=MySQLi
+	else
+		export DBTYPE=MySQL
+	fi
 fi
 
 # Prep files
@@ -63,7 +67,7 @@ fi
 
 # Run test suite.
 sudo rm -f cache/*.php
-if [[ "$TEST" == "mysql" ]]; then
+if [[ "$DBTYPE" == "MySQL" ]]; then
 	./lib/pkp/tools/runAllTests.sh -CcPpfH
 else
 	./lib/pkp/tools/runAllTests.sh -CcPpf

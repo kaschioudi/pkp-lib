@@ -3,8 +3,8 @@
 /**
  * @file classes/user/form/BaseProfileForm.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class BaseProfileForm
@@ -25,11 +25,11 @@ abstract class BaseProfileForm extends Form {
 	 * @param $template string
 	 * @param $user PKPUser
 	 */
-	function BaseProfileForm($template, $user) {
-		parent::Form($template);
+	function __construct($template, $user) {
+		parent::__construct($template);
 
 		$this->_user = $user;
-		assert($user);
+		assert(isset($user));
 
 		$this->addCheck(new FormValidatorPost($this));
 		$this->addCheck(new FormValidatorCSRF($this));

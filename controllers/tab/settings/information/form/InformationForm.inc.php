@@ -3,8 +3,8 @@
 /**
  * @file controllers/tab/settings/information/form/InformationForm.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class InformationForm
@@ -20,14 +20,14 @@ class InformationForm extends ContextSettingsForm {
 	/**
 	 * Constructor.
 	 */
-	function InformationForm($wizardMode = false) {
+	function __construct($wizardMode = false) {
 		$settings = array(
 			'readerInformation' => 'string',
 			'authorInformation' => 'string',
 			'librarianInformation' => 'string'
 		);
 
-		parent::ContextSettingsForm($settings, 'controllers/tab/settings/information/form/informationForm.tpl', $wizardMode);
+		parent::__construct($settings, 'controllers/tab/settings/information/form/informationForm.tpl', $wizardMode);
 	}
 
 

@@ -1,8 +1,8 @@
 {**
  * templates/frontend/pages/submissions.tpl
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @brief Display the page to view the editorial team.
@@ -53,7 +53,7 @@
 			{translate key="about.authorGuidelines"}
 			{include file="frontend/components/editLink.tpl" page="management" op="settings" path="journal" anchor="guidelines" sectionTitleKey="about.authorGuidelines"}
 		</h2>
-		{$currentContext->getLocalizedSetting('authorGuidelines')|nl2br}
+		{$currentContext->getLocalizedSetting('authorGuidelines')}
 	</div>
 	{/if}
 

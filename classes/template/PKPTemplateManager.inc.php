@@ -8,8 +8,8 @@
 /**
  * @file classes/template/PKPTemplateManager.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class TemplateManager
@@ -67,11 +67,11 @@ class PKPTemplateManager extends Smarty {
 	 * Initialize template engine and assign basic template variables.
 	 * @param $request PKPRequest
 	 */
-	function PKPTemplateManager($request) {
+	function __construct($request) {
 		assert(is_a($request, 'PKPRequest'));
 		$this->_request = $request;
 
-		parent::Smarty();
+		parent::__construct();
 
 		// Set up Smarty configuration
 		$baseDir = Core::getBaseDir();
@@ -181,13 +181,16 @@ class PKPTemplateManager extends Smarty {
 				);
 			}
 
+			// Add reading language flag based on locale
+			$this->assign('currentLocaleLangDir', AppLocale::getLocaleDirection($locale) );
+
 			// If there's a locale-specific stylesheet, add it.
 			if (($localeStyleSheet = AppLocale::getLocaleStyleSheet($locale)) != null) {
 				$this->addStyleSheet(
 					'pkpLibLocale',
 					$this->_request->getBaseUrl() . '/' . $localeStyleSheet,
 					array(
-						'contexts' => 'backend',
+						'contexts' => array('frontend', 'backend'),
 					)
 				);
 			}
@@ -256,6 +259,7 @@ class PKPTemplateManager extends Smarty {
 		$this->register_modifier('translate', array('AppLocale', 'translate'));
 		$this->register_modifier('strip_unsafe_html', array('PKPString', 'stripUnsafeHtml'));
 		$this->register_modifier('String_substr', array('PKPString', 'substr'));
+		$this->register_modifier('dateformatPHP2JQueryDatepicker', array('PKPString', 'dateformatPHP2JQueryDatepicker'));
 		$this->register_modifier('to_array', array($this, 'smartyToArray'));
 		$this->register_modifier('compare', array($this, 'smartyCompare'));
 		$this->register_modifier('concat', array($this, 'smartyConcat'));
@@ -343,9 +347,9 @@ class PKPTemplateManager extends Smarty {
 
 		// Load enabled block plugins and setup active sidebar variables
 		PluginRegistry::loadCategory('blocks', true);
-		$leftSidebarHooks = HookRegistry::getHooks('Templates::Common::LeftSidebar');
+		$sidebarHooks = HookRegistry::getHooks('Templates::Common::Sidebar');
 		$this->assign(array(
-			'hasLeftSidebar' => !empty($leftSidebarHooks),
+			'hasSidebar' => !empty($sidebarHooks),
 		));
 	}
 
@@ -680,31 +684,18 @@ class PKPTemplateManager extends Smarty {
 	}
 
 	/**
-	 * @see Smarty::fetch()
+	 * @copydoc Smarty::fetch()
 	 */
-	function fetch($resource_name, $cache_id = null, $compile_id = null, $display = false) {
-
-		foreach( $this->_styleSheets as &$list ) {
-			ksort( $list );
-		}
-		$this->assign('stylesheets', $this->_styleSheets);
-
-		foreach( $this->_javaScripts as &$list ) {
-			ksort( $list );
-		}
-		$this->assign('scripts', $this->_javaScripts);
-
-		foreach( $this->_htmlHeaders as &$list ) {
-			ksort( $list );
-		}
-		$this->assign('headers', $this->_htmlHeaders);
+	function fetch($template, $cache_id = null, $compile_id = null, $display = false) {
 
 		// If no compile ID was assigned, get one.
-		if (!$compile_id) $compile_id = $this->getCompileId($resource_name);
+		if (!$compile_id) $compile_id = $this->getCompileId($template);
 
+		// Give hooks an opportunity to override
 		$result = null;
-		if ($display == false && HookRegistry::call('TemplateManager::fetch', array($this, $resource_name, $cache_id, $compile_id, &$result))) return $result;
-		return parent::fetch($resource_name, $cache_id, $compile_id, $display);
+		if (HookRegistry::call($display?'TemplateManager::display':'TemplateManager::fetch', array($this, $template, $cache_id, $compile_id, &$result))) return $result;
+
+		return parent::fetch($template, $cache_id, $compile_id, $display);
 	}
 
 	/**
@@ -731,12 +722,20 @@ class PKPTemplateManager extends Smarty {
 	 * @return string
 	 */
 	function getCompileId($resourceName) {
+
+		if ( Config::getVar('general', 'installed' ) ) {
+			$context = $this->_request->getContext();
+			if (is_a($context, 'Context')) {
+				$resourceName .= $context->getSetting('themePluginPath');
+			}
+		}
+
 		return sha1($resourceName);
 	}
 
 	/**
 	 * Returns the template results as a JSON message.
-	 * @param $template string
+	 * @param $template string Template filename (or Smarty resource name)
 	 * @param $status boolean
 	 * @return JSONMessage JSON object
 	 */
@@ -746,45 +745,33 @@ class PKPTemplateManager extends Smarty {
 	}
 
 	/**
-	 * Display the template.
+	 * @copydoc Smarty::display()
+	 * @param $template string Template filename (or Smarty resource name)
+	 * @param $sendHeaders boolean True iff content type/cache control headers should be sent
 	 */
-	function display($template, $sendContentType = null, $hookName = null, $display = true) {
-		// Set the defaults
-		// N.B: This was moved from method signature to allow calls such as: ->display($template, null, null, false)
-		if ( is_null($sendContentType) ) {
-			$sendContentType = 'text/html';
-		}
-		if ( is_null($hookName) ) {
-			$hookName = 'TemplateManager::display';
-		}
-
-		$charset = Config::getVar('i18n', 'client_charset');
-
+	function display($template, $cache_id = null, $compile_id = null, $sendHeaders = true) {
 		// Give any hooks registered against the TemplateManager
 		// the opportunity to modify behavior; otherwise, display
 		// the template as usual.
 
 		$output = null;
-		if (!HookRegistry::call($hookName, array($this, &$template, &$sendContentType, &$charset, &$output))) {
-			// If this is the main display call, send headers.
-			if ($hookName == 'TemplateManager::display') {
-				// Explicitly set the character encoding
-				// Required in case server is using Apache's
-				// AddDefaultCharset directive (which can
-				// prevent browser auto-detection of the proper
-				// character set)
-				header('Content-Type: ' . $sendContentType . '; charset=' . $charset);
-
-				// Send caching info
-				header('Cache-Control: ' . $this->_cacheability);
-			}
-
-			// Actually display the template.
-			return $this->fetch($template, null, null, $display);
-		} else {
-			// Display the results of the plugin.
+		if (HookRegistry::call('TemplateManager::display', array($this, &$template, &$output))) {
 			echo $output;
+			return;
 		}
+
+		// If this is the main display call, send headers.
+		if ($sendHeaders) {
+			// Explicitly set the character encoding. Required in
+			// case server is using Apache's AddDefaultCharset
+			// directive (which can prevent browser auto-detection
+			// of the proper character set).
+			header('Content-Type: text/html; charset=' . Config::getVar('i18n', 'client_charset'));
+			header('Cache-Control: ' . $this->_cacheability);
+		}
+
+		// Actually display the template.
+		parent::display($template, $cache_id, $compile_id);
 	}
 
 
@@ -1349,15 +1336,13 @@ class PKPTemplateManager extends Smarty {
 	 */
 	function smartyLoadStylesheet($params, $smarty) {
 
-		if (empty($params['stylesheets'])) {
-			return;
-		}
-
 		if (empty($params['context'])) {
 			$context = 'frontend';
 		}
 
-		$stylesheets = $this->getResourcesByContext($params['stylesheets'], $params['context']);
+		$stylesheets = $this->getResourcesByContext($this->_styleSheets, $params['context']);
+
+		ksort($stylesheets);
 
 		$output = '';
 		foreach($stylesheets as $priorityList) {
@@ -1383,15 +1368,13 @@ class PKPTemplateManager extends Smarty {
 	 */
 	function smartyLoadScript($params, $smarty) {
 
-		if (empty($params['scripts'])) {
-			return;
-		}
-
 		if (empty($params['context'])) {
 			$params['context'] = 'frontend';
 		}
 
-		$scripts = $this->getResourcesByContext($params['scripts'], $params['context']);
+		$scripts = $this->getResourcesByContext($this->_javaScripts, $params['context']);
+
+		ksort($scripts);
 
 		$output = '';
 		foreach($scripts as $priorityList) {
@@ -1417,15 +1400,13 @@ class PKPTemplateManager extends Smarty {
 	 */
 	function smartyLoadHeader($params, $smarty) {
 
-		if (empty($params['headers'])) {
-			return;
-		}
-
 		if (empty($params['context'])) {
 			$params['context'] = 'frontend';
 		}
 
-		$headers = $this->getResourcesByContext($params['headers'], $params['context']);
+		$headers = $this->getResourcesByContext($this->_htmlHeaders, $params['context']);
+
+		ksort($headers);
 
 		$output = '';
 		foreach($headers as $priorityList) {

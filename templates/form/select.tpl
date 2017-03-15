@@ -1,15 +1,15 @@
 {**
  * templates/form/select.tpl
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * form select
  *}
 
 <div{if $FBV_layoutInfo} class="{$FBV_layoutInfo}"{/if}>
-<select {$FBV_selectParams}{if $FBV_class} class="{$FBV_class}"{/if}{if $FBV_disabled} disabled="disabled"{/if}{if $FBV_required} required="required"{/if}>
+<select {$FBV_selectParams}{if $FBV_class} class="{$FBV_class}"{/if}{if $FBV_disabled} disabled="disabled"{/if}{if $FBV_required} required aria-required="true"{/if}>
 	{if $FBV_defaultValue !== null}
 		<option value="{$FBV_defaultValue|escape}">{$FBV_defaultLabel|escape}</option>
 	{/if}

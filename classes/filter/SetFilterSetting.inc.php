@@ -3,8 +3,8 @@
 /**
  * @file classes/filter/SetFilterSetting.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class SetFilterSetting
@@ -30,9 +30,9 @@ class SetFilterSetting extends FilterSetting {
 	 * @param $acceptedValues array
 	 * @param $required boolean
 	 */
-	function SetFilterSetting($name, $displayName, $validationMessage, $acceptedValues, $required = FORM_VALIDATOR_REQUIRED_VALUE) {
+	function __construct($name, $displayName, $validationMessage, $acceptedValues, $required = FORM_VALIDATOR_REQUIRED_VALUE) {
 		$this->_acceptedValues = $acceptedValues;
-		parent::FilterSetting($name, $displayName, $validationMessage, $required);
+		parent::__construct($name, $displayName, $validationMessage, $required);
 	}
 
 	//

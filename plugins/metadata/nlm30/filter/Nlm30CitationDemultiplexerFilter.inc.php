@@ -6,8 +6,8 @@
 /**
  * @file plugins/metadata/nlm30/filter/Nlm30CitationDemultiplexerFilter.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class Nlm30CitationDemultiplexerFilter
@@ -35,10 +35,10 @@ class Nlm30CitationDemultiplexerFilter extends Filter {
 	/**
 	 * Constructor
 	 */
-	function Nlm30CitationDemultiplexerFilter() {
+	function __construct() {
 		$this->setDisplayName('Join several NLM Citation descriptions into a single citation'); // Only for internal debugging.
 
-		parent::Filter('metadata::lib.pkp.plugins.metadata.nlm30.schema.Nlm30CitationSchema(CITATION)[]',
+		parent::__construct('metadata::lib.pkp.plugins.metadata.nlm30.schema.Nlm30CitationSchema(CITATION)[]',
 			'class::lib.pkp.classes.citation.Citation');
 	}
 
@@ -285,7 +285,7 @@ class Nlm30CitationDemultiplexerFilter extends Filter {
 			// Set the found "best" element value in the result citation.
 			$statements = array($propertyName => $bestValue);
 			$success = $targetDescription->setStatements($statements);
-			assert($success);
+			assert((boolean) $success);
 		}
 
 		// Instantiate the target citation

@@ -2,8 +2,8 @@
 /**
  * @file controllers/grid/files/fileList/linkAction/SelectFilesLinkAction.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class SelectFilesLinkAction
@@ -25,7 +25,7 @@ class SelectFilesLinkAction extends LinkAction {
 	 * @param $actionLabel string The localized label of the link action.
 	 * @param $modalTitle string the (optional) title to be used for the modal.
 	 */
-	function SelectFilesLinkAction($request, $actionArgs, $actionLabel, $modalTitle = null) {
+	function __construct($request, $actionArgs, $actionLabel, $modalTitle = null) {
 		// Create an ajax action request that'll contain
 		// the file selection grid.
 		import('lib.pkp.classes.linkAction.request.AjaxModal');
@@ -36,7 +36,7 @@ class SelectFilesLinkAction extends LinkAction {
 				$modalTitle, 'modal_add_file');
 
 		// Configure the link action.
-		parent::LinkAction('selectFiles', $ajaxModal, $actionLabel, 'add');
+		parent::__construct('selectFiles', $ajaxModal, $actionLabel, 'add');
 	}
 }
 

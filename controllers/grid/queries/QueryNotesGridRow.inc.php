@@ -3,8 +3,8 @@
 /**
  * @file controllers/grid/queries/QueryNotesGridRow.inc.php
  *
- * Copyright (c) 2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2016-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class QueryNotesGridRow
@@ -31,12 +31,12 @@ class QueryNotesGridRow extends GridRow {
 	 * @param $query Query
 	 * @param $queryNotesGrid The notes grid containing this row
 	 */
-	function QueryNotesGridRow($actionArgs, $query, $queryNotesGrid) {
+	function __construct($actionArgs, $query, $queryNotesGrid) {
 		$this->_actionArgs = $actionArgs;
 		$this->_query = $query;
 		$this->_queryNotesGrid = $queryNotesGrid;
 
-		parent::GridRow();
+		parent::__construct();
 	}
 
 	//

@@ -8,8 +8,8 @@
 /**
  * @file classes/core/Core.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class Core
@@ -60,12 +60,7 @@ class Core {
 			// strip any invalid UTF-8 sequences
 			$var = PKPString::utf8_bad_strip($var);
 
-			// re-encode special HTML characters
-			if (checkPhpVersion('5.2.3')) {
-				$var = htmlspecialchars($var, ENT_NOQUOTES, 'UTF-8', false);
-			} else {
-				$var = htmlspecialchars($var, ENT_NOQUOTES, 'UTF-8');
-			}
+			$var = htmlspecialchars($var, ENT_NOQUOTES, 'UTF-8', false);
 		}
 
 		// strip any invalid ASCII control characters
@@ -103,27 +98,11 @@ class Core {
 	}
 
 	/**
-	 * Get the operating system of the server.
-	 * @return string
-	 */
-	static function serverPHPOS() {
-		return PHP_OS;
-	}
-
-	/**
-	 * Get the version of PHP running on the server.
-	 * @return string
-	 */
-	static function serverPHPVersion() {
-		return phpversion();
-	}
-
-	/**
 	 * Check if the server platform is Windows.
 	 * @return boolean
 	 */
 	static function isWindows() {
-		return strtolower_codesafe(substr(Core::serverPHPOS(), 0, 3)) == 'win';
+		return strtolower_codesafe(substr(PHP_OS, 0, 3)) == 'win';
 	}
 
 	/**

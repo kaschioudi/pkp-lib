@@ -3,8 +3,8 @@
 /**
  * @file tests/classes/metadata/MetadataPropertyTest.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class MetadataPropertyTest
@@ -22,7 +22,7 @@ import('lib.pkp.classes.metadata.MetadataProperty');
 
 class MetadataPropertyTest extends PKPTestCase {
 	/**
-	 * @covers MetadataProperty::MetadataProperty
+	 * @covers MetadataProperty::__construct
 	 * @covers MetadataProperty::getName
 	 * @covers MetadataProperty::getAssocTypes
 	 * @covers MetadataProperty::getAllowedTypes
@@ -66,7 +66,7 @@ class MetadataPropertyTest extends PKPTestCase {
 
 	/**
 	 * Tests special error conditions while setting composite types
-	 * @covers MetadataProperty::MetadataProperty
+	 * @covers MetadataProperty::__construct
 	 * @expectedException PHPUnit_Framework_Error
 	 */
 	public function testCompositeWithoutParameter() {
@@ -75,7 +75,7 @@ class MetadataPropertyTest extends PKPTestCase {
 
 	/**
 	 * Tests special error conditions while setting composite types
-	 * @covers MetadataProperty::MetadataProperty
+	 * @covers MetadataProperty::__construct
 	 * @expectedException PHPUnit_Framework_Error
 	 */
 	public function testCompositeWithWrongParameter() {
@@ -84,7 +84,7 @@ class MetadataPropertyTest extends PKPTestCase {
 
 	/**
 	 * Tests special error conditions while setting controlled vocab types
-	 * @covers MetadataProperty::MetadataProperty
+	 * @covers MetadataProperty::__construct
 	 * @expectedException PHPUnit_Framework_Error
 	 */
 	public function testControlledVocabWithoutParameter() {
@@ -93,7 +93,7 @@ class MetadataPropertyTest extends PKPTestCase {
 
 	/**
 	 * Tests special error conditions while setting controlled vocab types
-	 * @covers MetadataProperty::MetadataProperty
+	 * @covers MetadataProperty::__construct
 	 * @expectedException PHPUnit_Framework_Error
 	 */
 	public function testControlledVocabWithWrongParameter() {
@@ -102,7 +102,7 @@ class MetadataPropertyTest extends PKPTestCase {
 
 	/**
 	 * Tests special error conditions while setting non-parameterized type
-	 * @covers MetadataProperty::MetadataProperty
+	 * @covers MetadataProperty::__construct
 	 * @expectedException PHPUnit_Framework_Error
 	 */
 	public function testNonParameterizedTypeWithParameter() {

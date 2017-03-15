@@ -3,8 +3,8 @@
 /**
  * @file pages/submission/PKPSubmissionHandler.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class PKPSubmissionHandler
@@ -20,8 +20,8 @@ abstract class PKPSubmissionHandler extends Handler {
 	/**
 	 * Constructor
 	 */
-	function PKPSubmissionHandler() {
-		parent::Handler();
+	function __construct() {
+		parent::__construct();
 	}
 
 	/**
@@ -141,10 +141,12 @@ abstract class PKPSubmissionHandler extends Handler {
 			$router = $request->getRouter();
 			$dispatcher = $router->getDispatcher();
 
-			$templateMgr->assign('reviewSubmissionUrl', $reviewSubmissionUrl);
-			$templateMgr->assign('submissionId', $submission->getId());
-			$templateMgr->assign('submitStep', $step);
-			$templateMgr->assign('submissionProgress', $submission->getSubmissionProgress());
+			$templateMgr->assign(array(
+				'reviewSubmissionUrl' => $reviewSubmissionUrl,
+				'submissionId' => $submission->getId(),
+				'submitStep' => $step,
+				'submissionProgress' => $submission->getSubmissionProgress(),
+			));
 
 			return new JSONMessage(true, $templateMgr->fetch('submission/form/complete.tpl'));
 		}

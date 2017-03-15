@@ -3,8 +3,8 @@
 /**
  * @file plugins/importexport/users/PKPUserImportExportDeployment.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class PKPUserImportExportDeployment
@@ -22,8 +22,8 @@ class PKPUserImportExportDeployment extends PKPImportExportDeployment {
 	 * @param $context Context
 	 * @param $user User
 	 */
-	function PKPUserImportExportDeployment($context, $user) {
-		parent::PKPImportExportDeployment($context, $user);
+	function __construct($context, $user) {
+		parent::__construct($context, $user);
 	}
 
 	/**

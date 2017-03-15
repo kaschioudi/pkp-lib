@@ -2,8 +2,8 @@
 /**
  * @file classes/security/authorization/internal/SubmissionFileMatchesSubmissionPolicy.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class SubmissionFileMatchesSubmissionPolicy
@@ -22,8 +22,8 @@ class SubmissionFileMatchesSubmissionPolicy extends SubmissionFileBaseAccessPoli
 	 * Constructor
 	 * @param $request PKPRequest
 	 */
-	function SubmissionFileMatchesSubmissionPolicy($request, $fileIdAndRevision = null) {
-		parent::SubmissionFileBaseAccessPolicy($request, $fileIdAndRevision);
+	function __construct($request, $fileIdAndRevision = null) {
+		parent::__construct($request, $fileIdAndRevision);
 	}
 
 

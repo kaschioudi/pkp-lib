@@ -2,8 +2,8 @@
 /**
  * @file classes/submission/reviewer/form/ReviewerReviewForm.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class ReviewerReviewForm
@@ -34,8 +34,8 @@ class ReviewerReviewForm extends Form {
 	 * @param $step integer
 	 * @param $request PKPRequest
 	 */
-	function ReviewerReviewForm($request, $reviewerSubmission, $reviewAssignment, $step) {
-		parent::Form(sprintf('reviewer/review/step%d.tpl', $step));
+	function __construct($request, $reviewerSubmission, $reviewAssignment, $step) {
+		parent::__construct(sprintf('reviewer/review/step%d.tpl', $step));
 		$this->addCheck(new FormValidatorPost($this));
 		$this->addCheck(new FormValidatorCSRF($this));
 		$this->request = $request;
@@ -80,12 +80,12 @@ class ReviewerReviewForm extends Form {
 	 * @see Form::fetch()
 	 */
 	function fetch($request) {
-		$reviewAssignment = $this->getReviewAssignment();
-
 		$templateMgr = TemplateManager::getManager($request);
-		$templateMgr->assign('submission', $this->getReviewerSubmission());
-		$templateMgr->assign('reviewIsComplete', (boolean) $reviewAssignment->getDateCompleted());
-		$templateMgr->assign('step', $this->getStep());
+		$templateMgr->assign(array(
+			'submission' => $this->getReviewerSubmission(),
+			'reviewIsComplete' => (boolean) $this->getReviewAssignment()->getDateCompleted(),
+			'step' => $this->getStep(),
+		));
 		return parent::fetch($request);
 	}
 

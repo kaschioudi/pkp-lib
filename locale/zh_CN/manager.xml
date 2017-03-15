@@ -4,15 +4,15 @@
 <!--
   * locale/zh_CN/manager.xml
   *
-  * Copyright (c) 2014-2016 Simon Fraser University Library
-  * Copyright (c) 2000-2016 John Willinsky
+  * Copyright (c) 2014-2017 Simon Fraser University
+  * Copyright (c) 2000-2017 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * Localization strings for the en_US (English) locale.
   *
   -->
 
-<locale name="zh_CN" full_name = "China .PR">
+<locale name="zh_CN" full_name="简体中文">
 	<message key="manager.announcements">公告</message>
 	<message key="manager.announcements.confirmDelete">您确定要永久删除此公告?</message>
 	<message key="manager.announcements.create">创建新的公告</message>
@@ -143,8 +143,6 @@
 	<message key="manager.setup.homeHeaderImageInvalid">无效的首页头部图片格式或者上传失败，有效的格式有 .gif, .jpg, or .png.</message>
 	<message key="manager.setup.homepageImageInvalid">无效的首页图片格式或者上传失败，有效的格式有 .gif, .jpg, or .png.</message>
 	<message key="manager.setup.homeTitleImageInvalid">无效的首页头部标题图片格式或者上传失败，有效的格式有 .gif, .jpg, or .png.</message>
-	<message key="manager.setup.layout.leftSidebar">左侧边栏</message>
-	<message key="manager.setup.layout.rightSidebar">右侧边栏</message>
 	<message key="manager.setup.layout.unselected">没有选择的</message>
 	<message key="manager.setup.loggingAndAuditing">日志记录与审计</message>
 	<message key="manager.setup.pageHeaderLogoImageInvalid">无效的页面头部Logo图片格式或者上传失败，有效的格式有 .gif, .jpg, or .png.</message>

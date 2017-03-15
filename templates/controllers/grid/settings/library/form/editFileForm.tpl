@@ -1,8 +1,8 @@
 {**
  * templates/controllers/grid/settings/library/form/editFileForm.tpl
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * Library Files form for editing an existing file
@@ -21,14 +21,14 @@
 	{csrf}
 	{fbvFormArea id="name"}
 		{fbvFormSection title="common.name" required=true}
-			{fbvElement type="text" id="libraryFileName" value=$libraryFileName maxlength="255" multilingual=true}
+			{fbvElement type="text" id="libraryFileName" value=$libraryFileName maxlength="255" multilingual=true required=true}
 		{/fbvFormSection}
 	{/fbvFormArea}
 
 	{fbvFormArea id="type"}
 		{fbvFormSection title="common.type" required=true}
 			{translate|assign:"defaultLabel" key="common.chooseOne"}
-			{fbvElement type="select" from=$fileTypes id="fileType" selected=$libraryFile->getType() defaultValue="" defaultLabel=$defaultLabel}
+			{fbvElement type="select" from=$fileTypes id="fileType" selected=$libraryFile->getType() defaultValue="" defaultLabel=$defaultLabel required=true}
 		{/fbvFormSection}
 	{/fbvFormArea}
 

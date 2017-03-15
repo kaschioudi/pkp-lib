@@ -8,8 +8,8 @@
 /**
  * @file classes/mail/Mail.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class Mail
@@ -27,8 +27,8 @@ class Mail extends DataObject {
 	/**
 	 * Constructor.
 	 */
-	function Mail() {
-		parent::DataObject();
+	function __construct() {
+		parent::__construct();
 		$this->privateParams = array();
 		if (Config::getVar('email', 'allow_envelope_sender')) {
 			$defaultEnvelopeSender = Config::getVar('email', 'default_envelope_sender');

@@ -3,7 +3,7 @@
 /**
  * @file classes/notification/managerDelegate/review/ReviewRoundNotificationManager.inc.php
  *
- * Copyright (c) 2014 Simon Fraser University Library
+ * Copyright (c) 2014 Simon Fraser University
  * Copyright (c) 2003-2014 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
@@ -24,8 +24,8 @@ abstract class ReviewRoundNotificationManager extends NotificationManagerDelegat
 	 * Constructor.
 	 * @param $notificationType int NOTIFICATION_TYPE_...
 	 */
-	function ReviewRoundNotificationManager($notificationType) {
-		parent::NotificationManagerDelegate($notificationType);
+	function __construct($notificationType) {
+		parent::__construct($notificationType);
 	}
 
 	/**

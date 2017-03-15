@@ -4,8 +4,8 @@
 <!--
   * locale/en_US/common.xml
   *
-  * Copyright (c) 2014-2016 Simon Fraser University Library
-  * Copyright (c) 2000-2016 John Willinsky
+  * Copyright (c) 2014-2017 Simon Fraser University
+  * Copyright (c) 2000-2017 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * Localization strings.
@@ -131,6 +131,7 @@
 	<message key="common.discipline">Discipline</message>
 	<message key="common.done">Done</message>
 	<message key="common.download">Download</message>
+	<message key="common.downloadPdf">Download PDF</message>
 	<message key="common.edit">Edit</message>
 	<message key="common.enable">Enable</message>
 	<message key="common.enabled">Enabled</message>
@@ -403,6 +404,9 @@
 	<message key="navigation.settings">Settings</message>
 	<message key="navigation.setup">Setup</message>
 	<message key="navigation.sitemap">Site Map</message>
+	<message key="navigation.skip.main">Skip to main content</message>
+	<message key="navigation.skip.nav">Skip to main navigation menu</message>
+	<message key="navigation.skip.footer">Skip to site footer</message>
 	<message key="navigation.stepNumber">Step {$step}</message>
 	<message key="navigation.submissions">Submissions</message>
 	<message key="navigation.system">System</message>

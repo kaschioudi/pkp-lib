@@ -3,8 +3,8 @@
 /**
  * @file tests/classes/metadata/DateStringNormalizerFilterTest.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class CitationParserServiceTest
@@ -23,11 +23,21 @@ class DateStringNormalizerFilterTest extends PKPTestCase {
 	 */
 	public function testExecute() {
 		$filter = new DateStringNormalizerFilter();
-		self::assertEquals('2003', $filter->execute($dateString = ' 2003 '));
-		self::assertEquals('2003-07', $filter->execute($dateString = ' 2003  Jul '));
-		self::assertEquals('2003-07-05', $filter->execute($dateString = ' 2003  Jul 5 '));
-		self::assertEquals('2003', $filter->execute($dateString = ' 2003  5 '));
-		self::assertNull($filter->execute($dateString = 'unparsable string'));
+
+		$dateString = ' 2003 ';
+		self::assertEquals('2003', $filter->execute($dateString));
+
+		$dateString = ' 2003  Jul ';
+		self::assertEquals('2003-07', $filter->execute($dateString));
+
+		$dateString = ' 2003  Jul 5 ';
+		self::assertEquals('2003-07-05', $filter->execute($dateString));
+
+		$dateString = ' 2003  5 ';
+		self::assertEquals('2003', $filter->execute($dateString));
+
+		$dateString = 'unparsable string';
+		self::assertNull($filter->execute($dateString));
 	}
 }
 ?>

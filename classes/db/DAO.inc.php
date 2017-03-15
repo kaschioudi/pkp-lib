@@ -8,8 +8,8 @@
 /**
  * @file classes/db/DAO.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class DAO
@@ -59,7 +59,7 @@ class DAO {
 	 * Constructor.
 	 * Initialize the database connection.
 	 */
-	function DAO($dataSource = null, $callHooks = true) {
+	function __construct($dataSource = null, $callHooks = true) {
 		if ($callHooks === true) {
 			// Call hooks based on the object name. Results
 			// in hook calls named e.g. "sessiondao::_Constructor"

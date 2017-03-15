@@ -3,8 +3,8 @@
 /**
  * @file controllers/grid/settings/library/form/EditLibraryFileForm.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class EditLibraryFileForm
@@ -28,8 +28,8 @@ class EditLibraryFileForm extends LibraryFileForm {
 	 * @param $fileType int LIBRARY_FILE_TYPE_...
 	 * @param $fileId int optional
 	 */
-	function EditLibraryFileForm($contextId, $fileId) {
-		parent::LibraryFileForm('controllers/grid/settings/library/form/editFileForm.tpl', $contextId);
+	function __construct($contextId, $fileId) {
+		parent::__construct('controllers/grid/settings/library/form/editFileForm.tpl', $contextId);
 		$libraryFileDao = DAORegistry::getDAO('LibraryFileDAO');
 		$this->libraryFile = $libraryFileDao->getById($fileId);
 

@@ -2,8 +2,8 @@
 /**
  * @file classes/security/authorization/WorkflowStageAccessPolicy.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class WorkflowStageAccessPolicy
@@ -25,8 +25,8 @@ class WorkflowStageAccessPolicy extends ContextPolicy {
 	 * @param $submissionParameterName string
 	 * @param $stageId integer One of the WORKFLOW_STAGE_ID_* constants.
 	 */
-	function WorkflowStageAccessPolicy($request, &$args, $roleAssignments, $submissionParameterName, $stageId) {
-		parent::ContextPolicy($request);
+	function __construct($request, &$args, $roleAssignments, $submissionParameterName, $stageId) {
+		parent::__construct($request);
 
 		// A workflow stage component requires a valid workflow stage.
 		import('lib.pkp.classes.security.authorization.internal.WorkflowStageRequiredPolicy');

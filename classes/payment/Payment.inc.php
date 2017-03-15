@@ -8,8 +8,8 @@
 /**
  * @file classes/payment/Payment.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class Payment
@@ -43,7 +43,7 @@ class Payment {
 	 * @param $userId int
 	 * @param $assocId int optional
 	 */
-	function Payment($amount = null, $currencyCode = null, $userId = null, $assocId = null) {
+	function __construct($amount = null, $currencyCode = null, $userId = null, $assocId = null) {
 		$this->amount = $amount;
 		$this->currencyCode = $currencyCode;
 		$this->userId = $userId;

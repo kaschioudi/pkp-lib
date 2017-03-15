@@ -3,8 +3,8 @@
 /**
  * @file classes/controllers/listbuilder/ListbuilderGridRow.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class ListbuilderGridRow
@@ -24,8 +24,8 @@ class ListbuilderGridRow extends GridRow {
 	 * Constructor
 	 * @param $hasDeleteItemLink boolean
 	 */
-	function ListbuilderGridRow($hasDeleteItemLink = true) {
-		parent::GridRow();
+	function __construct($hasDeleteItemLink = true) {
+		parent::__construct();
 
 		$this->setHasDeleteItemLink($hasDeleteItemLink);
 	}

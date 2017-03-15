@@ -3,8 +3,8 @@
 /**
  * @file controllers/grid/queries/QueriesGridRow.inc.php
  *
- * Copyright (c) 2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2016-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class QueriesGridRow
@@ -30,12 +30,12 @@ class QueriesGridRow extends GridRow {
 	 * @param $stageId int
 	 * @param $queriesAccessHelper QueriesAccessHelper
 	 */
-	function QueriesGridRow($submission, $stageId, $queriesAccessHelper) {
+	function __construct($submission, $stageId, $queriesAccessHelper) {
 		$this->_submission = $submission;
 		$this->_stageId = $stageId;
 		$this->_queriesAccessHelper = $queriesAccessHelper;
 
-		parent::GridRow();
+		parent::__construct();
 	}
 
 	//

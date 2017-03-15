@@ -3,8 +3,8 @@
 /**
  * @file controllers/listbuilder/files/FilesListbuilderHandler.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class FilesListbuilderHandler
@@ -24,8 +24,8 @@ class FilesListbuilderHandler extends ListbuilderHandler {
 	 * Constructor
 	 * @param $fileStage int File stage (or null for any)
 	 */
-	function FilesListbuilderHandler($fileStage = null) {
-		parent::ListbuilderHandler();
+	function __construct($fileStage = null) {
+		parent::__construct();
 
 		$this->_fileStage = $fileStage;
 

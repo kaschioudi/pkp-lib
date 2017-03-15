@@ -2,8 +2,8 @@
 /**
  * @file controllers/grid/files/submissionDocuments/form/NewLibraryFileForm.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class FileForm
@@ -24,8 +24,8 @@ class NewLibraryFileForm extends LibraryFileForm {
 	 * Constructor.
 	 * @param $contextId int
 	 */
-	function NewLibraryFileForm($contextId, $submissionId) {
-		parent::LibraryFileForm('controllers/grid/files/submissionDocuments/form/newFileForm.tpl', $contextId);
+	function __construct($contextId, $submissionId) {
+		parent::__construct('controllers/grid/files/submissionDocuments/form/newFileForm.tpl', $contextId);
 		$this->submissionId = $submissionId;
 		$this->addCheck(new FormValidator($this, 'temporaryFileId', 'required', 'settings.libraryFiles.fileRequired'));
 	}
@@ -65,7 +65,7 @@ class NewLibraryFileForm extends LibraryFileForm {
 
 		// Convert the temporary file to a library file and store
 		$libraryFile =& $libraryFileManager->copyFromTemporaryFile($temporaryFile, $this->getData('fileType'));
-		assert($libraryFile);
+		assert(isset($libraryFile));
 		$libraryFile->setContextId($this->contextId);
 		$libraryFile->setName($this->getData('libraryFileName'), null); // Localized
 		$libraryFile->setType($this->getData('fileType'));

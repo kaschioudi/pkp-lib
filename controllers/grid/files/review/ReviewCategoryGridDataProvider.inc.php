@@ -2,8 +2,8 @@
 /**
  * @file controllers/grid/files/review/ReviewCategoryGridDataProvider.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class ReviewGridCategoryDataProvider
@@ -23,8 +23,8 @@ class ReviewCategoryGridDataProvider extends SubmissionFilesCategoryGridDataProv
 	 * @param $viewableOnly int Will be passed to the review grid data provider.
 	 * See parameter description there.
 	 */
-	function ReviewCategoryGridDataProvider($fileStage, $viewableOnly = false) {
-		parent::SubmissionFilesCategoryGridDataProvider($fileStage, array('viewableOnly' => $viewableOnly));
+	function __construct($fileStage, $viewableOnly = false) {
+		parent::__construct($fileStage, array('viewableOnly' => $viewableOnly));
 	}
 
 

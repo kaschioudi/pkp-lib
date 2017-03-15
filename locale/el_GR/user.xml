@@ -4,15 +4,15 @@
 <!--
   * locale/el_GR/user.xml
   *
-  * Copyright (c) 2014-2016 Simon Fraser University Library
-  * Copyright (c) 2000-2016 John Willinsky
+  * Copyright (c) 2014-2017 Simon Fraser University
+  * Copyright (c) 2000-2017 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * Localization strings for the el_GR (ελληνικά) locale.
   *
   -->
 
-<locale name="el_GR" full_name = "Greek">
+<locale name="el_GR" full_name="ελληνικά">
 	<message key="user.affiliation">Συνεργαζόμενος Οργανισμός</message>
 	<message key="user.affiliations">Συνεργαζόμενοι Οργανισμοί</message>
 	<message key="user.biography">Βιογραφικά Στοιχεία</message>
@@ -44,7 +44,6 @@
 	<message key="user.login.lostPassword.invalidUser">Κανένας χρήστης δεν υπάρχει με τη συγκεκριμένη διεύθυνση ηλεκτρονικού ταχυδρομείου.</message>
 	<message key="user.login.lostPassword.passwordSent">Ένας καινούργιος  κωδικός πρόσβασης έχει σταλεί στη διεύθυνση ηλεκτρονικού ταχυδρομείου  σας. Μπορείτε τώρα να συνδεθείτε στην συλλογή  με την χρήση του νέου σας κωδικού.</message>
 	<message key="user.login.registeredEmail">Διεύθυνση ηλεκτρονικού ταχυδρομείου εγγεγραμμένου χρήστη</message>
-	<message key="user.login.rememberUsernameAndPassword">Απομνημόνευση  του προσωπικού μου Ονόματος Χρήστη και Κωδικού Πρόσβασης</message>
 	<message key="user.login.resetPassword">Αλλαγή του προσωπικού σας Κωδικού Πρόσβασης</message>
 	<message key="user.logOut">Αποσυνδεθείτε</message>
 	<message key="user.mailingAddress">Ταχυδρομική Διεύθυνση</message>

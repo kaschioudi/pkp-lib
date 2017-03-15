@@ -3,8 +3,8 @@
 /**
  * @file plugins/metadata/nlm30/filter/Nlm30CitationSchemaCitationAdapter.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class Nlm30CitationSchemaCitationAdapter
@@ -24,8 +24,8 @@ class Nlm30CitationSchemaCitationAdapter extends MetadataDataObjectAdapter {
 	 * Constructor
 	 * @param $filterGroup FilterGroup
 	 */
-	function Nlm30CitationSchemaCitationAdapter($filterGroup) {
-		parent::MetadataDataObjectAdapter($filterGroup);
+	function __construct($filterGroup) {
+		parent::__construct($filterGroup);
 	}
 
 	//
@@ -157,7 +157,7 @@ class Nlm30CitationSchemaCitationAdapter extends MetadataDataObjectAdapter {
 
 		// Set the statements in the meta-data description
 		$success = $metadataDescription->setStatements($statements);
-		assert($success);
+		assert((boolean) $success);
 
 		return $metadataDescription;
 	}

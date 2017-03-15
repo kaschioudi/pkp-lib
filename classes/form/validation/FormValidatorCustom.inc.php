@@ -3,8 +3,8 @@
 /**
  * @file classes/form/validation/FormValidatorCustom.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class FormValidatorCustom
@@ -37,8 +37,8 @@ class FormValidatorCustom extends FormValidator {
 	 * @param $additionalArguments array optional, a list of additional arguments to pass to $userFunction
 	 * @param $complementReturn boolean optional, complement the value returned by $userFunction
 	 */
-	function FormValidatorCustom(&$form, $field, $type, $message, $userFunction, $additionalArguments = array(), $complementReturn = false) {
-		parent::FormValidator($form, $field, $type, $message);
+	function __construct(&$form, $field, $type, $message, $userFunction, $additionalArguments = array(), $complementReturn = false) {
+		parent::__construct($form, $field, $type, $message);
 		$this->_userFunction = $userFunction;
 		$this->_additionalArguments = $additionalArguments;
 		$this->_complementReturn = $complementReturn;

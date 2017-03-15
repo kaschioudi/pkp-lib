@@ -1,8 +1,8 @@
 {**
  * templates/common/headerHead.tpl
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * Common site backend header <head> tag and contents.
@@ -12,7 +12,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>{$pageTitleTranslated|strip_tags}</title>
 
-	{load_header context="backend" headers=$headers}
-	{load_stylesheet context="backend" stylesheets=$stylesheets}
-	{load_script context="backend" scripts=$scripts}
+	{load_header context="backend"}
+	{load_stylesheet context="backend"}
+	{load_script context="backend"}
 </head>

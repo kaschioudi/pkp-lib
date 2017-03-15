@@ -3,8 +3,8 @@
 /**
  * @file controllers/grid/files/UploaderUserGroupGridColumn.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class UploaderUserGroupGridColumn
@@ -23,10 +23,10 @@ class UploaderUserGroupGridColumn extends GridColumn {
 	/**
 	 * Constructor
 	 */
-	function UploaderUserGroupGridColumn($userGroup, $flags = array()) {
+	function __construct($userGroup, $flags = array()) {
 		$this->_userGroup = $userGroup;
 		$cellProvider = new ColumnBasedGridCellProvider();
-		parent::GridColumn(
+		parent::__construct(
 			'userGroup-' . $userGroup->getId(),
 			null, $userGroup->getLocalizedName(),
 			'controllers/grid/common/cell/statusCell.tpl',

@@ -3,8 +3,8 @@
 /**
  * @file controllers/grid/files/form/ManageSubmissionFilesForm.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class ManageSubmissionFilesForm
@@ -25,8 +25,8 @@ class ManageSubmissionFilesForm extends Form {
 	 * @param $submissionId int Submission ID
 	 * @param $template string Template filename
 	 */
-	function ManageSubmissionFilesForm($submissionId, $template) {
-		parent::Form($template);
+	function __construct($submissionId, $template) {
+		parent::__construct($template);
 		$this->_submissionId = (int)$submissionId;
 
 		$this->addCheck(new FormValidatorPost($this));

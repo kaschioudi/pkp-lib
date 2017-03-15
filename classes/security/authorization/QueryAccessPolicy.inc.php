@@ -2,8 +2,8 @@
 /**
  * @file classes/security/authorization/QueryAccessPolicy.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class QueryAccessPolicy
@@ -23,8 +23,8 @@ class QueryAccessPolicy extends ContextPolicy {
 	 * @param $roleAssignments array
 	 * @param $stageId int
 	 */
-	function QueryAccessPolicy($request, $args, $roleAssignments, $stageId) {
-		parent::ContextPolicy($request);
+	function __construct($request, $args, $roleAssignments, $stageId) {
+		parent::__construct($request);
 
 		// We need a valid workflow stage.
 		import('lib.pkp.classes.security.authorization.WorkflowStageAccessPolicy');
@@ -96,19 +96,10 @@ class QueryAccessPolicy extends ContextPolicy {
 			$subEditorQueryAccessPolicy = new PolicySet(COMBINING_DENY_OVERRIDES);
 			$subEditorQueryAccessPolicy->addPolicy(new RoleBasedHandlerOperationPolicy($request, ROLE_ID_SUB_EDITOR, $roleAssignments[ROLE_ID_SUB_EDITOR]));
 
-			// 2) ... but only if the requested query is part of their series/section.
-			// but only if ...
-			$subEditorAssignmentOrSectionPolicy = new PolicySet(COMBINING_PERMIT_OVERRIDES);
-
-			// 2a) ... the requested query is part of their series/section...
-			import('lib.pkp.classes.security.authorization.internal.SectionAssignmentPolicy');
-			$subEditorAssignmentOrSectionPolicy->addPolicy(new SectionAssignmentPolicy($request));
-
-			// 2b) ... or they have been assigned to the requested submission.
+			// 2) ... but only if they have been assigned to the requested submission.
 			import('lib.pkp.classes.security.authorization.internal.UserAccessibleWorkflowStageRequiredPolicy');
-			$subEditorAssignmentOrSectionPolicy->addPolicy(new UserAccessibleWorkflowStageRequiredPolicy($request));
+			$subEditorQueryAccessPolicy->addPolicy(new UserAccessibleWorkflowStageRequiredPolicy($request));
 
-			$subEditorQueryAccessPolicy->addPolicy($subEditorAssignmentOrSectionPolicy);
 			$queryAccessPolicy->addPolicy($subEditorQueryAccessPolicy);
 		}
 		$this->addPolicy($queryAccessPolicy);

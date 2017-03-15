@@ -3,8 +3,8 @@
 /**
  * @file controllers/grid/settings/user/form/UserForm.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class UserForm
@@ -26,8 +26,8 @@ class UserForm extends Form {
 	 * @param $userId int optional
 	 * @param $author Author optional
 	 */
-	function UserForm($template, $userId = null) {
-		parent::Form($template);
+	function __construct($template, $userId = null) {
+		parent::__construct($template);
 
 		$this->userId = isset($userId) ? (int) $userId : null;
 

@@ -3,8 +3,8 @@
 /**
  * @file plugins/importexport/native/filter/SubmissionNativeXmlFilter.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class SubmissionNativeXmlFilter
@@ -23,9 +23,9 @@ class SubmissionNativeXmlFilter extends NativeExportFilter {
 	 * Constructor
 	 * @param $filterGroup FilterGroup
 	 */
-	function SubmissionNativeXmlFilter($filterGroup) {
+	function __construct($filterGroup) {
 		$this->setDisplayName('Native XML submission export');
-		parent::NativeExportFilter($filterGroup);
+		parent::__construct($filterGroup);
 	}
 
 
@@ -51,6 +51,8 @@ class SubmissionNativeXmlFilter extends NativeExportFilter {
 	function &process(&$submissions) {
 		// Create the XML document
 		$doc = new DOMDocument('1.0');
+		$doc->preserveWhiteSpace = false;
+		$doc->formatOutput = true;
 		$deployment = $this->getDeployment();
 
 		if (count($submissions)==1 && !$this->getIncludeSubmissionsNode()) {
@@ -87,15 +89,15 @@ class SubmissionNativeXmlFilter extends NativeExportFilter {
 		$submissionNode->setAttribute('locale', $submission->getLocale());
 		$submissionLanguage = $submission->getLanguage();
 		if ($submissionLanguage) {
-			$submissionNode->setAttribute('locale', $submissionLanguage);
+			$submissionNode->setAttribute('language', $submissionLanguage);
 		}
-		$submissionNode->setAttribute('date_submitted', strftime('%F', strtotime($submission->getDateSubmitted())));
+		$submissionNode->setAttribute('date_submitted', strftime('%Y-%m-%d', strtotime($submission->getDateSubmitted())));
 
 		$workflowStageDao = DAORegistry::getDAO('WorkflowStageDAO');
 		$submissionNode->setAttribute('stage', WorkflowStageDAO::getPathFromId($submission->getStageId()));
 
 		if ($datePublished = $submission->getDatePublished()) {
-			$submissionNode->setAttribute('date_published', strftime('%F', strtotime($datePublished)));
+			$submissionNode->setAttribute('date_published', strftime('%Y-%m-%d', strtotime($datePublished)));
 		}
 		// FIXME: language attribute (from old DTD). Necessary? Data migration needed?
 
@@ -124,7 +126,7 @@ class SubmissionNativeXmlFilter extends NativeExportFilter {
 
 		// Add public ID
 		if ($pubId = $submission->getStoredPubId('publisher-id')) {
-			$submissionNode->appendChild($node = $doc->createElementNS($deployment->getNamespace(), 'id', $pubId));
+			$submissionNode->appendChild($node = $doc->createElementNS($deployment->getNamespace(), 'id', htmlspecialchars($pubId, ENT_COMPAT, 'UTF-8')));
 			$node->setAttribute('type', 'public');
 			$node->setAttribute('advice', 'update');
 		}
@@ -148,7 +150,7 @@ class SubmissionNativeXmlFilter extends NativeExportFilter {
 		$pubId = $submission->getStoredPubId($pubIdPlugin->getPubIdType());
 		if ($pubId) {
 			$deployment = $this->getDeployment();
-			$submissionNode->appendChild($node = $doc->createElementNS($deployment->getNamespace(), 'id', $pubId));
+			$submissionNode->appendChild($node = $doc->createElementNS($deployment->getNamespace(), 'id', htmlspecialchars($pubId, ENT_COMPAT, 'UTF-8')));
 			$node->setAttribute('type', $pubIdPlugin->getPubIdType());
 			$node->setAttribute('advice', 'update');
 			return $node;
@@ -163,7 +165,7 @@ class SubmissionNativeXmlFilter extends NativeExportFilter {
 	 * @param $submission Submission
 	 */
 	function addMetadata($doc, $submissionNode, $submission) {
-		$this->createLocalizedNodes($doc, $submissionNode, 'title', $submission->getTitle(null));
+		$this->createLocalizedNodes($doc, $submissionNode, 'title', $submission->getTitle(null, false));
 		$this->createLocalizedNodes($doc, $submissionNode, 'prefix', $submission->getPrefix(null));
 		$this->createLocalizedNodes($doc, $submissionNode, 'subtitle', $submission->getSubtitle(null));
 		$this->createLocalizedNodes($doc, $submissionNode, 'abstract', $submission->getAbstract(null));
@@ -171,7 +173,41 @@ class SubmissionNativeXmlFilter extends NativeExportFilter {
 		$this->createLocalizedNodes($doc, $submissionNode, 'type', $submission->getType(null));
 		$this->createLocalizedNodes($doc, $submissionNode, 'source', $submission->getSource(null));
 		$this->createLocalizedNodes($doc, $submissionNode, 'rights', $submission->getRights(null));
-		$this->createOptionalNode($doc, $submissionNode, 'comments_to_editor', $submission->getCommentsToEditor());
+
+		// add controlled vocabularies
+		// get the supported locale keys
+		$supportedLocales = array_keys(AppLocale::getSupportedFormLocales());
+		$controlledVocabulariesMapping = $this->_getControlledVocabulariesMappings();
+		foreach ($controlledVocabulariesMapping as $controlledVocabulariesNodeName => $mappings) {
+			$dao = DAORegistry::getDAO($mappings[0]);
+			$getFunction = $mappings[1];
+			$controlledVocabularyNodeName = $mappings[2];
+			$controlledVocabulary = $dao->$getFunction($submission->getId(), $supportedLocales);
+			$this->addControlledVocabulary($doc, $submissionNode, $controlledVocabulariesNodeName, $controlledVocabularyNodeName, $controlledVocabulary);
+		}
+	}
+
+	/**
+	 * Add submission controlled vocabulary to its DOM element.
+	 * @param $doc DOMDocument
+	 * @param $submissionNode DOMElement
+	 * @param $controlledVocabulariesNodeName string Parent node name
+	 * @param $controlledVocabularyNodeName string Item node name
+	 * @param $controlledVocabulary array Associative array (locale => array of items)
+	 */
+	function addControlledVocabulary($doc, $submissionNode, $controlledVocabulariesNodeName, $controlledVocabularyNodeName, $controlledVocabulary) {
+		$deployment = $this->getDeployment();
+		$locales = array_keys($controlledVocabulary);
+		foreach ($locales as $locale) {
+			if (!empty($controlledVocabulary[$locale])) {
+				$controlledVocabulariesNode = $doc->createElementNS($deployment->getNamespace(), $controlledVocabulariesNodeName);
+				$controlledVocabulariesNode->setAttribute('locale', $locale);
+				foreach ($controlledVocabulary[$locale] as $controlledVocabularyItem) {
+					$controlledVocabulariesNode->appendChild($node = $doc->createElementNS($deployment->getNamespace(), $controlledVocabularyNodeName, htmlspecialchars($controlledVocabularyItem, ENT_COMPAT, 'UTF-8')));
+				}
+				$submissionNode->appendChild($controlledVocabulariesNode);
+			}
+		}
 	}
 
 	/**
@@ -293,6 +329,19 @@ class SubmissionNativeXmlFilter extends NativeExportFilter {
 	 */
 	function getIncludeSubmissionsNode() {
 		return $this->_includeSubmissionsNode;
+	}
+
+	/**
+	 * Get controlled vocabularies parent node name to DAO, get function and item node name mapping.
+	 * @return array
+	 */
+	function _getControlledVocabulariesMappings() {
+		return array(
+				'keywords' => array('SubmissionKeywordDAO', 'getKeywords', 'keyword'),
+				'agencies' => array('SubmissionAgencyDAO', 'getAgencies', 'agency'),
+				'disciplines' => array('SubmissionDisciplineDAO', 'getDisciplines', 'disciplin'),
+				'subjects' => array('SubmissionSubjectDAO', 'getSubjects', 'subject'),
+		);
 	}
 }
 

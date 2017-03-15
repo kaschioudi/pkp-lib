@@ -3,8 +3,8 @@
 /**
  * @file plugins/metadata/openurl10/schema/Openurl10BaseSchema.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class Openurl10BaseSchema
@@ -23,9 +23,9 @@ class Openurl10BaseSchema extends MetadataSchema {
 	 * Constructor
 	 * @param $name string the meta-data schema name
 	 */
-	function Openurl10BaseSchema($name, $classname) {
+	function __construct($name, $classname) {
 		// Configure the meta-data schema.
-		parent::MetadataSchema(
+		parent::__construct(
 			$name,
 			'openurl10',
 			$classname,

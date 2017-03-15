@@ -3,8 +3,8 @@
 /**
  * @file controllers/grid/files/final/FinalDraftFilesGridDataProvider.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class FinalDraftFilesGridDataProvider
@@ -20,9 +20,8 @@ class FinalDraftFilesGridDataProvider extends SubmissionFilesGridDataProvider {
 	/**
 	 * Constructor
 	 */
-	function FinalDraftFilesGridDataProvider() {
-		parent::SubmissionFilesGridDataProvider(SUBMISSION_FILE_FINAL);
-		$this->setViewableOnly(true);
+	function __construct() {
+		parent::__construct(SUBMISSION_FILE_FINAL);
 	}
 
 	//

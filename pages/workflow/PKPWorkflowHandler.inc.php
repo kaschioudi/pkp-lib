@@ -3,8 +3,8 @@
 /**
  * @file pages/workflow/PKPWorkflowHandler.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class WorkflowHandler
@@ -25,8 +25,8 @@ abstract class PKPWorkflowHandler extends Handler {
 	/**
 	 * Constructor
 	 */
-	function PKPWorkflowHandler() {
-		parent::Handler();
+	function __construct() {
+		parent::__construct();
 	}
 
 
@@ -110,7 +110,7 @@ abstract class PKPWorkflowHandler extends Handler {
 			}
 		}
 
-		assert($workingStageId);
+		assert(isset($workingStageId));
 
 		$router = $request->getRouter();
 		$request->redirectUrl($router->url($request, null, 'workflow', 'index', array($submission->getId(), $workingStageId)));

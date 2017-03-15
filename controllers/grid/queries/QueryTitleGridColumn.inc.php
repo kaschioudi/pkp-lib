@@ -3,8 +3,8 @@
 /**
  * @file controllers/grid/queries/QueryTitleGridColumn.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class QueryTitleGridColumn
@@ -24,13 +24,13 @@ class QueryTitleGridColumn extends GridColumn {
 	 * Constructor
 	 * @param $actionArgs array Action args for link actions
 	 */
-	function QueryTitleGridColumn($actionArgs) {
+	function __construct($actionArgs) {
 		$this->_actionArgs = $actionArgs;
 
 		import('lib.pkp.classes.controllers.grid.ColumnBasedGridCellProvider');
 		$cellProvider = new ColumnBasedGridCellProvider();
 
-		parent::GridColumn('name', 'common.name', null, null, $cellProvider,
+		parent::__construct('name', 'common.name', null, null, $cellProvider,
 			array('width' => 60, 'alignment' => COLUMN_ALIGNMENT_LEFT));
 	}
 

@@ -3,8 +3,8 @@
 /**
  * @file controllers/statistics/ReportGeneratorHandler.inc.php
  *
- * Copyright (c) 2013-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2013-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class ReportGeneratorHandler
@@ -21,8 +21,8 @@ class ReportGeneratorHandler extends Handler {
 	/**
 	 * Constructor
 	 **/
-	function ReportGeneratorHandler() {
-		parent::Handler();
+	function __construct() {
+		parent::__construct();
 		$this->addRoleAssignment(
 			ROLE_ID_MANAGER,
 			array('fetchReportGenerator', 'saveReportGenerator', 'fetchArticlesInfo', 'fetchRegions'));

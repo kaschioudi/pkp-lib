@@ -3,8 +3,8 @@
 /**
  * @file plugins/generic/usageStats/PKPUsageStatsLoader.php
  *
- * Copyright (c) 2013-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2013-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class PKPUsageStatsLoader
@@ -44,7 +44,7 @@ abstract class PKPUsageStatsLoader extends FileLoader {
 	 * Constructor.
 	 * @param $argv array task arguments
 	 */
-	function PKPUsageStatsLoader($args) {
+	function __construct($args) {
 		$plugin = PluginRegistry::getPlugin('generic', 'usagestatsplugin'); /* @var $plugin UsageStatsPlugin */
 		$this->_plugin = $plugin;
 
@@ -69,7 +69,7 @@ abstract class PKPUsageStatsLoader extends FileLoader {
 		// Define the base filesystem path.
 		$args[0] = $plugin->getFilesPath();
 
-		parent::FileLoader($args);
+		parent::__construct($args);
 
 		if ($plugin->getEnabled()) {
 			// Load the metric type constant.

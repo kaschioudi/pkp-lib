@@ -3,8 +3,8 @@
 /**
  * @file controllers/grid/settings/metadata/MetadataGridCellProvider.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class MetadataGridCellProvider
@@ -24,9 +24,9 @@ class MetadataGridCellProvider extends GridCellProvider {
 	 * Constructor
 	 * @param $context Context
 	 */
-	function MetadataGridCellProvider($context) {
+	function __construct($context) {
 		$this->_context = $context;
-		parent::GridCellProvider();
+		parent::__construct();
 	}
 
 	/**

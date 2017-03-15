@@ -3,8 +3,8 @@
 /**
  * @file controllers/grid/files/query/form/ManageQueryNoteFilesForm.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class ManageQueryNoteFilesForm
@@ -32,8 +32,8 @@ class ManageQueryNoteFilesForm extends ManageSubmissionFilesForm {
 	 * @param $noteId int Note ID.
 	 * @param $actionArgs array Optional list of extra request parameters.
 	 */
-	function ManageQueryNoteFilesForm($submissionId, $queryId, $noteId, $actionArgs = array()) {
-		parent::ManageSubmissionFilesForm($submissionId, 'controllers/grid/files/query/manageQueryNoteFiles.tpl');
+	function __construct($submissionId, $queryId, $noteId, $actionArgs = array()) {
+		parent::__construct($submissionId, 'controllers/grid/files/query/manageQueryNoteFiles.tpl');
 		$this->_queryId = $queryId;
 		$this->_noteId = $noteId;
 		$this->_actionArgs = $actionArgs;

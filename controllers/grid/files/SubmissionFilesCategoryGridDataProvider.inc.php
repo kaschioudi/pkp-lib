@@ -3,8 +3,8 @@
 /**
  * @file controllers/grid/files/SubmissionFilesCategoryGridDataProvider.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class SubmissionFilesCategoryDataProvider
@@ -32,7 +32,8 @@ class SubmissionFilesCategoryGridDataProvider extends CategoryGridDataProvider {
 	 * data provider that this category grid data provider will use to implement
 	 * common behaviours and data.
 	 */
-	function SubmissionFilesCategoryGridDataProvider($fileStage, $dataProviderInitParams = null) {
+	function __construct($fileStage, $dataProviderInitParams = null) {
+		parent::__construct();
 		$this->setDataProvider($this->initGridDataProvider($fileStage, $dataProviderInitParams));
 	}
 

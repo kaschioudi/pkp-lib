@@ -3,8 +3,8 @@
 /**
  * @file controllers/grid/users/reviewer/form/AdvancedSearchReviewerForm.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class AdvancedSearchReviewerForm
@@ -21,8 +21,8 @@ class AdvancedSearchReviewerForm extends ReviewerForm {
 	 * @param $submission Submission
 	 * @param $reviewRound ReviewRound
 	 */
-	function AdvancedSearchReviewerForm($submission, $reviewRound) {
-		parent::ReviewerForm($submission, $reviewRound);
+	function __construct($submission, $reviewRound) {
+		parent::__construct($submission, $reviewRound);
 		$this->setTemplate('controllers/grid/users/reviewer/form/advancedSearchReviewerForm.tpl');
 
 		$this->addCheck(new FormValidator($this, 'reviewerId', 'required', 'editor.review.mustSelect'));

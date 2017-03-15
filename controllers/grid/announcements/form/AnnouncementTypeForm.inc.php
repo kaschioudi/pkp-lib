@@ -3,8 +3,8 @@
 /**
  * @file controllers/grid/announcements/form/AnnouncementTypeForm.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class AnnouncementTypeForm
@@ -29,11 +29,11 @@ class AnnouncementTypeForm extends Form {
 	 * @param $contextId int Context ID
 	 * @param $typeId int leave as default for new announcement type
 	 */
-	function AnnouncementTypeForm($contextId, $typeId = null) {
+	function __construct($contextId, $typeId = null) {
 		$this->typeId = isset($typeId) ? (int) $typeId : null;
 		$this->contextId = $contextId;
 
-		parent::Form('manager/announcement/announcementTypeForm.tpl');
+		parent::__construct('manager/announcement/announcementTypeForm.tpl');
 
 		// Type name is provided
 		$this->addCheck(new FormValidatorLocale($this, 'name', 'required', 'manager.announcementTypes.form.typeNameRequired'));

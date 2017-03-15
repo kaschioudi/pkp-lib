@@ -4,13 +4,13 @@
 <!--
   * locale/tr_TR/user.xml
   *
-  * Copyright (c) 2014-2016 Simon Fraser University Library
-  * Copyright (c) 2000-2016 John Willinsky
+  * Copyright (c) 2014-2017 Simon Fraser University
+  * Copyright (c) 2000-2017 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   * Localization strings for the tr_TR (Türkçe) locale.
   -->
 
-<locale name="tr_TR" full_name = "Türkiye Türkçesi">
+<locale name="tr_TR" full_name="Türkçe">
 	<message key="user.affiliation">Kurum</message>
 	<message key="user.affiliation.description">(Kurumunuz, Ör.; Doğuş Üniversitesi, İİBF, İşletme Bölümü)</message>
 	<message key="user.affiliations">Kurumlar</message>
@@ -54,7 +54,6 @@
 	<message key="user.login.lostPassword.invalidUser">Belirtilen e-posta adresiyle kayıtlı bir kullanıcı bulunamamıştır.</message>
 	<message key="user.login.lostPassword.passwordSent">E-posta adresinize yeni şifreniz gönderilmiştir. Yeni şifrenizi kullanarak siteme bağlanabilirsiniz.</message>
 	<message key="user.login.registeredEmail">Kayıtlı kullanıcının e-posta adresi</message>
-	<message key="user.login.rememberUsernameAndPassword">Kullanıcı adı ve şifremi hatırla</message>
 	<message key="user.login.resetPassword">Şifreyi Sıfırla</message>
 	<message key="user.logOut">Çıkış</message>
 	<message key="user.mailingAddress">Posta Adresi</message>

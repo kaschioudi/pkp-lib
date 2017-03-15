@@ -4,8 +4,8 @@
 <!--
   * locale/en_US/submission.xml
   *
-  * Copyright (c) 2014-2016 Simon Fraser University Library
-  * Copyright (c) 2000-2016 John Willinsky
+  * Copyright (c) 2014-2017 Simon Fraser University
+  * Copyright (c) 2000-2017 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * Localization strings.
@@ -140,7 +140,9 @@
 	<message key="common.queue.long.myAssigned">My Assigned</message>
 	<message key="common.queue.long.submissionsArchived">Archived Submissions</message>
 	<message key="submission.authors">Authors</message>
+	<message key="submission.authorBiography">Author Biography</message>
 	<message key="submission.authorBiographies">Author Biographies</message>
+	<message key="submission.authorWithAffiliation">{$name}, {$affiliation}</message>
 	<message key="submission.shortAuthor">{$author} et al.</message>
 	<message key="submission.mySubmissions">My Authored</message>
 	<message key="submission.addFile">Upload File</message>
@@ -272,13 +274,15 @@
 	<message key="submission.email.confirmDeleteLogEntry">Are you sure you want to delete this email log entry?</message>
 	<message key="submission.email.deleteLogEntry">Delete Log Entry</message>
 	<message key="submission.emailLog">Email Log</message>
+	<message key="submission.event.participantAdded">"{$name}" ({$username}) is added as a {$userGroupName}.</message>
+	<message key="submission.event.participantRemoved">"{$name}" ({$username}) is removed as a {$userGroupName}.</message>
 	<message key="submission.event.backToEventLog">Back to Event Log</message>
 	<message key="submission.event.confirmClearLog">Are you sure you want to clear the event log for this submission?</message>
 	<message key="submission.event.confirmDeleteLogEntry">Are you sure you want to delete this event log entry?</message>
 	<message key="submission.event.deleteLogEntry">Delete Log Entry</message>
 	<message key="submission.event.submissionSubmitted">Initial submission completed.</message>
-	<message key="submission.event.fileUploaded">File "{$name}" (file ID {$fileId}-{$revision}) was uploaded.</message>
-	<message key="submission.event.fileRevised">Revision "{$name}" (file ID {$fileId}-{$revision}) was uploaded.</message>
+	<message key="submission.event.fileUploaded">File "{$name}" (file ID {$fileId}-{$fileRevision}) was uploaded.</message>
+	<message key="submission.event.fileRevised">Revision "{$name}" (file ID {$fileId}-{$fileRevision}) was uploaded.</message>
 	<message key="submission.event.general.metadataUpdated">Submission metadata updated</message>
 	<message key="submission.event.general.suppFileUpdated">Submission file updated</message>
 	<message key="submission.event.participantAdded">{$name} was assigned to this submission as a {$userGroupName}.</message>
@@ -428,7 +432,7 @@
 	<message key="submission.submit.metadataForm">Additional Refinements</message>
 	<message key="submission.submit.metadataForm.tip">Add additional information for your submission.  Press 'enter' after each term.</message>
 	<message key="submission.submit.submissionLocale">Submission Language</message>
-	<message key="submission.submit.submissionLocaleDescription">This press accepts submissions in several languages. Choose the primary language of the submission from the pulldown below.</message>
+	<message key="submission.submit.submissionLocaleDescription">Submissions in several languages are accepted. Choose the primary language of the submission from the pulldown below.</message>
 	<message key="submission.submit.submissionFiles">Submission Files</message>
 	<message key="submission.submit.dependentFiles">Dependent Files</message>
 	<message key="submission.manageDependentFiles">Manage Dependent Files</message>

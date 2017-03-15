@@ -2,8 +2,8 @@
 /**
  * @file classes/security/authorization/internal/UserAccessibleWorkflowStageRequiredPolicy.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class UserAccessibleWorkflowStageRequiredPolicy
@@ -24,8 +24,8 @@ class UserAccessibleWorkflowStageRequiredPolicy extends AuthorizationPolicy {
 	 * Constructor
 	 * @param $request PKPRequest
 	 */
-	function UserAccessibleWorkflowStageRequiredPolicy($request) {
-		parent::AuthorizationPolicy('user.authorization.accessibleWorkflowStage');
+	function __construct($request) {
+		parent::__construct('user.authorization.accessibleWorkflowStage');
 		$this->_request = $request;
 	}
 
@@ -96,18 +96,6 @@ class UserAccessibleWorkflowStageRequiredPolicy extends AuthorizationPolicy {
 					$stageAssignments = $stageAssignmentDao->getBySubmissionAndRoleId($submission->getId(), $roleId, $stageId, $userId);
 					if(!$stageAssignments->wasEmpty()) {
 						$accessibleStageRoles[] = $roleId;
-					}
-
-					if ($roleId == ROLE_ID_SUB_EDITOR) {
-						// The requested submission must be part of their section/series...
-						// and the requested workflow stage must be assigned to
-						// them in the context settings.
-						import('lib.pkp.classes.security.authorization.internal.SectionAssignmentRule');
-						$userGroupDao = DAORegistry::getDAO('UserGroupDAO');
-						if (SectionAssignmentRule::effect($contextId, $submission->getSectionId(), $userId) &&
-						$userGroupDao->userAssignmentExists($contextId, $userId, $stageId)) {
-							$accessibleStageRoles[] = $roleId;
-						}
 					}
 					break;
 				default:

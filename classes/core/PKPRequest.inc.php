@@ -3,8 +3,8 @@
 /**
  * @file classes/core/PKPRequest.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class PKPRequest
@@ -189,7 +189,7 @@ class PKPRequest {
 			// and we need to avoid stripping the terminal directory
 			$path = preg_replace('#/[^/]*$#', '', $_SERVER['SCRIPT_NAME'].(substr($_SERVER['SCRIPT_NAME'], -1) == '/' || preg_match('#.php$#i', $_SERVER['SCRIPT_NAME']) ? '' : '/'));
 
-			// Encode charcters which need to be encoded in a URL.
+			// Encode characters which need to be encoded in a URL.
 			// Simply using rawurlencode() doesn't work because it
 			// also encodes characters which are valid in a URL (i.e. @, $).
 			$parts = explode('/', $path);
@@ -327,7 +327,7 @@ class PKPRequest {
 			if ($_this->isRestfulUrlsEnabled()) {
 				$_this->_requestPath = $_this->getBasePath();
 			} else {
-				$_this->_requestPath = $_SERVER['SCRIPT_NAME'];
+				$_this->_requestPath = isset($_SERVER['SCRIPT_NAME'])?$_SERVER['SCRIPT_NAME']:'';
 			}
 
 			if ($_this->isPathInfoEnabled()) {
@@ -352,7 +352,7 @@ class PKPRequest {
 		if (!isset($_this->_serverHost)) {
 			$_this->_serverHost = isset($_SERVER['HTTP_X_FORWARDED_HOST']) ? $_SERVER['HTTP_X_FORWARDED_HOST']
 				: (isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST']
-				: (isset($_SERVER['HOSTNAME']) ? $_SERVER['HOSTNAME']
+				: (isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME']
 				: $default));
 			HookRegistry::call('Request::getServerHost', array(&$_this->_serverHost, &$default, &$includePort));
 		}

@@ -1,8 +1,8 @@
 /**
  * @file js/controllers/TabHandler.js
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class TabHandler
@@ -69,6 +69,14 @@
 			},
 			disabled: options.disabled,
 			active: options.selected
+		});
+
+		// Load tabs when focused. This ensures that links which use anchor
+		// elements (eg - #backIssues) will load the tab even if the current
+		// page is already visible.
+		// See: https://github.com/pkp/pkp-lib/issues/1787
+		$tabs.children('.ui-tabs-nav').find('li > a').focus(function(e) {
+			$(this).click();
 		});
 	};
 	$.pkp.classes.Helper.inherits(

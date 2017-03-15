@@ -1,8 +1,8 @@
 {**
  * templates/controllers/grid/settings/genre/form/genreForm.tpl
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * Genre form under context management.
@@ -21,10 +21,7 @@
 
 {fbvFormArea id="genreInfo"}
 {fbvFormSection title="common.name" for="name" required="true"}
-	{fbvElement type="text" multilingual="true" id="name" value=$name maxlength="80"}
-{/fbvFormSection}
-{fbvFormSection title="common.designation" for="designation" required="true"}
-	{fbvElement type="text" id="designation" value=$designation maxlength="80"}
+	{fbvElement type="text" multilingual="true" id="name" value=$name maxlength="80" required="true"}
 {/fbvFormSection}
 {fbvFormSection list="true" title="common.options"}
 	{fbvElement type="checkbox" id="sortable" checked=$sortable label="manager.setup.genres.sortable"}

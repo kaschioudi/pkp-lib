@@ -3,8 +3,8 @@
 /**
  * @file classes/db/DBConnection.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class DBConnection
@@ -45,7 +45,7 @@ class DBConnection {
 	 * otherwise calls initCustomDBConnection with custom connection
 	 * parameters.
 	 */
-	function DBConnection() {
+	function __construct() {
 		$this->connected = false;
 
 		if (func_num_args() == 0) {

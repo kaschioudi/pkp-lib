@@ -3,8 +3,8 @@
 /**
  * @file classes/controllers/grid/filter/form/FilterForm.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class FilterForm
@@ -36,8 +36,8 @@ class FilterForm extends Form {
 	 * @param $title string
 	 * @param $description string
 	 */
-	function FilterForm(&$filter, $title, $description, $filterGroupSymbolic) {
-		parent::Form('controllers/grid/filter/form/filterForm.tpl');
+	function __construct(&$filter, $title, $description, $filterGroupSymbolic) {
+		parent::__construct('controllers/grid/filter/form/filterForm.tpl');
 
 		// Initialize internal state.
 		$this->_filter =& $filter;

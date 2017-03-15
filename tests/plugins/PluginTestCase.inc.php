@@ -7,8 +7,8 @@
 /**
  * @file tests/plugins/PluginTestCase.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class PluginTestCase
@@ -75,15 +75,16 @@ class PluginTestCase extends DatabaseTestCase {
 		// Parse the plug-ins version.xml.
 		import('lib.pkp.classes.site.VersionCheck');
 		self::assertFileExists($versionFile = './plugins/'.$pluginCategory.'/'.$pluginDir.'/version.xml');
-		self::assertArrayHasKey('version', $versionInfo =& VersionCheck::parseVersionXML($versionFile));
-		self::assertInstanceOf('Version', $pluginVersion =& $versionInfo['version']);
+		self::assertArrayHasKey('version', $versionInfo = VersionCheck::parseVersionXML($versionFile));
+		self::assertInstanceOf('Version', $pluginVersion = $versionInfo['version']);
 		$installer->setCurrentVersion($pluginVersion);
 
 		// Install the plug-in.
 		self::assertTrue($installer->execute());
 
 		// Reset the hook registry.
-		Registry::set('hooks', $nullVar = null);
+		$nullVar = null;
+		Registry::set('hooks', $nullVar);
 
 		// Test whether the installation is idempotent.
 		$this->markTestIncomplete('Idempotence test disabled temporarily.');

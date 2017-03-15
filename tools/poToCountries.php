@@ -3,8 +3,8 @@
 /**
  * @file tools/poToCountries.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class poToCountries
@@ -29,8 +29,8 @@ class poToCountries extends CommandLineTool {
 	/**
 	 * Constructor
 	 */
-	function poToCountries($argv = array()) {
-		parent::CommandLineTool($argv);
+	function __construct($argv = array()) {
+		parent::__construct($argv);
 
 		array_shift($argv); // Shift the tool name off the top
 
@@ -97,8 +97,8 @@ class poToCountries extends CommandLineTool {
 <!--
   * ' . $ofn . '
   *
-  * Copyright (c) 2014-2016 Simon Fraser University Library
-  * Copyright (c) 2000-2016 John Willinsky
+  * Copyright (c) 2014-2017 Simon Fraser University
+  * Copyright (c) 2000-2017 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * Localized list of countries.

@@ -3,8 +3,8 @@
 /**
  * @file classes/install/form/MaintenanceForm.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class MaintenanceForm
@@ -23,20 +23,19 @@ class MaintenanceForm extends Form {
 	/**
 	 * Constructor.
 	 */
-	function MaintenanceForm($request, $template) {
-		parent::Form($template);
+	function __construct($request, $template) {
+		parent::__construct($template);
 		$this->_request = $request;
 		$this->addCheck(new FormValidatorPost($this));
 	}
 
 	/**
-	 * Display the form.
+	 * @copydoc Form::display
 	 */
-	function display() {
+	function display($template = null) {
 		$templateMgr = TemplateManager::getManager($this->_request);
 		$templateMgr->assign('version', VersionCheck::getCurrentCodeVersion());
-
-		parent::display($this->_request);
+		parent::display($this->_request, $template);
 	}
 
 	/**
@@ -59,7 +58,6 @@ class MaintenanceForm extends Form {
 		error_log($errorMsg);
 		$this->display($this->_request);
 	}
-
 }
 
 ?>

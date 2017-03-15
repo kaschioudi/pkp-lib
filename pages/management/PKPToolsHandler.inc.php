@@ -3,8 +3,8 @@
 /**
  * @file pages/management/PKPToolsHandler.inc.php
  *
- * Copyright (c) 2013-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2013-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class PKPToolsHandler
@@ -22,8 +22,8 @@ class PKPToolsHandler extends ManagementHandler {
 	/**
 	 * Constructor.
 	 */
-	function PKPToolsHandler() {
-		parent::Handler();
+	function __construct() {
+		parent::__construct();
 		$this->addRoleAssignment(
 			ROLE_ID_MANAGER,
 			array('tools', 'statistics', 'importexport')
@@ -117,7 +117,7 @@ class PKPToolsHandler extends ManagementHandler {
 		$templateMgr->assign('contextObjectName', __($application->getNameKey()));
 
 		$reportPlugins = PluginRegistry::loadCategory('reports');
-		$templateMgr->assign_by_ref('reportPlugins', $reportPlugins);
+		$templateMgr->assign('reportPlugins', $reportPlugins);
 
 		$templateMgr->assign('defaultMetricType', $context->getSetting('defaultMetricType'));
 		$availableMetricTypes = $context->getMetricTypes(true);

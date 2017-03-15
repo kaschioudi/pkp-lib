@@ -3,8 +3,8 @@
 /**
  * @file classes/notification/managerDelegate/QueryNotificationManager.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class QueryNotificationManager
@@ -21,8 +21,8 @@ class QueryNotificationManager extends NotificationManagerDelegate {
 	 * Constructor.
 	 * @param $notificationType int NOTIFICATION_TYPE_...
 	 */
-	function QueryNotificationManagerDelegate($notificationType) {
-		parent::NotificationManagerDelegate($notificationType);
+	function __construct($notificationType) {
+		parent::__construct($notificationType);
 	}
 
 	/**
@@ -49,7 +49,7 @@ class QueryNotificationManager extends NotificationManagerDelegate {
 		$query = $queryDao->getById($notification->getAssocId());
 
 		$headNote = $query->getHeadNote();
-		assert($headNote);
+		assert(isset($headNote));
 
 		switch($notification->getType()) {
 			case NOTIFICATION_TYPE_NEW_QUERY:

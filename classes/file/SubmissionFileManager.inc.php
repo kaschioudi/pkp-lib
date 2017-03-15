@@ -3,8 +3,8 @@
 /**
  * @file classes/file/SubmissionFileManager.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class SubmissionFileManager
@@ -33,8 +33,8 @@ class SubmissionFileManager extends BaseSubmissionFileManager {
 	 * @param $contextId int
 	 * @param $submissionId int
 	 */
-	function SubmissionFileManager($contextId, $submissionId) {
-		parent::BaseSubmissionFileManager($contextId, $submissionId);
+	function __construct($contextId, $submissionId) {
+		parent::__construct($contextId, $submissionId);
 	}
 
 
@@ -270,7 +270,7 @@ class SubmissionFileManager extends BaseSubmissionFileManager {
 		// revised file, otherwise we cannot identify the target file
 		// implementation.
 		if ($fileStage != SUBMISSION_FILE_REVIEW_ATTACHMENT) {
-			assert($genreId || $revisedFileId);
+			assert(isset($genreId) || isset($revisedFileId));
 			if (!$genreId || $revisedFileId) {
 				// Retrieve the revised file. (null $fileStage in case the revision is from a previous stage).
 				$revisedFile = $submissionFileDao->getLatestRevision($revisedFileId, null, $this->getSubmissionId());
@@ -287,6 +287,11 @@ class SubmissionFileManager extends BaseSubmissionFileManager {
 		// Instantiate a new submission file implementation.
 		$submissionFile = $submissionFileDao->newDataObjectByGenreId($genreId); /* @var $submissionFile SubmissionFile */
 		$submissionFile->setSubmissionId($this->getSubmissionId());
+
+		// Instantiate submission locale for the file
+		$submissionDao = Application::getSubmissionDAO();
+		$submission = $submissionDao->getById($submissionFile->getSubmissionId());
+		$submissionFile->setSubmissionLocale($submission->getLocale());
 
 		// Do we create a new file or a new revision of an existing file?
 		if ($revisedFileId) {

@@ -3,8 +3,8 @@
 /**
  * @file plugins/importexport/native/filter/RepresentationNativeXmlFilter.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class RepresentationNativeXmlFilter
@@ -20,9 +20,9 @@ class RepresentationNativeXmlFilter extends NativeExportFilter {
 	 * Constructor
 	 * @param $filterGroup FilterGroup
 	 */
-	function RepresentationNativeXmlFilter($filterGroup) {
+	function __construct($filterGroup) {
 		$this->setDisplayName('Native XML representation export');
-		parent::NativeExportFilter($filterGroup);
+		parent::__construct($filterGroup);
 	}
 
 
@@ -48,6 +48,8 @@ class RepresentationNativeXmlFilter extends NativeExportFilter {
 	function &process(&$representation) {
 		// Create the XML document
 		$doc = new DOMDocument('1.0');
+		$doc->preserveWhiteSpace = false;
+		$doc->formatOutput = true;
 		$deployment = $this->getDeployment();
 		$rootNode = $this->createRepresentationNode($doc, $representation);
 		$doc->appendChild($rootNode);
@@ -114,7 +116,7 @@ class RepresentationNativeXmlFilter extends NativeExportFilter {
 
 		// Add public ID
 		if ($pubId = $representation->getStoredPubId('publisher-id')) {
-			$representationNode->appendChild($node = $doc->createElementNS($deployment->getNamespace(), 'id', $pubId));
+			$representationNode->appendChild($node = $doc->createElementNS($deployment->getNamespace(), 'id', htmlspecialchars($pubId, ENT_COMPAT, 'UTF-8')));
 			$node->setAttribute('type', 'public');
 			$node->setAttribute('advice', 'update');
 		}
@@ -138,7 +140,7 @@ class RepresentationNativeXmlFilter extends NativeExportFilter {
 		$pubId = $representation->getStoredPubId($pubIdPlugin->getPubIdType());
 		if ($pubId) {
 			$deployment = $this->getDeployment();
-			$representationNode->appendChild($node = $doc->createElementNS($deployment->getNamespace(), 'id', $pubId));
+			$representationNode->appendChild($node = $doc->createElementNS($deployment->getNamespace(), 'id', htmlspecialchars($pubId, ENT_COMPAT, 'UTF-8')));
 			$node->setAttribute('type', $pubIdPlugin->getPubIdType());
 			$node->setAttribute('advice', 'update');
 			return $node;

@@ -3,8 +3,8 @@
 /**
  * @file controllers/grid/files/SubmissionFilesGridRow.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class SubmissionFilesGridRow
@@ -28,10 +28,10 @@ class SubmissionFilesGridRow extends GridRow {
 	 * @param $capabilities FilesGridCapabilities
 	 * @param $stageId int Stage ID (optional)
 	 */
-	function SubmissionFilesGridRow($capabilities = null, $stageId = null) {
+	function __construct($capabilities = null, $stageId = null) {
 		$this->_capabilities = $capabilities;
 		$this->_stageId = $stageId;
-		parent::GridRow();
+		parent::__construct();
 	}
 
 

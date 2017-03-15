@@ -9,8 +9,8 @@
 /**
  * @file classes/oai/OAI.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class OAI
@@ -40,7 +40,7 @@ abstract class OAI {
 	 * Initializes object and parses user input.
 	 * @param $config OAIConfig repository configuration
 	 */
-	function OAI($config) {
+	function __construct($config) {
 		$this->config = $config;
 
 		// Initialize parameters from GET or POST variables

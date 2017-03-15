@@ -3,8 +3,8 @@
 /**
  * @file classes/user/form/ContactForm.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class ContactForm
@@ -21,8 +21,8 @@ class ContactForm extends BaseProfileForm {
 	 * Constructor.
 	 * @param $user PKPUser
 	 */
-	function ContactForm($user) {
-		parent::BaseProfileForm('user/contactForm.tpl', $user);
+	function __construct($user) {
+		parent::__construct('user/contactForm.tpl', $user);
 
 		// Validation checks for this form
 		$this->addCheck(new FormValidator($this, 'country', 'required', 'user.profile.form.countryRequired'));

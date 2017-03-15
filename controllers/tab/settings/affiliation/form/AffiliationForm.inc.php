@@ -3,8 +3,8 @@
 /**
  * @file controllers/tab/settings/affiliation/form/AffiliationForm.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class AffiliationForm
@@ -21,13 +21,13 @@ class AffiliationForm extends ContextSettingsForm {
 	 * Constructor.
 	 * @param $wizardMode boolean
 	 */
-	function AffiliationForm($wizardMode = false) {
+	function __construct($wizardMode = false) {
 		$settings = array(
 			'sponsorNote' => 'string',
 			'contributorNote' => 'string'
 		);
 
-		parent::ContextSettingsForm($settings, 'controllers/tab/settings/affiliation/form/affiliationForm.tpl', $wizardMode);
+		parent::__construct($settings, 'controllers/tab/settings/affiliation/form/affiliationForm.tpl', $wizardMode);
 	}
 
 

@@ -3,8 +3,8 @@
 /**
  * @file controllers/grid/files/submissionDocuments/SubmissionLibraryLinkAction.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class SubmissionLibraryLinkAction
@@ -23,11 +23,11 @@ class SubmissionLibraryLinkAction extends LinkAction {
 	 * @param $submissionId int the ID of the submission to present link for
 	 * to show information about.
 	 */
-	function SubmissionLibraryLinkAction($request, $submissionId) {
+	function __construct($request, $submissionId) {
 		$dispatcher = $request->getDispatcher();
 		AppLocale::requireComponents(LOCALE_COMPONENT_PKP_EDITOR);
 		import('lib.pkp.classes.linkAction.request.AjaxModal');
-		parent::LinkAction(
+		parent::__construct(
 			'editorialHistory',
 			new AjaxModal(
 				$dispatcher->url(

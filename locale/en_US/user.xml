@@ -4,8 +4,8 @@
 <!--
   * locale/en_US/user.xml
   *
-  * Copyright (c) 2014-2016 Simon Fraser University Library
-  * Copyright (c) 2000-2016 John Willinsky
+  * Copyright (c) 2014-2017 Simon Fraser University
+  * Copyright (c) 2000-2017 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * Localization strings.
@@ -66,7 +66,7 @@
 	<message key="user.login.registrationComplete.newSubmission">Make a New Submission</message>
 	<message key="user.login.registrationComplete.continueBrowsing">Continue Browsing</message>
 	<message key="user.login.registrationPendingValidation">Registration awaiting verification</message>
-	<message key="user.login.rememberUsernameAndPassword">Remember my username and password</message>
+	<message key="user.login.rememberUsernameAndPassword">Keep me logged in</message>
 	<message key="user.login.resetPassword">Reset Password</message>
 	<message key="user.logOut">Logout</message>
 	<message key="user.logOutAs">Logout as</message>

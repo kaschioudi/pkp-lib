@@ -3,8 +3,8 @@
 /**
  * @file classes/controllers/listbuilder/ListbuilderHandler.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class ListbuilderHandler
@@ -45,22 +45,18 @@ class ListbuilderHandler extends GridHandler {
 	/**
 	 * Constructor.
 	 */
-	function ListbuilderHandler() {
-		parent::GridHandler();
+	function __construct() {
+		parent::__construct();
 	}
 
 	/**
-	 * @see GridHandler::initialize
-	 * @param $request PKPRequest
-	 * @param $addItemLink boolean optional True/default to present an "add item" link action
+	 * @copydoc GridHandler::initialize
 	 */
-	function initialize($request, $addItemLink = true) {
-		parent::initialize($request);
+	function initialize($request, $args = null) {
+		parent::initialize($request, $args);
 
-		if ($addItemLink) {
-			import('lib.pkp.classes.linkAction.request.NullAction');
-			$this->addAction($this->getAddItemLinkAction(new NullAction()));
-		}
+		import('lib.pkp.classes.linkAction.request.NullAction');
+		$this->addAction($this->getAddItemLinkAction(new NullAction()));
 	}
 
 

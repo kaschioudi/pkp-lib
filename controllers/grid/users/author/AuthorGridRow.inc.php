@@ -3,8 +3,8 @@
 /**
  * @file controllers/grid/users/author/AuthorGridRow.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class AuthorGridRow
@@ -20,15 +20,15 @@ class AuthorGridRow extends GridRow {
 	var $_submission;
 
 	/** @var boolean */
-	var $_reaadOnly;
+	var $_readOnly;
 
 	/**
 	 * Constructor
 	 */
-	function AuthorGridRow($submission, $readOnly = false) {
+	function __construct($submission, $readOnly = false) {
 		$this->_submission = $submission;
 		$this->_readOnly = $readOnly;
-		parent::GridRow();
+		parent::__construct();
 	}
 
 	//

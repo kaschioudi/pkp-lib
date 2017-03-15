@@ -3,8 +3,8 @@
 /**
  * @file controllers/grid/queries/QueriesAccessHelper.inc.php
  *
- * Copyright (c) 2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2016-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class QueriesAccessHelper
@@ -34,7 +34,7 @@ class QueriesAccessHelper {
 	 * @param $authorizedContext array
 	 * @param $user User
 	 */
-	function QueriesAccessHelper($authorizedContext, $user) {
+	function __construct($authorizedContext, $user) {
 		$this->_authorizedContext = $authorizedContext;
 		$this->_user = $user;
 	}
@@ -124,6 +124,14 @@ class QueriesAccessHelper {
 
 		// Managers and sub editors are always allowed
 		if (count(array_intersect($userRoles, array(ROLE_ID_MANAGER, ROLE_ID_SUB_EDITOR)))) return true;
+
+		// Users can always delete their own placeholder queries.
+		$queryDao = DAORegistry::getDAO('QueryDAO');
+		$query = $queryDao->getById($queryId);
+		if ($query) {
+			$headNote = $query->getHeadNote();
+			if ($headNote->getUserId() == $this->_user->getId() && $headNote->getTitle()=='') return true;
+		}
 
 		// Otherwise, not allowed.
 		return false;

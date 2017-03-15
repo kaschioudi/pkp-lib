@@ -3,8 +3,8 @@
 /**
  * @file plugins/generic/usageStats/GeoLocationTool.php
  *
- * Copyright (c) 2013-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2013-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class GeoLocationTool
@@ -29,7 +29,7 @@ class GeoLocationTool {
 	 * If we cannot find the database file, an empty object will be constructed.
 	 * Use the method isPresent() to check if the database file is present before use.
 	 */
-	function GeoLocationTool() {
+	function __construct() {
 		$geoLocationDbFile = str_replace(PKP_LIB_PATH . DIRECTORY_SEPARATOR, '', dirname(__FILE__)) . DIRECTORY_SEPARATOR . "GeoLiteCity.dat";
 		if (file_exists($geoLocationDbFile)) {
 			$isDbFilePresent = true;

@@ -3,8 +3,8 @@
 /**
  * @file controllers/modals/editorDecision/form/PromoteForm.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class PromoteForm
@@ -27,14 +27,14 @@ class PromoteForm extends EditorDecisionWithEmailForm {
 	 * @param $stageId int
 	 * @param $reviewRound ReviewRound
 	 */
-	function PromoteForm($submission, $decision, $stageId, $reviewRound = null) {
+	function __construct($submission, $decision, $stageId, $reviewRound = null) {
 		if (!in_array($decision, $this->_getDecisions())) {
 			fatalError('Invalid decision!');
 		}
 
 		$this->setSaveFormOperation('savePromote');
 
-		parent::EditorDecisionWithEmailForm(
+		parent::__construct(
 			$submission, $decision, $stageId,
 			'controllers/modals/editorDecision/form/promoteForm.tpl',
 			$reviewRound

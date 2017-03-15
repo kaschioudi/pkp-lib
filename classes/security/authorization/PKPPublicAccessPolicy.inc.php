@@ -2,8 +2,8 @@
 /**
  * @file classes/security/authorization/PKPPublicAccessPolicy.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class PKPPublicAccessPolicy
@@ -23,8 +23,8 @@ class PKPPublicAccessPolicy extends HandlerOperationPolicy {
 	 *  this policy is targeting.
 	 * @param $message string a message to be displayed if the authorization fails
 	 */
-	function PKPPublicAccessPolicy($request, $operations, $message = 'user.authorization.privateOperation') {
-		parent::HandlerOperationPolicy($request, $operations, $message);
+	function __construct($request, $operations, $message = 'user.authorization.privateOperation') {
+		parent::__construct($request, $operations, $message);
 	}
 
 

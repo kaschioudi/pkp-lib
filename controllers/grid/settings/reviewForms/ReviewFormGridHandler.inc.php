@@ -3,8 +3,8 @@
 /**
  * @file controllers/grid/settings/reviewForms/ReviewFormGridHandler.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class ReviewFormGridHandler
@@ -26,8 +26,8 @@ class ReviewFormGridHandler extends GridHandler {
 	/**
 	 * Constructor
 	 */
-	function ReviewFormGridHandler() {
-		parent::GridHandler();
+	function __construct() {
+		parent::__construct();
 		$this->addRoleAssignment(
 			array(ROLE_ID_MANAGER),
 			array('fetchGrid', 'fetchRow', 'createReviewForm', 'editReviewForm', 'updateReviewForm',
@@ -42,16 +42,16 @@ class ReviewFormGridHandler extends GridHandler {
 	// Implement template methods from PKPHandler.
 	//
 	/**
-	 * @see PKPHandler::initialize()
+	 * @copydoc GridHandler::initialize()
 	 */
-	function initialize($request) {
+	function initialize($request, $args = null) {
+		parent::initialize($request, $args);
+
 		// Load user-related translations.
 		AppLocale::requireComponents(
 			LOCALE_COMPONENT_APP_ADMIN,
 			LOCALE_COMPONENT_APP_MANAGER,
-			LOCALE_COMPONENT_APP_COMMON,
 			LOCALE_COMPONENT_PKP_USER,
-			LOCALE_COMPONENT_PKP_GRID,
 			LOCALE_COMPONENT_PKP_MANAGER
 		);
 
@@ -169,12 +169,12 @@ class ReviewFormGridHandler extends GridHandler {
 	}
 
 	/**
-	 * @see lib/pkp/classes/controllers/grid/GridHandler::setDataElementSequence()
+	 * @copydoc GridHandler::setDataElementSequence()
 	 */
-	function setDataElementSequence($request, $rowId, $reviewForm, $newSequence) {
+	function setDataElementSequence($request, $rowId, $gridDataElement, $newSequence) {
 		$reviewFormDao = DAORegistry::getDAO('ReviewFormDAO'); /* @var $reviewFormDao ReviewFormDAO */
-		$reviewForm->setSequence($newSequence);
-		$reviewFormDao->updateObject($reviewForm);
+		$gridDataElement->setSequence($newSequence);
+		$reviewFormDao->updateObject($gridDataElement);
 	}
 
 	/**
@@ -238,17 +238,20 @@ class ReviewFormGridHandler extends GridHandler {
 	 * @return JSONMessage JSON object
 	 */
 	function editReviewForm($args, $request) {
-		// Identify the review form ID
-		$reviewFormId = (int) $request->getUserVar('rowId');
 		$reviewFormDao = DAORegistry::getDAO('ReviewFormDAO');
 		$context = $request->getContext();
-		$reviewForm = $reviewFormDao->getById($reviewFormId, Application::getContextAssocType(), $context->getId());
+		$reviewForm = $reviewFormDao->getById(
+			$request->getUserVar('rowId'),
+			Application::getContextAssocType(), $context->getId()
+		);
 
 		// Display 'editReviewForm' tabs
 		$templateMgr = TemplateManager::getManager($request);
-		$templateMgr->assign('preview', $request->getUserVar('preview'));
-		$templateMgr->assign('reviewFormId', $reviewFormId);
-		$templateMgr->assign('canEdit', $reviewForm->getIncompleteCount() == 0 && $reviewForm->getCompleteCount() == 0);
+		$templateMgr->assign(array(
+			'preview' => $request->getUserVar('preview'),
+			'reviewFormId' => $reviewForm->getId(),
+			'canEdit' => $reviewForm->getIncompleteCount() == 0 && $reviewForm->getCompleteCount() == 0,
+		));
 		return new JSONMessage(true, $templateMgr->fetch('controllers/grid/settings/reviewForms/editReviewForm.tpl'));
 	}
 

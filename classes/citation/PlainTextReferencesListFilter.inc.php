@@ -3,8 +3,8 @@
 /**
  * @file classes/citation/PlainTextReferencesListFilter.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class PlainTextReferencesListFilter
@@ -23,13 +23,13 @@ class PlainTextReferencesListFilter extends TemplateBasedReferencesListFilter {
 	 * Constructor
 	 * @param $filterGroup FilterGroup
 	 */
-	function PlainTextReferencesListFilter($filterGroup) {
+	function __construct($filterGroup) {
 		// Add the persistable filter settings.
 		import('lib.pkp.classes.filter.SetFilterSetting');
 		$this->addSetting(new SetFilterSetting('ordering', null, null,
 				array(REFERENCES_LIST_ORDERING_ALPHABETICAL, REFERENCES_LIST_ORDERING_NUMERICAL)));
 
-		parent::TemplateBasedReferencesListFilter($filterGroup);
+		parent::__construct($filterGroup);
 	}
 
 
@@ -76,7 +76,7 @@ class PlainTextReferencesListFilter extends TemplateBasedReferencesListFilter {
 	/**
 	 * @copydoc TemplateBasedFilter::addTemplateVars()
 	 */
-	function addTemplateVars($templateMgr, $submission, $request, &$locale) {
+	function addTemplateVars($templateMgr, &$submission, $request, &$locale) {
 		parent::addTemplateVars($templateMgr, $submission, $request, $locale);
 
 		// Add the ordering type to the template.

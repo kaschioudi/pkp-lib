@@ -3,8 +3,8 @@
 /**
  * @file tests/classes/form/validation/FormValidatorTest.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class FormValidatorTest
@@ -30,7 +30,7 @@ class FormValidatorTest extends PKPTestCase {
 	}
 
 	/**
-	 * @covers FormValidator::FormValidator
+	 * @covers FormValidator::__construct
 	 * @covers FormValidator::getField
 	 * @covers FormValidator::getForm
 	 * @covers FormValidator::getValidator

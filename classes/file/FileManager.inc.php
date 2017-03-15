@@ -9,8 +9,8 @@
 /**
  * @file classes/file/FileManager.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  * ePUB mime type added  Leah M Root (rootl) SUNY Geneseo
  * @class FileManager
@@ -36,7 +36,7 @@ class FileManager {
 	/**
 	 * Constructor
 	 */
-	function FileManager() {
+	function __construct() {
 	}
 
 	/**
@@ -92,7 +92,11 @@ class FileManager {
 	 */
 	function getUploadedFileType($fileName) {
 		if (isset($_FILES[$fileName])) {
-			$type = PKPString::mime_content_type($_FILES[$fileName]['tmp_name']);
+			$type = PKPString::mime_content_type(
+				$_FILES[$fileName]['tmp_name'], // Location on server
+				array_pop(explode('.',$_FILES[$fileName]['name'])) // Extension on client machine
+			);
+
 			if (!empty($type)) return $type;
 			return $_FILES[$fileName]['type'];
 		}

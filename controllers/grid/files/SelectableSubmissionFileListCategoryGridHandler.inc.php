@@ -3,8 +3,8 @@
 /**
  * @file controllers/grid/files/SelectableSubmissionFileListCategoryGridHandler.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class SelectableSubmissionFileListCategoryGridHandler
@@ -42,7 +42,7 @@ class SelectableSubmissionFileListCategoryGridHandler extends CategoryGridHandle
 	 * @param $capabilities integer A bit map with zero or more
 	 *  FILE_GRID_* capabilities set.
 	 */
-	function SelectableSubmissionFileListCategoryGridHandler($dataProvider, $stageId, $capabilities = 0) {
+	function __construct($dataProvider, $stageId, $capabilities = 0) {
 		// the StageId can be set later if necessary.
 		if ($stageId) {
 			$this->_stageId = (int)$stageId;
@@ -50,7 +50,7 @@ class SelectableSubmissionFileListCategoryGridHandler extends CategoryGridHandle
 
 		$this->_capabilities = new FilesGridCapabilities($capabilities);
 
-		parent::CategoryGridHandler($dataProvider);
+		parent::__construct($dataProvider);
 	}
 
 
@@ -182,7 +182,7 @@ class SelectableSubmissionFileListCategoryGridHandler extends CategoryGridHandle
 		}
 
 		if($capabilities->canAdd()) {
-			assert($dataProvider);
+			assert(isset($dataProvider));
 			$this->addAction($dataProvider->getAddFileAction($request));
 		}
 

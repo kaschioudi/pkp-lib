@@ -3,8 +3,8 @@
 /**
  * @file controllers/grid/users/stageParticipant/StageParticipantGridCategoryRow.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class StageParticipantGridCategoryRow
@@ -28,10 +28,10 @@ class StageParticipantGridCategoryRow extends GridCategoryRow {
 	/**
 	 * Constructor
 	 */
-	function StageParticipantGridCategoryRow($submission, $stageId) {
+	function __construct($submission, $stageId) {
 		$this->_submission = $submission;
 		$this->_stageId = $stageId;
-		parent::GridCategoryRow();
+		parent::__construct();
 	}
 
 	//

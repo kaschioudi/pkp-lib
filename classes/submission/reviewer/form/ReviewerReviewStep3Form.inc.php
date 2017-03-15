@@ -3,8 +3,8 @@
 /**
  * @file classes/submission/reviewer/form/ReviewerReviewStep3Form.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class ReviewerReviewStep3Form
@@ -21,8 +21,8 @@ class ReviewerReviewStep3Form extends ReviewerReviewForm {
 	 * @param $reviewerSubmission ReviewerSubmission
 	 * @param $reviewAssignment ReviewAssignment
 	 */
-	function ReviewerReviewStep3Form($request, $reviewerSubmission, $reviewAssignment) {
-		parent::ReviewerReviewForm($request, $reviewerSubmission, $reviewAssignment, 3);
+	function __construct($request, $reviewerSubmission, $reviewAssignment) {
+		parent::__construct($request, $reviewerSubmission, $reviewAssignment, 3);
 
 		// Validation checks for this form
 		$reviewFormElementDao = DAORegistry::getDAO('ReviewFormElementDAO');
@@ -68,33 +68,28 @@ class ReviewerReviewStep3Form extends ReviewerReviewForm {
 	 */
 	function fetch($request) {
 		$templateMgr = TemplateManager::getManager($request);
-
 		$reviewAssignment = $this->getReviewAssignment();
-		$reviewRoundId = $reviewAssignment->getReviewRoundId();
 
 		// Assign the objects and data to the template.
 		$context = $this->request->getContext();
-		$templateMgr->assign('reviewAssignment', $reviewAssignment);
-		$templateMgr->assign('reviewRoundId', $reviewRoundId);
-
-		// Include the review recommendation options on the form.
-		$templateMgr->assign('reviewerRecommendationOptions', ReviewAssignment::getReviewerRecommendationOptions());
+		$templateMgr->assign(array(
+			'reviewAssignment' => $reviewAssignment,
+			'reviewRoundId' => $reviewAssignment->getReviewRoundId(),
+			'reviewerRecommendationOptions' => ReviewAssignment::getReviewerRecommendationOptions(),
+		));
 
 		if ($reviewAssignment->getReviewFormId()) {
 
 			// Get the review form components
 			$reviewFormElementDao = DAORegistry::getDAO('ReviewFormElementDAO');
-			$reviewFormElements = $reviewFormElementDao->getByReviewFormId($reviewAssignment->getReviewFormId());
 			$reviewFormResponseDao = DAORegistry::getDAO('ReviewFormResponseDAO');
-			$reviewFormResponses = $reviewFormResponseDao->getReviewReviewFormResponseValues($reviewAssignment->getId());
 			$reviewFormDao = DAORegistry::getDAO('ReviewFormDAO');
-			$reviewformid = $reviewAssignment->getReviewFormId();
-			$reviewForm = $reviewFormDao->getById($reviewAssignment->getReviewFormId(), Application::getContextAssocType(), $context->getId());
-
-			$templateMgr->assign('reviewForm', $reviewForm);
-			$templateMgr->assign('reviewFormElements', $reviewFormElements);
-			$templateMgr->assign('reviewFormResponses', $reviewFormResponses);
-			$templateMgr->assign('disabled', isset($reviewAssignment) && $reviewAssignment->getDateCompleted() != null);
+			$templateMgr->assign(array(
+				'reviewForm' => $reviewFormDao->getById($reviewAssignment->getReviewFormId(), Application::getContextAssocType(), $context->getId()),
+				'reviewFormElements' => $reviewFormElementDao->getByReviewFormId($reviewAssignment->getReviewFormId()),
+				'reviewFormResponses' => $reviewFormResponseDao->getReviewReviewFormResponseValues($reviewAssignment->getId()),
+				'disabled' => isset($reviewAssignment) && $reviewAssignment->getDateCompleted() != null,
+			));
 		}
 
 		//
@@ -199,14 +194,14 @@ class ReviewerReviewStep3Form extends ReviewerReviewForm {
 			$userGroupDao = DAORegistry::getDAO('UserGroupDAO');
 			$router = $request->getRouter();
 			$context = $router->getContext($request);
-			$receivedList = array(); // Avoid sending twice to the same user. 
+			$receivedList = array(); // Avoid sending twice to the same user.
 
 			while ($stageAssignment = $stageAssignments->next()) {
 				$userId = $stageAssignment->getUserId();
 				$userGroup = $userGroupDao->getById($stageAssignment->getUserGroupId(), $submission->getContextId());
-				
-				// Never send reviewer comment notification to authors.
-				if ($userGroup->getRoleId() == ROLE_ID_AUTHOR || in_array($userId, $receivedList)) continue;
+
+				// Never send reviewer comment notification to users other than mangers and editors.
+				if (!in_array($userGroup->getRoleId(), array(ROLE_ID_MANAGER, ROLE_ID_SUB_EDITOR)) || in_array($userId, $receivedList)) continue;
 
 				$notificationMgr->createNotification(
 					$request, $userId, NOTIFICATION_TYPE_REVIEWER_COMMENT,

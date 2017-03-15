@@ -3,8 +3,8 @@
 /**
  * @file classes/cliTool/ScheduledTaskTool.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class ScheduledTaskTool
@@ -34,8 +34,8 @@ class ScheduledTaskTool extends CommandLineTool {
 	 * 		If specified, the first parameter should be the path to
 	 *		a tasks XML descriptor file (other than the default)
 	 */
-	function ScheduledTaskTool($argv = array()) {
-		parent::CommandLineTool($argv);
+	function __construct($argv = array()) {
+		parent::__construct($argv);
 
 		if (isset($this->argv[0])) {
 			$this->file = $this->argv[0];
@@ -109,8 +109,8 @@ class ScheduledTaskTool extends CommandLineTool {
 		if (!is_object($task = instantiate($className, null, null, 'execute', $args))) {
 			fatalError('Cannot instantiate task class.');
 		}
-		$task->execute();
 		$this->taskDao->updateLastRunTime($className);
+		$task->execute();
 	}
 }
 

@@ -1,8 +1,8 @@
 /**
  * @file js/controllers/form/FileUploadFormHandler.js
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class FileUploadFormHandler
@@ -20,6 +20,7 @@
 	 *
 	 * @param {jQueryObject} $form The wrapped HTML form element.
 	 * @param {{
+	 *  readOnly: boolean,
 	 *  resetUploader: boolean,
 	 *  $uploader: jQueryObject,
 	 *  $preview: jQueryObject,
@@ -31,22 +32,24 @@
 
 		this.parent($form, options);
 
-		if (options.resetUploader !== undefined) {
-			this.resetUploader_ = options.resetUploader;
+		if (options.readOnly === undefined || options.readOnly === null) {
+			if (options.resetUploader !== undefined) {
+				this.resetUploader_ = options.resetUploader;
+			}
+
+			// An optional preview container for the file. If this option is passed
+			// the preview container will be hidden when a new file is uploaded and
+			// when the `fileDeleted` event is fired.
+			if (options.$preview !== undefined && options.$preview.length) {
+				this.$preview = options.$preview;
+				this.bind('fileDeleted', this.callbackWrapper(this.fileDeleted));
+			}
+
+			// Attach the uploader handler to the uploader HTML element.
+			this.attachUploader_(options.$uploader, options.uploaderOptions);
+
+			this.uploaderSetup(options.$uploader);
 		}
-
-		// An optional preview container for the file. If this option is passed
-		// the preview container will be hidden when a new file is uploaded and
-		// when the `fileDeleted` event is fired.
-		if (options.$preview !== undefined && options.$preview.length) {
-			this.$preview_ = options.$preview;
-			this.bind('fileDeleted', this.callbackWrapper(this.fileDeleted));
-		}
-
-		// Attach the uploader handler to the uploader HTML element.
-		this.attachUploader_(options.$uploader, options.uploaderOptions);
-
-		this.uploaderSetup(options.$uploader);
 
 	};
 	$.pkp.classes.Helper.inherits(
@@ -65,11 +68,11 @@
 
 	/**
 	 * The file preview DOM element. A jQuery object when available
-	 * @private
+	 * @protected
 	 * @type {boolean|jQueryObject}
 	 */
 	$.pkp.controllers.form.FileUploadFormHandler.prototype.
-			$preview_ = false;
+			$preview = false;
 
 
 	//
@@ -135,8 +138,8 @@
 			this.trigger('fileUploaded', [jsonData.uploadedFile]);
 
 			// Hide preview if one exists
-			if (this.$preview_) {
-				this.$preview_.hide();
+			if (this.$preview) {
+				this.$preview.hide();
 			}
 
 			if (jsonData.content === '') {
@@ -158,8 +161,8 @@
 	$.pkp.controllers.form.FileUploadFormHandler.prototype.
 			fileDeleted = function() {
 
-		if (this.$preview_) {
-			this.$preview_.hide();
+		if (this.$preview) {
+			this.$preview.hide();
 		}
 	};
 

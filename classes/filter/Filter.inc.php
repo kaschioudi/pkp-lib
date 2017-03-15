@@ -2,8 +2,8 @@
 /**
  * @file classes/filter/Filter.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class Filter
@@ -106,9 +106,9 @@ class Filter extends DataObject {
 	 * @param $inputType string a string representation of a TypeDescription
 	 * @param $outputType string a string representation of a TypeDescription
 	 */
-	function Filter($inputType, $outputType) {
+	function __construct($inputType, $outputType) {
 		// Initialize the filter.
-		parent::DataObject();
+		parent::__construct();
 		$this->setTransformationType($inputType, $outputType);
 	}
 

@@ -3,8 +3,8 @@
 /**
  * @file classes/plugins/MetadataPlugin.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class MetadataPlugin
@@ -23,8 +23,8 @@ abstract class MetadataPlugin extends Plugin {
 	/**
 	 * Constructor
 	 */
-	function MetadataPlugin() {
-		parent::Plugin();
+	function __construct() {
+		parent::__construct();
 	}
 
 

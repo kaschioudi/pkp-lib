@@ -6,8 +6,8 @@
 /**
  * @file classes/admin/form/PKPSiteSettingsForm.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class SiteSettingsForm
@@ -26,9 +26,10 @@ class PKPSiteSettingsForm extends Form {
 
 	/**
 	 * Constructor.
+	 * @param $template string? Optional name of template file to use for form presentation
 	 */
-	function PKPSiteSettingsForm() {
-		parent::Form('admin/settings.tpl');
+	function __construct($template = null) {
+		parent::__construct($template?$template:'admin/settings.tpl');
 		$this->siteSettingsDao = DAORegistry::getDAO('SiteSettingsDAO');
 
 		// Validation checks for this form
@@ -48,15 +49,17 @@ class PKPSiteSettingsForm extends Form {
 		$publicFileManager = new PublicFileManager();
 		$siteStyleFilename = $publicFileManager->getSiteFilesPath() . '/' . $site->getSiteStyleFilename();
 		$templateMgr = TemplateManager::getManager();
-		$templateMgr->assign('showThumbnail', $site->getSetting('showThumbnail'));
-		$templateMgr->assign('showTitle', $site->getSetting('showTitle'));
-		$templateMgr->assign('showDescription', $site->getSetting('showDescription'));
-		$templateMgr->assign('originalStyleFilename', $site->getOriginalStyleFilename());
-		$templateMgr->assign('pageHeaderTitleImage', $site->getSetting('pageHeaderTitleImage'));
-		$templateMgr->assign('styleFilename', $site->getSiteStyleFilename());
-		$templateMgr->assign('publicFilesDir', Request::getBasePath() . '/' . $publicFileManager->getSiteFilesPath());
-		$templateMgr->assign('dateStyleFileUploaded', file_exists($siteStyleFilename)?filemtime($siteStyleFilename):null);
-		$templateMgr->assign('siteStyleFileExists', file_exists($siteStyleFilename));
+		$templateMgr->assign(array(
+			'showThumbnail' => $site->getSetting('showThumbnail'),
+			'showTitle' => $site->getSetting('showTitle'),
+			'showDescription' => $site->getSetting('showDescription'),
+			'originalStyleFilename' => $site->getOriginalStyleFilename(),
+			'pageHeaderTitleImage' => $site->getSetting('pageHeaderTitleImage'),
+			'styleFilename' => $site->getSiteStyleFilename(),
+			'publicFilesDir' => Request::getBasePath() . '/' . $publicFileManager->getSiteFilesPath(),
+			'dateStyleFileUploaded' => file_exists($siteStyleFilename)?filemtime($siteStyleFilename):null,
+			'siteStyleFileExists' => file_exists($siteStyleFilename),
+		));
 		return parent::display();
 	}
 
@@ -75,6 +78,7 @@ class PKPSiteSettingsForm extends Form {
 			'showTitle' => $site->getSetting('showTitle'),
 			'showDescription' => $site->getSetting('showDescription'),
 			'about' => $site->getSetting('about'), // Localized
+			'pageFooter' => $site->getSetting('pageFooter'), // Localized
 			'contactName' => $site->getSetting('contactName'), // Localized
 			'contactEmail' => $site->getSetting('contactEmail'), // Localized
 			'minPasswordLength' => $site->getMinPasswordLength(),
@@ -88,7 +92,7 @@ class PKPSiteSettingsForm extends Form {
 	}
 
 	function getLocaleFieldNames() {
-		return array('title', 'pageHeaderTitleType', 'intro', 'about', 'contactName', 'contactEmail');
+		return array('title', 'pageHeaderTitleType', 'intro', 'about', 'contactName', 'contactEmail', 'pageFooter');
 	}
 
 	/**
@@ -96,7 +100,7 @@ class PKPSiteSettingsForm extends Form {
 	 */
 	function readInputData() {
 		$this->readUserVars(
-			array('pageHeaderTitleType', 'title', 'intro', 'about', 'redirect', 'contactName', 'contactEmail', 'minPasswordLength', 'pageHeaderTitleImageAltText', 'showThumbnail', 'showTitle', 'showDescription', 'themePluginPath')
+			array('pageHeaderTitleType', 'title', 'intro', 'about', 'redirect', 'contactName', 'contactEmail', 'minPasswordLength', 'pageHeaderTitleImageAltText', 'showThumbnail', 'showTitle', 'showDescription', 'themePluginPath', 'pageFooter')
 		);
 	}
 
@@ -136,6 +140,7 @@ class PKPSiteSettingsForm extends Form {
 		$site->updateSetting('showDescription', $this->getData('showDescription'), 'bool');
 
 		$siteDao->updateObject($site);
+
 		return true;
 	}
 

@@ -3,8 +3,8 @@
 /**
  * @file classes/controllers/grid/GridCategoryRow.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class GridCategoryRow
@@ -23,8 +23,8 @@ class GridCategoryRow extends GridRow {
 	/**
 	 * Constructor.
 	 */
-	function GridCategoryRow() {
-		parent::GridRow();
+	function __construct() {
+		parent::__construct();
 
 		// Set a default cell provider that will get the cell template
 		// variables from the category grid row.

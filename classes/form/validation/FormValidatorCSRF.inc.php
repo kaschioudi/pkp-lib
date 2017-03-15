@@ -3,8 +3,8 @@
 /**
  * @file classes/form/validation/FormValidatorCSRF.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class FormValidatorCSRF
@@ -21,8 +21,8 @@ class FormValidatorCSRF extends FormValidator {
 	 * @param $form Form
 	 * @param $message string the locale key to use (optional)
 	 */
-	function FormValidatorCSRF(&$form, $message = 'form.csrfInvalid') {
-		parent::FormValidator($form, 'dummy', FORM_VALIDATOR_REQUIRED_VALUE, $message);
+	function __construct(&$form, $message = 'form.csrfInvalid') {
+		parent::__construct($form, 'dummy', FORM_VALIDATOR_REQUIRED_VALUE, $message);
 	}
 
 

@@ -6,8 +6,8 @@
 /**
  * @file plugins/metadata/nlm30/schema/Nlm30CitationSchema.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class Nlm30CitationSchema
@@ -41,9 +41,9 @@ class Nlm30CitationSchema extends MetadataSchema {
 	/**
 	 * Constructor
 	 */
-	function Nlm30CitationSchema() {
+	function __construct() {
 		// Configure the meta-data schema.
-		parent::MetadataSchema(
+		parent::__construct(
 			'nlm-3.0-element-citation',
 			'nlm30',
 			'lib.pkp.plugins.metadata.nlm30.schema.Nlm30CitationSchema',

@@ -3,8 +3,8 @@
 /**
  * @file classes/template/PKPTemplateResource.inc.php
  *
- * Copyright (c) 2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2016-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class PKPTemplateResource
@@ -20,7 +20,7 @@ class PKPTemplateResource {
 	 * Constructor
 	 * @param $templateDir Template directory
 	 */
-	function PKPTemplateResource($templateDir) {
+	function __construct($templateDir) {
 		$this->templateDir = $templateDir;
 	}
 

@@ -3,8 +3,8 @@
 /**
  * @file plugins/metadata/nlm30/filter/Openurl10Nlm30CitationSchemaCrosswalkFilter.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class Openurl10Nlm30CitationSchemaCrosswalkFilter
@@ -24,9 +24,9 @@ class Openurl10Nlm30CitationSchemaCrosswalkFilter extends Nlm30Openurl10Crosswal
 	/**
 	 * Constructor
 	 */
-	function Openurl10Nlm30CitationSchemaCrosswalkFilter() {
+	function __construct() {
 		$this->setDisplayName('Crosswalk from Open URL to NLM Citation');
-		parent::Nlm30Openurl10CrosswalkFilter('lib.pkp.plugins.metadata.openurl10.schema.Openurl10BaseSchema',
+		parent::__construct('lib.pkp.plugins.metadata.openurl10.schema.Openurl10BaseSchema',
 				'lib.pkp.plugins.metadata.nlm30.schema.Nlm30CitationSchema');
 	}
 
@@ -58,7 +58,7 @@ class Openurl10Nlm30CitationSchemaCrosswalkFilter extends Nlm30Openurl10Crosswal
 			foreach ($authors as $author) {
 				$authorDescription =& $personStringFilter->execute($author);
 				$success = $output->addStatement('person-group[@person-group-type="author"]', $authorDescription);
-				assert($success);
+				assert((boolean) $success);
 				unset($authorDescription);
 			}
 		}
@@ -70,7 +70,7 @@ class Openurl10Nlm30CitationSchemaCrosswalkFilter extends Nlm30Openurl10Crosswal
 			$genreMap = $this->_getOpenurl10GenreTranslationMapping();
 			$publicationType = (isset($genreMap[$genre]) ? $genreMap[$genre] : $genre);
 			$success = $output->addStatement('[@publication-type]', $publicationType);
-			assert($success);
+			assert((boolean) $success);
 		}
 
 		// Get NLM => OpenURL property mapping.
@@ -80,7 +80,7 @@ class Openurl10Nlm30CitationSchemaCrosswalkFilter extends Nlm30Openurl10Crosswal
 		foreach ($propertyMap as $nlm30Property => $openurl10Property) {
 			if ($input->hasStatement($openurl10Property)) {
 				$success = $output->addStatement($nlm30Property, $input->getStatement($openurl10Property));
-				assert($success);
+				assert((boolean) $success);
 			}
 		}
 

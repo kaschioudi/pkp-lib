@@ -3,8 +3,8 @@
 /**
  * @file controllers/tab/settings/appearance/form/PKPAppearanceForm.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class PKPAppearanceForm
@@ -25,7 +25,7 @@ class PKPAppearanceForm extends ContextSettingsForm {
 	 * @param $wizardMode bool True IFF this form is to be opened in wizard mode
 	 * @param $additionalSettings array Additional settings to add, if any
 	 */
-	function PKPAppearanceForm($wizardMode = false, $additionalSettings = array()) {
+	function __construct($wizardMode = false, $additionalSettings = array()) {
 
 		$settings = array_merge($additionalSettings, array(
 			'additionalHomeContent' => 'string',
@@ -44,7 +44,7 @@ class PKPAppearanceForm extends ContextSettingsForm {
 			PluginRegistry::loadCategory('themes', true);
 		}
 
-		parent::ContextSettingsForm($settings, 'controllers/tab/settings/appearance/form/appearanceForm.tpl', $wizardMode);
+		parent::__construct($settings, 'controllers/tab/settings/appearance/form/appearanceForm.tpl', $wizardMode);
 	}
 
 
@@ -245,13 +245,10 @@ class PKPAppearanceForm extends ContextSettingsForm {
 			case 'unselected':
 				$plugin->setEnabled(false);
 				break;
-			case 'leftContext':
+			case 'sidebarContext':
 				$plugin->setEnabled(true);
-				$plugin->setBlockContext(BLOCK_CONTEXT_LEFT_SIDEBAR);
+				$plugin->setBlockContext(BLOCK_CONTEXT_SIDEBAR);
 				$plugin->setSeq((int) $newRowId['sequence']);
-				break;
-			case 'rightContext':
-				// Deprecated
 				break;
 			default:
 				assert(false);

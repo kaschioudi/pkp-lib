@@ -2,8 +2,8 @@
 /**
  * @file classes/security/authorization/internal/SubmissionFileBaseAccessPolicy.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class SubmissionFileBaseAccessPolicy
@@ -28,8 +28,8 @@ class SubmissionFileBaseAccessPolicy extends AuthorizationPolicy {
 	 * @param $fileIdAndRevision string If passed, this policy will try to
 	 * get the submission file from this data.
 	 */
-	function SubmissionFileBaseAccessPolicy($request, $fileIdAndRevision = null) {
-		parent::AuthorizationPolicy('user.authorization.submissionFile');
+	function __construct($request, $fileIdAndRevision = null) {
+		parent::__construct('user.authorization.submissionFile');
 		$this->_request = $request;
 		$this->_fileIdAndRevision = $fileIdAndRevision;
 	}
@@ -70,7 +70,7 @@ class SubmissionFileBaseAccessPolicy extends AuthorizationPolicy {
 			// Get the identifying info from the request
 			$fileId = (int) $request->getUserVar('fileId');
 			$revision = (int) $request->getUserVar('revision');
-			assert($fileId);
+			assert($fileId>0);
 			$cacheId = "$fileId-$revision"; // -0 for most recent revision
 		}
 

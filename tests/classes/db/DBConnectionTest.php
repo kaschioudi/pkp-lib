@@ -3,8 +3,8 @@
 /**
  * @file tests/classes/db/DBConnectionTest.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class DBConnectionTest
@@ -21,7 +21,7 @@ class DBConnectionTest extends DatabaseTestCase {
 	const CONFIG_PGSQL = 'pgsql';
 
 	/**
-	 * @covers DBConnection::DBConnection
+	 * @covers DBConnection::__construct
 	 * @covers DBConnection::initDefaultDBConnection
 	 * @covers DBConnection::initConn
 	 */
@@ -47,7 +47,7 @@ class DBConnectionTest extends DatabaseTestCase {
 	}
 
 	/**
-	 * @covers DBConnection::DBConnection
+	 * @covers DBConnection::__construct
 	 * @covers DBConnection::initDefaultDBConnection
 	 * @covers DBConnection::initConn
 	 * @covers AdodbPostgres7Compat::AdodbPostgres7Compat
@@ -63,7 +63,7 @@ class DBConnectionTest extends DatabaseTestCase {
 	}
 
 	/**
-	 * @covers DBConnection::DBConnection
+	 * @covers DBConnection::__construct
 	 * @covers DBConnection::initCustomDBConnection
 	 * @covers DBConnection::initConn
 	 */

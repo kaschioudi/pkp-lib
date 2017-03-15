@@ -3,8 +3,8 @@
 /**
  * @file classes/i18n/LocaleFile.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class LocaleFile
@@ -29,7 +29,7 @@ class LocaleFile {
 	 * @param $locale string Key for this locale file
 	 * @param $filename string Filename to this locale file
 	 */
-	function LocaleFile($locale, $filename) {
+	function __construct($locale, $filename) {
 		$this->locale = $locale;
 		$this->filename = $filename;
 	}

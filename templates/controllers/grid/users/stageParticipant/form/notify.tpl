@@ -1,8 +1,8 @@
 {**
  * templates/controllers/grid/users/stageParticipant/form/notify.tpl
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * Display a form to notify other users about this file.
@@ -36,7 +36,7 @@
 			{/fbvFormSection}
 
 			{fbvFormSection title="stageParticipants.notify.message" for="message" required="true"}
-				{fbvElement type="textarea" id="message" rich=true}
+				{fbvElement type="textarea" id="message" rich=true required="true"}
 			{/fbvFormSection}
 			{fbvFormButtons id="notifyButton" hideCancel=true submitText="submission.stageParticipants.notify"}
 		{/fbvFormArea}

@@ -2,8 +2,8 @@
 /**
  * @file controllers/api/file/linkAction/FileLinkAction.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class FileLinkAction
@@ -24,8 +24,8 @@ class FileLinkAction extends LinkAction {
 	 * @param $image string optional
 	 * @param $tooltip string optional
 	 */
-	function FileLinkAction($id, &$actionRequest, $title = null, $image = null, $tooltip = null) {
-		parent::LinkAction($id, $actionRequest, $title, $image, $tooltip);
+	function __construct($id, &$actionRequest, $title = null, $image = null, $tooltip = null) {
+		parent::__construct($id, $actionRequest, $title, $image, $tooltip);
 	}
 
 

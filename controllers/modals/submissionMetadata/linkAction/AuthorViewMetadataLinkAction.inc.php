@@ -2,8 +2,8 @@
 /**
  * @file controllers/modals/submissionMetadata/linkAction/AuthorViewMetadataLinkAction.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class AuthorViewMetadataLinkAction
@@ -21,10 +21,10 @@ class AuthorViewMetadataLinkAction extends LinkAction {
 	 * @param $request Request
 	 * @param $submissionId integer The submission to show meta-data for.
 	 */
-	function AuthorViewMetadataLinkAction($request, $submissionId) {
+	function __construct($request, $submissionId) {
 		$dispatcher = $request->getDispatcher();
 		import('lib.pkp.classes.linkAction.request.AjaxModal');
-		parent::LinkAction(
+		parent::__construct(
 			'viewMetadata',
 			new AjaxModal(
 				$dispatcher->url($request, ROUTE_COMPONENT, null,

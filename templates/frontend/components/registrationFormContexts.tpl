@@ -1,13 +1,13 @@
 {**
  * templates/frontend/components/registrationFormContexts.tpl
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @brief Display role selection for all of the journals/presses on this site
  *
- * @uses $contexts array List of journals/presses on this site
+ * @uses $contexts array List of journals/presses on this site that have enabled registration
  * @uses $readerUserGroups array Associative array of user groups with reader
  *  permissions in each context.
  * @uses $authorUserGroups array Associative array of user groups with author

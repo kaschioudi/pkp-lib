@@ -2,8 +2,8 @@
 /**
  * @file classes/security/authorization/internal/UserAccessibleWorkflowStagePolicy.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class UserAccessibleWorkflowStagePolicy
@@ -25,8 +25,8 @@ class UserAccessibleWorkflowStagePolicy extends AuthorizationPolicy {
 	 * @param $stageId The one that will be checked against accessible
 	 * user workflow stages.
 	 */
-	function UserAccessibleWorkflowStagePolicy($stageId) {
-		parent::AuthorizationPolicy('user.authorization.accessibleWorkflowStage');
+	function __construct($stageId) {
+		parent::__construct('user.authorization.accessibleWorkflowStage');
 		$this->_stageId = $stageId;
 	}
 

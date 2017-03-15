@@ -3,8 +3,8 @@
 /**
  * @file controllers/tab/settings/emailTemplates/form/EmailTemplatesForm.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class EmailTemplatesForm
@@ -20,7 +20,7 @@ class EmailTemplatesForm extends ContextSettingsForm {
 	/**
 	 * Constructor.
 	 */
-	function EmailTemplatesForm($wizardMode = false) {
+	function __construct($wizardMode = false) {
 		$settings = array(
 			'emailSignature' => 'string',
 			'envelopeSender' => 'string'
@@ -28,7 +28,7 @@ class EmailTemplatesForm extends ContextSettingsForm {
 
 		$this->addCheck(new FormValidatorEmail($this, 'envelopeSender', 'optional', 'user.profile.form.emailRequired'));
 
-		parent::ContextSettingsForm($settings, 'controllers/tab/settings/emailTemplates/form/emailTemplatesForm.tpl', $wizardMode);
+		parent::__construct($settings, 'controllers/tab/settings/emailTemplates/form/emailTemplatesForm.tpl', $wizardMode);
 	}
 
 

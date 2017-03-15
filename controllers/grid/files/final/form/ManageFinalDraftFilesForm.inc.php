@@ -3,8 +3,8 @@
 /**
  * @file controllers/grid/files/final/form/ManageFinalDraftFilesForm.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class ManageFinalDraftFilesForm
@@ -21,8 +21,8 @@ class ManageFinalDraftFilesForm extends ManageSubmissionFilesForm {
 	 * Constructor.
 	 * @param $submissionId int Submission ID.
 	 */
-	function ManageFinalDraftFilesForm($submissionId) {
-		parent::ManageSubmissionFilesForm($submissionId, 'controllers/grid/files/final/manageFinalDraftFiles.tpl');
+	function __construct($submissionId) {
+		parent::__construct($submissionId, 'controllers/grid/files/final/manageFinalDraftFiles.tpl');
 	}
 
 

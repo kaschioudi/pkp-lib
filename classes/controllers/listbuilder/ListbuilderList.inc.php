@@ -3,8 +3,8 @@
 /**
  * @file classes/controllers/listbuilder/ListbuilderList.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class ListbuilderList
@@ -30,7 +30,7 @@ class ListbuilderList {
 	 * @param $id mixed
 	 * @param $title string optional Locale key.
 	 */
-	function ListbuilderList($id, $title = null) {
+	function __construct($id, $title = null) {
 		$this->setId($id);
 		$this->setTitle($title);
 	}

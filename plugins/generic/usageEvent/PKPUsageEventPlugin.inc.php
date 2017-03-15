@@ -3,8 +3,8 @@
 /**
  * @file plugins/generic/usageEvent/PKPUsageEventPlugin.inc.php
  *
- * Copyright (c) 2013-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2013-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class PKPUsageEventPlugin
@@ -25,8 +25,8 @@ abstract class PKPUsageEventPlugin extends GenericPlugin {
 	/**
 	 * Constructor
 	 */
-	function PKPUsageEventPlugin() {
-		parent::GenericPlugin();
+	function __construct() {
+		parent::__construct();
 	}
 
 	//
@@ -90,13 +90,6 @@ abstract class PKPUsageEventPlugin extends GenericPlugin {
 		return true;
 	}
 
-	/**
-	 * @copydoc GenericPlugin::getManagementVerbs()
-	 */
-	function getManagementVerbs() {
-		return array();
-	}
-
 
 	//
 	// Public methods.
@@ -144,6 +137,17 @@ abstract class PKPUsageEventPlugin extends GenericPlugin {
 	}
 
 	/**
+	 * Get all hooks that define the
+	 * finished file download.
+	 * @return array
+	 */
+	protected function getDownloadFinishedEventHooks() {
+		return array(
+			'FileManager::downloadFileFinished'
+		);
+	}
+
+	/**
 	 * Build an usage event.
 	 * @param $hookName string
 	 * @param $args array
@@ -151,7 +155,7 @@ abstract class PKPUsageEventPlugin extends GenericPlugin {
 	 */
 	protected function buildUsageEvent($hookName, $args) {
 		// Finished downloading a file?
-		if ($hookName == 'FileManager::downloadFileFinished') {
+		if (in_array($hookName, $this->getDownloadFinishedEventHooks())) {
 			// The usage event for this request is already build and
 			// passed to any other registered hook.
 			return null;

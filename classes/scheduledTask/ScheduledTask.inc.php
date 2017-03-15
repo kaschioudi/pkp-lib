@@ -3,8 +3,8 @@
 /**
  * @file classes/scheduledTask/ScheduledTask.inc.php
  *
- * Copyright (c) 2013-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2013-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class ScheduledTask
@@ -36,7 +36,7 @@ abstract class ScheduledTask {
 	 * Constructor.
 	 * @param $args array
 	 */
-	function ScheduledTask($args = array()) {
+	function __construct($args = array()) {
 		$this->_args = $args;
 		$this->_processId = uniqid();
 

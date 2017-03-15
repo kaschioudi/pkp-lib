@@ -3,8 +3,8 @@
 /**
  * @file classes/xslt/XSLTransformationFilter.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class XSLTransformationFilter
@@ -27,7 +27,7 @@ class XSLTransformationFilter extends PersistableFilter {
 	 * be an XML format. See the XMLTypeDescription class for
 	 * more details how to enable XML validation.
 	 */
-	function XSLTransformationFilter($filterGroup, $displayName = 'XSL Transformation') {
+	function __construct($filterGroup, $displayName = 'XSL Transformation') {
 		// Check that we only get xml input, the output type is arbitrary.
 		if (!substr($filterGroup->getInputType(), 0, 5) == 'xml::') fatalError('XSL filters need XML as input.');
 
@@ -39,7 +39,7 @@ class XSLTransformationFilter extends PersistableFilter {
 
 		$this->setDisplayName($displayName);
 
-		parent::PersistableFilter($filterGroup);
+		parent::__construct($filterGroup);
 	}
 
 
@@ -140,7 +140,7 @@ class XSLTransformationFilter extends PersistableFilter {
 
 		// Transform the input
 		$xslTransformer = new XSLTransformer();
-		$result =& $xslTransformer->transform($xml, $xmlType, $this->getXsl(), $this->getXslType(), $this->getResultType());
+		$result = $xslTransformer->transform($xml, $xmlType, $this->getXsl(), $this->getXslType(), $this->getResultType());
 		return $result;
 	}
 }

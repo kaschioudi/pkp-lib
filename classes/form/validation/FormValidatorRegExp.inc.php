@@ -3,8 +3,8 @@
 /**
  * @file classes/form/validation/FormValidatorRegExp.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class FormValidatorRegExp
@@ -24,10 +24,10 @@ class FormValidatorRegExp extends FormValidator {
 	 * @param $message string the error message for validation failures (i18n key)
 	 * @param $regExp string the regular expression (PCRE form)
 	 */
-	function FormValidatorRegExp(&$form, $field, $type, $message, $regExp) {
+	function __construct(&$form, $field, $type, $message, $regExp) {
 		import('lib.pkp.classes.validation.ValidatorRegExp');
 		$validator = new ValidatorRegExp($regExp);
-		parent::FormValidator($form, $field, $type, $message, $validator);
+		parent::__construct($form, $field, $type, $message, $validator);
 	}
 }
 

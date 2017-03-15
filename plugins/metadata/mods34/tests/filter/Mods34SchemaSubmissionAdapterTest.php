@@ -3,8 +3,8 @@
 /**
  * @file plugins/metadata/mods34/tests/filter/Mods34SchemaSubmissionAdapterTest.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class Mods34SchemaSubmissionAdapterTest
@@ -53,7 +53,7 @@ class Mods34SchemaSubmissionAdapterTest extends Mods34DescriptionTestCase {
 		$submissionDescription->removeStatement('abstract');
 
 		// Test metadata injection (no replace).
-		$resultSubmission =& $adapter->injectMetadataIntoDataObject($submissionDescription, $submission, 'lib.pkp.tests.plugins.metadata.mods34.filter.Author');
+		$resultSubmission =& $adapter->injectMetadataIntoDataObject($submissionDescription, $submission);
 		$expectedResult = array(
 			'cleanTitle' => array('en_US' => 'new submission title', 'de_DE' => 'neuer Titel'),
 			'title' => array('en_US' => 'new submission title', 'de_DE' => 'neuer Titel'),

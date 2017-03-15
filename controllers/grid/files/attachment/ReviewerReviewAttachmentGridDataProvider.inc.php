@@ -2,8 +2,8 @@
 /**
  * @file controllers/grid/files/attachment/ReviewerReviewAttachmentGridDataProvider.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class ReviewerReviewAttachmentGridDataProvider
@@ -22,8 +22,8 @@ class ReviewerReviewAttachmentGridDataProvider extends SubmissionFilesGridDataPr
 	/**
 	 * Constructor
 	 */
-	function ReviewerReviewAttachmentGridDataProvider() {
-		parent::SubmissionFilesGridDataProvider(SUBMISSION_FILE_REVIEW_ATTACHMENT);
+	function __construct() {
+		parent::__construct(SUBMISSION_FILE_REVIEW_ATTACHMENT);
 	}
 
 
@@ -47,7 +47,7 @@ class ReviewerReviewAttachmentGridDataProvider extends SubmissionFilesGridDataPr
 			assert($assocType == ASSOC_TYPE_REVIEW_ASSIGNMENT);
 
 			$this->setUploaderRoles($roleAssignments);
-			import('classes.security.authorization.ReviewStageAccessPolicy');
+			import('lib.pkp.classes.security.authorization.ReviewStageAccessPolicy');
 
 			$authorizationPolicy = new ReviewStageAccessPolicy($request, $args, $roleAssignments, 'submissionId', $request->getUserVar('stageId'));
 			$paramName = 'assocId';

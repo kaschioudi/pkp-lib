@@ -3,8 +3,8 @@
 /**
  * @file controllers/grid/submissions/assignedSubmissions/ActiveSubmissionsListGridHandler.inc.php
  *
- * Copyright (c) 2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2016-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class ActiveSubmissionsListGridHandler
@@ -15,7 +15,6 @@
 
 // Import grid base classes.
 import('lib.pkp.controllers.grid.submissions.SubmissionsListGridHandler');
-import('lib.pkp.controllers.grid.submissions.SubmissionsListGridRow');
 
 // Filter editor
 define('FILTER_EDITOR_ALL', 0);
@@ -25,8 +24,8 @@ class ActiveSubmissionsListGridHandler extends SubmissionsListGridHandler {
 	/**
 	 * Constructor
 	 */
-	function ActiveSubmissionsListGridHandler() {
-		parent::SubmissionsListGridHandler();
+	function __construct() {
+		parent::__construct();
 		$this->addRoleAssignment(
 			array(ROLE_ID_SITE_ADMIN, ROLE_ID_MANAGER, ROLE_ID_SUB_EDITOR, ROLE_ID_REVIEWER, ROLE_ID_ASSISTANT, ROLE_ID_AUTHOR),
 			array('fetchGrid', 'fetchRows', 'fetchRow')
@@ -42,10 +41,10 @@ class ActiveSubmissionsListGridHandler extends SubmissionsListGridHandler {
 	// Implement template methods from PKPHandler
 	//
 	/**
-	 * @copydoc PKPHandler::initialize()
+	 * @copydoc GridHandler::initialize()
 	 */
-	function initialize($request) {
-		parent::initialize($request);
+	function initialize($request, $args = null) {
+		parent::initialize($request, $args);
 
 		AppLocale::requireComponents(LOCALE_COMPONENT_PKP_USER);
 
@@ -82,6 +81,26 @@ class ActiveSubmissionsListGridHandler extends SubmissionsListGridHandler {
 	}
 
 	/**
+	 * @copyDoc GridHandler::renderFilter()
+	 */
+	function renderFilter($request, $filterData = array()) {
+		$filterData = array('active' => true);
+		return parent::renderFilter($request, $filterData);
+	}
+
+	/**
+	 * @copyDoc GridHandler::getFilterSelectionData()
+	 */
+	function getFilterSelectionData($request) {
+		return array_merge(
+			parent::getFilterSelectionData($request),
+			array(
+				'orphaned' => $request->getUserVar('orphaned') ? (int) $request->getUserVar('orphaned') : null,
+			)
+		);
+	}
+
+	/**
 	 * @copydoc GridHandler::loadData()
 	 */
 	protected function loadData($request, $filter) {
@@ -89,7 +108,7 @@ class ActiveSubmissionsListGridHandler extends SubmissionsListGridHandler {
 		$context = $request->getContext();
 		$rangeInfo = $this->getGridRangeInfo($request, $this->getId());
 
-		list($search, $column, $stageId) = $this->getFilterValues($filter);
+		list($search, $column, $stageId, $sectionId) = $this->getFilterValues($filter);
 		$title = $author = $editor = null;
 		if ($column == 'title') {
 			$title = $search;
@@ -100,7 +119,7 @@ class ActiveSubmissionsListGridHandler extends SubmissionsListGridHandler {
 		}
 
 		$nonExistingUserId = 0;
-		return $submissionDao->getActiveSubmissions($context->getId(), $title, $author, $editor, $stageId, $rangeInfo);
+		return $submissionDao->getActiveSubmissions($context->getId(), $title, $author, $editor, $stageId, $sectionId, $rangeInfo, $filter['orphaned']);
 	}
 
 
@@ -123,6 +142,7 @@ class ActiveSubmissionsListGridHandler extends SubmissionsListGridHandler {
 
 		return $columns;
 	}
+
 }
 
 ?>

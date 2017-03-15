@@ -3,8 +3,8 @@
 /**
  * @file controllers/tab/pubIds/form/PKPPublicIdentifiersForm.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class PKPPublicIdentifiersForm
@@ -41,8 +41,8 @@ class PKPPublicIdentifiersForm extends Form {
 	 * @param $stageId integer
 	 * @param $formParams array
 	 */
-	function PKPPublicIdentifiersForm($pubObject, $stageId = null, $formParams = null) {
-		parent::Form('controllers/tab/pubIds/form/publicIdentifiersForm.tpl');
+	function __construct($pubObject, $stageId = null, $formParams = null) {
+		parent::__construct('controllers/tab/pubIds/form/publicIdentifiersForm.tpl');
 
 		$this->_pubObject = $pubObject;
 		$this->_stageId = $stageId;
@@ -67,11 +67,12 @@ class PKPPublicIdentifiersForm extends Form {
 	 */
 	function fetch($request) {
 		$templateMgr = TemplateManager::getManager($request);
-		$pubIdPlugins = PluginRegistry::loadCategory('pubIds', true, $this->getContextId());
-		$templateMgr->assign('pubIdPlugins', $pubIdPlugins);
-		$templateMgr->assign('pubObject', $this->getPubObject());
-		$templateMgr->assign('stageId', $this->getStageId());
-		$templateMgr->assign('formParams', $this->getFormParams());
+		$templateMgr->assign(array(
+			'pubIdPlugins' => PluginRegistry::loadCategory('pubIds', true, $this->getContextId()),
+			'pubObject' => $this->getPubObject(),
+			'stageId' => $this->getStageId(),
+			'formParams' => $this->getFormParams(),
+		));
 		// consider JavaScripts
 		$pubIdPluginHelper = new PKPPubIdPluginHelper();
 		$pubIdPluginHelper->addJavaScripts($this->getContextId(), $request, $templateMgr);

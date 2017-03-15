@@ -3,8 +3,8 @@
 /**
  * @file classes/file/EditableFile.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class EditableFile
@@ -25,7 +25,7 @@ class EditableFile {
 	 * Constructor
 	 * @param $filename string Filename
 	 */
-	function EditableFile($filename) {
+	function __construct($filename) {
 		import('lib.pkp.classes.file.FileWrapper');
 		$this->filename = $filename;
 		$wrapper = FileWrapper::wrapper($this->filename);

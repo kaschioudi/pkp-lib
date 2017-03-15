@@ -2,8 +2,8 @@
 /**
  * @file classes/security/authorization/HttpsPolicy.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class HttpsPolicy
@@ -23,8 +23,8 @@ class HttpsPolicy extends AuthorizationPolicy {
 	 *
 	 * @param $request PKPRequest
 	 */
-	function HttpsPolicy($request) {
-		parent::AuthorizationPolicy();
+	function __construct($request) {
+		parent::__construct();
 		$this->_request = $request;
 
 		// Add advice

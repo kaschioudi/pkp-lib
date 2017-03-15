@@ -1,8 +1,8 @@
 {**
  * templates/controllers/grid/announcements/form/announcementForm.tpl
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * Announcement form to read/create/edit announcements.
@@ -43,16 +43,16 @@
 				{fbvElement type="select" id="typeId" from=$announcementTypes selected=$selectedTypeId label="manager.announcements.form.typeId" translate=false}
 			{/if}
 			{fbvFormSection title="manager.announcements.form.title" for="title" required="true"}
-				{fbvElement type="text" multilingual="true" id="title" value=$title maxlength="255"}
+				{fbvElement type="text" multilingual="true" id="title" value=$title maxlength="255" required="true"}
 			{/fbvFormSection}
 			{fbvFormSection title="manager.announcements.form.descriptionShort" for="descriptionShort" required="true"}
-				{fbvElement type="textarea" multilingual="true" id="descriptionShort" value=$descriptionShort label="manager.announcements.form.descriptionShortInstructions" rich=true height=$fbvStyles.height.SHORT}
+				{fbvElement type="textarea" multilingual="true" id="descriptionShort" value=$descriptionShort label="manager.announcements.form.descriptionShortInstructions" required="true" rich=true height=$fbvStyles.height.SHORT}
 			{/fbvFormSection}
 			{fbvFormSection title="manager.announcements.form.description" for="description"}
 				{fbvElement type="textarea" multilingual="true" id="description" value=$description label="manager.announcements.form.descriptionInstructions" rich=true}
 			{/fbvFormSection}
 			{fbvFormSection title="manager.announcements.form.dateExpire" for="dataExpire"}
-				{fbvElement type="text" id="dateExpire" value=$dateExpire|date_format:"%y-%m-%d" label="manager.announcements.form.dateExpireInstructions" class="datepicker"}
+				{fbvElement type="text" id="dateExpire" value=$dateExpire|date_format:$dateFormatShort label="manager.announcements.form.dateExpireInstructions" class="datepicker"}
 			{/fbvFormSection}
 		{/fbvFormArea}
 		<p><span class="formRequired">{translate key="common.requiredField"}</span></p>

@@ -1,8 +1,8 @@
 {**
  * templates/controllers/grid/announcements/form/announcementTypeForm.tpl
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * Form to read/create/edit announcement types.
@@ -23,9 +23,9 @@
 			<input type="hidden" name="announcementTypeId" value="{$typeId|escape}" />
 		{/if}
 		{fbvFormSection title="manager.announcementTypes.form.typeName" for="title" required="true"}
-			{fbvElement type="text" multilingual="true" id="name" value=$name maxlength="255"}
+			{fbvElement type="text" multilingual="true" id="name" value=$name maxlength="255" required="true"}
 		{/fbvFormSection}
 	{/fbvFormArea}
+	<p><span class="formRequired">{translate key="common.requiredField"}</span></p>
 	{fbvFormButtons id="announcementTypeFormSubmit" submitText="common.save"}
 </form>
-<p><span class="formRequired">{translate key="common.requiredField"}</span></p>

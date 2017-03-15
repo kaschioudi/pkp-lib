@@ -1,8 +1,8 @@
 {**
  * templates/manager/reviewForms/reviewFormForm.tpl
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * Form to create/modify a review form.
@@ -27,7 +27,7 @@
 
 	{fbvFormArea id="reviewFormForm"}
 		{fbvFormSection title="manager.reviewForms.title" required=true for="title"}
-			{fbvElement type="text" id="title" value=$title multilingual=true}
+			{fbvElement type="text" id="title" value=$title multilingual=true required=true}
 		{/fbvFormSection}
 		{fbvFormSection title="manager.reviewForms.description" for="description"}
 			{fbvElement type="textarea" id="description" value=$description multilingual=true rich=true}

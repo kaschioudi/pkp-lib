@@ -3,8 +3,8 @@
 /**
  * @file classes/core/VirtualArrayIterator.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class VirtualArrayIterator
@@ -40,7 +40,8 @@ class VirtualArrayIterator extends ItemIterator {
 	 * @param $page int the current page number
 	 * @param $itemsPerPage int Number of items to display per page
 	 */
-	function VirtualArrayIterator(&$theArray, $totalItems, $page=-1, $itemsPerPage=-1) {
+	function __construct(&$theArray, $totalItems, $page=-1, $itemsPerPage=-1) {
+		parent::__construct();
 		if ($page>=1 && $itemsPerPage>=1) {
 			$this->page = $page;
 		} else {

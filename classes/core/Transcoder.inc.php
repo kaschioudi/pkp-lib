@@ -3,8 +3,8 @@
 /**
  * @file classes/core/Transcoder.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class Transcoder
@@ -30,7 +30,7 @@ class Transcoder {
 	 * @param $toEncoding string Name of target encoding
 	 * @param $translit boolean Whether or not to transliterate while transcoding
 	 */
-	function Transcoder($fromEncoding, $toEncoding, $translit = false) {
+	function __construct($fromEncoding, $toEncoding, $translit = false) {
 		$this->fromEncoding = $fromEncoding;
 		$this->toEncoding = $toEncoding;
 		$this->translit = $translit;

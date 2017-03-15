@@ -3,8 +3,8 @@
 /**
  * @file controllers/grid/files/dependent/DependentFilesGridDataProvider.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class DependentFilesGridDataProvider
@@ -28,10 +28,10 @@ class DependentFilesGridDataProvider extends SubmissionFilesGridDataProvider {
 	 * Constructor
 	 * @param $assocId int Association ID
 	 */
-	function DependentFilesGridDataProvider($assocId) {
+	function __construct($assocId) {
 		assert(is_numeric($assocId));
 		$this->_assocId = (int) $assocId;
-		parent::SubmissionFilesGridDataProvider(SUBMISSION_FILE_DEPENDENT);
+		parent::__construct(SUBMISSION_FILE_DEPENDENT);
 
 	}
 

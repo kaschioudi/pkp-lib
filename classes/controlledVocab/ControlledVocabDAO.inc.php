@@ -3,8 +3,8 @@
 /**
  * @file classes/controlledVocab/ControlledVocabDAO.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class ControlledVocabDAO
@@ -20,8 +20,8 @@ class ControlledVocabDAO extends DAO {
 	/**
 	 * Constructor
 	 */
-	function ControlledVocabDAO() {
-		parent::DAO();
+	function __construct() {
+		parent::__construct();
 	}
 
 	/**
@@ -160,7 +160,7 @@ class ControlledVocabDAO extends DAO {
 	function deleteObjectById($controlledVocabId) {
 		$params = array((int) $controlledVocabId);
 		$controlledVocabEntryDao = DAORegistry::getDAO('ControlledVocabEntryDAO');
-		$controlledVocabEntries =& $this->enumerate($controlledVocabId);
+		$controlledVocabEntries = $this->enumerate($controlledVocabId);
 		foreach ($controlledVocabEntries as $controlledVocabEntryId => $controlledVocabEntryName) {
 			$controlledVocabEntryDao->deleteObjectById($controlledVocabEntryId);
 		}
@@ -174,7 +174,7 @@ class ControlledVocabDAO extends DAO {
 	 * @param $assocType int
 	 * @param $assocId int
 	 */
-	function getBySymbolic($symbolic, $assocType, $assocId) {
+	function getBySymbolic($symbolic, $assocType = 0, $assocId = 0) {
 		$result = $this->retrieve(
 			'SELECT * FROM controlled_vocabs WHERE symbolic = ? AND assoc_type = ? AND assoc_id = ?',
 			array($symbolic, (int) $assocType, (int) $assocId)

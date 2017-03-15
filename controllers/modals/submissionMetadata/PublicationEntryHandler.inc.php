@@ -3,8 +3,8 @@
 /**
  * @file controllers/modals/submissionMetadata/PublicationEntryHandler.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class PublicationEntryHandler
@@ -30,8 +30,8 @@ class PublicationEntryHandler extends Handler {
 	/**
 	 * Constructor.
 	 */
-	function PublicationEntryHandler() {
-		parent::Handler();
+	function __construct() {
+		parent::__construct();
 		$this->addRoleAssignment(
 			array(ROLE_ID_SUB_EDITOR, ROLE_ID_MANAGER),
 			array('fetch', 'fetchFormatInfo'));
@@ -104,18 +104,12 @@ class PublicationEntryHandler extends Handler {
 	 */
 	function fetch($args, $request) {
 		$templateMgr = TemplateManager::getManager($request);
-
-		$submission = $this->getSubmission();
-
-		$templateMgr->assign('submissionId', $submission->getId());
-		$templateMgr->assign('stageId', $this->getStageId());
-		$tabPosition = (int) $this->getTabPosition();
-		$templateMgr->assign('selectedTab', $tabPosition);
-
-		if ($request->getUserVar('hideHelp')) {
-			$templateMgr->assign('hideHelp', true);
-		}
-
+		$templateMgr->assign(array(
+			'submissionId' => $this->getSubmission()->getId(),
+			'stageId' => $this->getStageId(),
+			'selectedTab' => (int) $this->getTabPosition(),
+			'hideHelp' => (boolean) $request->getUserVar('hideHelp'),
+		));
 		$this->setupTemplate($request);
 	}
 

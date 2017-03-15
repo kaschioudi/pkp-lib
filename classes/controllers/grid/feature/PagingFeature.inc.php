@@ -3,8 +3,8 @@
 /**
  * @file classes/controllers/grid/feature/PagingFeature.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class PagingFeature
@@ -23,8 +23,8 @@ class PagingFeature extends GeneralPagingFeature {
 	 * Constructor.
 	 * @param $id string Feature identifier.
 	 */
-	function PagingFeature($id = 'paging') {
-		parent::GeneralPagingFeature($id);
+	function __construct($id = 'paging') {
+		parent::__construct($id);
 	}
 
 
@@ -43,14 +43,13 @@ class PagingFeature extends GeneralPagingFeature {
 	 * @copydoc GridFeature::fetchUIElements()
 	 */
 	function fetchUIElements($request, $grid) {
-		$iterator = $this->getItemIterator();
 		$options = $this->getOptions();
-
 		$templateMgr = TemplateManager::getManager($request);
-		$templateMgr->assign('iterator', $iterator);
-		$templateMgr->assign('currentItemsPerPage', $options['currentItemsPerPage']);
-		$templateMgr->assign('grid', $grid);
-
+		$templateMgr->assign(array(
+			'iterator' => $this->getItemIterator(),
+			'currentItemsPerPage' => $options['currentItemsPerPage'],
+			'grid' => $grid,
+		));
 		return array('pagingMarkup' => $templateMgr->fetch('controllers/grid/feature/gridPaging.tpl'));
 	}
 

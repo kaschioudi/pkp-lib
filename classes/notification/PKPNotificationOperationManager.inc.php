@@ -3,8 +3,8 @@
 /**
  * @file classes/notification/PKPNotificationOperationManager.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class PKPNotificationOperationManager
@@ -24,7 +24,7 @@ abstract class PKPNotificationOperationManager implements INotificationInfoProvi
 	/**
 	 * Constructor.
 	 */
-	function PKPNotificationOperationManager() {
+	function __construct() {
 	}
 
 
@@ -413,19 +413,21 @@ abstract class PKPNotificationOperationManager implements INotificationInfoProvi
 			$notification->setDateRead($dateRead);
 		}
 
-		$templateMgr->assign('notificationDateCreated', $notification->getDateCreated());
-		$templateMgr->assign('notificationId', $notification->getId());
-		$templateMgr->assign('notificationContents',$this->getNotificationContents($request, $notification));
-		$templateMgr->assign('notificationTitle',$this->getNotificationTitle($notification));
-		$templateMgr->assign('notificationStyleClass', $this->getStyleClass($notification));
-		$templateMgr->assign('notificationIconClass', $this->getIconClass($notification));
-		$templateMgr->assign('notificationDateRead', $notification->getDateRead());
+		$user = $request->getUser();
+		$templateMgr->assign(array(
+			'isUserLoggedIn' => $user,
+			'notificationDateCreated' => $notification->getDateCreated(),
+			'notificationId' => $notification->getId(),
+			'notificationContents' => $this->getNotificationContents($request, $notification),
+			'notificationTitle' => $this->getNotificationTitle($notification),
+			'notificationStyleClass' => $this->getStyleClass($notification),
+			'notificationIconClass' => $this->getIconClass($notification),
+			'notificationDateRead' => $notification->getDateRead(),
+		));
+
 		if($notification->getLevel() != NOTIFICATION_LEVEL_TRIVIAL) {
 			$templateMgr->assign('notificationUrl', $this->getNotificationUrl($request, $notification));
 		}
-
-		$user = $request->getUser();
-		$templateMgr->assign('isUserLoggedIn', $user);
 
 		return $templateMgr->fetch($notificationTemplate);
 	}

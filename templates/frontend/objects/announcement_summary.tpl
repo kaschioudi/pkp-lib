@@ -1,8 +1,8 @@
 {**
  * templates/frontend/objects/announcement_summary.tpl
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @brief Display a summary view of an announcement
@@ -21,7 +21,7 @@
 		</a>
 	</{$heading}>
 	<div class="date">
-		{$announcement->getDatePosted()}
+		{$announcement->getDatePosted()|date_format:$dateFormatShort}
 	</div>
 	<div class="summary">
 		{$announcement->getLocalizedDescriptionShort()|strip_unsafe_html}

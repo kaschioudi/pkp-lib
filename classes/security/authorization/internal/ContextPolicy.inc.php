@@ -2,8 +2,8 @@
 /**
  * @file classes/security/authorization/internal/ContextPolicy.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class ContextPolicy
@@ -21,8 +21,8 @@ class ContextPolicy extends PolicySet {
 	 * Constructor
 	 * @param $request PKPRequest
 	 */
-	function ContextPolicy($request) {
-		parent::PolicySet();
+	function __construct($request) {
+		parent::__construct();
 
 		// Ensure we're in a context
 		import('lib.pkp.classes.security.authorization.ContextRequiredPolicy');

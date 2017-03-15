@@ -2,8 +2,8 @@
 /**
  * @file controllers/api/file/linkAction/DownloadLibraryFileLinkAction.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class DownloadLibraryFileLinkAction
@@ -22,7 +22,7 @@ class DownloadLibraryFileLinkAction extends LinkAction {
 	 * @param $libraryFile LibraryFile the library file to
 	 *  link to.
 	 */
-	function DownloadLibraryFileLinkAction($request, $libraryFile) {
+	function __construct($request, $libraryFile) {
 		// Instantiate the redirect action request.
 		$router = $request->getRouter();
 		import('lib.pkp.classes.linkAction.request.PostAndRedirectAction');
@@ -36,7 +36,7 @@ class DownloadLibraryFileLinkAction extends LinkAction {
 		);
 
 		// Configure the file link action.
-		parent::LinkAction(
+		parent::__construct(
 			'downloadFile', $redirectRequest, $libraryFile->getLocalizedName(),
 			$libraryFile->getDocumentType()
 		);

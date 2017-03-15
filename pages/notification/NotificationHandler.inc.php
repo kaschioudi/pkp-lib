@@ -3,8 +3,8 @@
 /**
  * @file pages/notification/NotificationHandler.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class NotificationHandler
@@ -20,8 +20,8 @@ class NotificationHandler extends Handler {
 	/**
 	 * Constructor
 	 */
-	function NotificationHandler() {
-		parent::Handler();
+	function __construct() {
+		parent::__construct();
 	}
 
 	/**
@@ -130,13 +130,14 @@ class NotificationHandler extends Handler {
 		$version = $versionDao->getCurrentVersion();
 
 		$templateMgr = TemplateManager::getManager($request);
-		$templateMgr->assign('version', $version->getVersionString(false));
-		$templateMgr->assign('selfUrl', $request->getCompleteUrl());
-		$templateMgr->assign('locale', AppLocale::getPrimaryLocale());
-		$templateMgr->assign('appName', $appName);
-		$templateMgr->assign('siteTitle', $siteTitle);
-		$templateMgr->assign('formattedNotifications', $notifications);
-
+		$templateMgr->assign(array(
+			'version' => $version->getVersionString(false),
+			'selfUrl' => $request->getCompleteUrl(),
+			'locale' => AppLocale::getPrimaryLocale(),
+			'appName' => $appName,
+			'siteTitle' => $siteTitle,
+			'formattedNotifications' => $notifications,
+		));
 		$templateMgr->display('notification/' . $typeMap[$type], $mimeTypeMap[$type]);
 
 		return true;

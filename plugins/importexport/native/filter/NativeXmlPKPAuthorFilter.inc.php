@@ -3,8 +3,8 @@
 /**
  * @file plugins/importexport/native/filter/NativeXmlPKPAuthorFilter.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class NativeXmlPKPAuthorFilter
@@ -20,9 +20,9 @@ class NativeXmlPKPAuthorFilter extends NativeImportFilter {
 	 * Constructor
 	 * @param $filterGroup FilterGroup
 	 */
-	function NativeXmlPKPAuthorFilter($filterGroup) {
+	function __construct($filterGroup) {
 		$this->setDisplayName('Native XML author import');
-		parent::NativeImportFilter($filterGroup);
+		parent::__construct($filterGroup);
 	}
 
 	//
@@ -81,10 +81,11 @@ class NativeXmlPKPAuthorFilter extends NativeImportFilter {
 			if (in_array($userGroupName, $userGroup->getName(null))) {
 				// Found a candidate; stash it.
 				$author->setUserGroupId($userGroup->getId());
+				break;
 			}
 		}
 		if (!$author->getUserGroupId()) {
-			fatalError("Could not identify a matching user group \"$userGroupName\".");
+			$deployment->addError(ASSOC_TYPE_SUBMISSION, $submission->getId(), __('plugins.importexport.common.error.unknownUserGroup', array('param' => $userGroupName)));
 		}
 
 		// Handle metadata in subelements

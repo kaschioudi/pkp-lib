@@ -2,8 +2,8 @@
 /**
  * @file classes/security/authorization/internal/SubmissionAuthorPolicy.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class SubmissionAuthorPolicy
@@ -25,8 +25,8 @@ class SubmissionAuthorPolicy extends AuthorizationPolicy {
 	 * Constructor
 	 * @param $request PKPRequest
 	 */
-	function SubmissionAuthorPolicy($request) {
-		parent::AuthorizationPolicy('user.authorization.submissionAuthor');
+	function __construct($request) {
+		parent::__construct('user.authorization.submissionAuthor');
 		$this->_request = $request;
 	}
 

@@ -6,8 +6,8 @@
 /**
  * @file controllers/modals/submissionMetadata/linkAction/ReviewerViewMetadataLinkAction.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class ReviewerViewMetadataLinkAction
@@ -26,7 +26,7 @@ class ReviewerViewMetadataLinkAction extends LinkAction {
 	 * @param $submissionId integer
 	 * @param $reviewAssignmentId integer
 	 */
-	function ReviewerViewMetadataLinkAction($request, $submissionId, $reviewAssignmentId) {
+	function __construct($request, $submissionId, $reviewAssignmentId) {
 		// Instantiate the meta-data modal.
 		$dispatcher = $request->getDispatcher();
 		import('lib.pkp.classes.linkAction.request.AjaxModal');
@@ -37,7 +37,7 @@ class ReviewerViewMetadataLinkAction extends LinkAction {
 				__('reviewer.step1.viewAllDetails'), 'modal_information');
 
 		// Configure the link action.
-		parent::LinkAction('viewMetadata', $modal, __('reviewer.step1.viewAllDetails'));
+		parent::__construct('viewMetadata', $modal, __('reviewer.step1.viewAllDetails'));
 	}
 }
 

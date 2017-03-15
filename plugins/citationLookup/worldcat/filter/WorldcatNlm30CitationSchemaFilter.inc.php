@@ -7,8 +7,8 @@
 /**
  * @file plugins/citationLookup/worldcat/filter/WorldcatNlm30CitationSchemaFilter.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class WorldcatNlm30CitationSchemaFilter
@@ -36,7 +36,7 @@ class WorldcatNlm30CitationSchemaFilter extends Nlm30CitationSchemaFilter {
 	 * Constructor
 	 * @param $filterGroup FilterGroup
 	 */
-	function WorldcatNlm30CitationSchemaFilter($filterGroup) {
+	function __construct($filterGroup) {
 		$this->setDisplayName('WorldCat');
 
 		// Instantiate the settings of this filter
@@ -46,7 +46,7 @@ class WorldcatNlm30CitationSchemaFilter extends Nlm30CitationSchemaFilter {
 				FORM_VALIDATOR_OPTIONAL_VALUE);
 		$this->addSetting($apiKeySetting);
 
-		parent::Nlm30CitationSchemaFilter($filterGroup, array(NLM30_PUBLICATION_TYPE_BOOK));
+		parent::__construct($filterGroup, array(NLM30_PUBLICATION_TYPE_BOOK));
 	}
 
 	//

@@ -3,8 +3,8 @@
 /**
  * @file classes/submission/SubmissionMetadataFormImplementation.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class SubmissionMetadataFormImplementation
@@ -23,7 +23,7 @@ class PKPSubmissionMetadataFormImplementation {
 	 * Constructor.
 	 * @param $parentForm Form A form that can use this form.
 	 */
-	function PKPSubmissionMetadataFormImplementation($parentForm = null) {
+	function __construct($parentForm = null) {
 		assert(is_a($parentForm, 'Form'));
 		$this->_parentForm = $parentForm;
 	}
@@ -46,9 +46,9 @@ class PKPSubmissionMetadataFormImplementation {
 		import('lib.pkp.classes.form.validation.FormValidatorCustom');
 
 		// Validation checks.
-		$this->_parentForm->addCheck(new FormValidatorLocale($this->_parentForm, 'title', 'required', 'submission.submit.form.titleRequired'));
+		$this->_parentForm->addCheck(new FormValidatorLocale($this->_parentForm, 'title', 'required', 'submission.submit.form.titleRequired', $submission->getLocale()));
 		if ($this->_getAbstractsRequired($submission)) {
-			$this->_parentForm->addCheck(new FormValidatorLocale($this->_parentForm, 'abstract', 'required', 'submission.submit.form.abstractRequired'));
+			$this->_parentForm->addCheck(new FormValidatorLocale($this->_parentForm, 'abstract', 'required', 'submission.submit.form.abstractRequired', $submission->getLocale()));
 		}
 
 		// Validates that at least one author has been added (note that authors are in grid, so Form does not
@@ -68,7 +68,7 @@ class PKPSubmissionMetadataFormImplementation {
 	function initData($submission) {
 		if (isset($submission)) {
 			$formData = array(
-				'title' => $submission->getTitle(null), // Localized
+				'title' => $submission->getTitle(null, false), // Localized
 				'prefix' => $submission->getPrefix(null), // Localized
 				'subtitle' => $submission->getSubtitle(null), // Localized
 				'abstract' => $submission->getAbstract(null), // Localized
@@ -76,7 +76,8 @@ class PKPSubmissionMetadataFormImplementation {
 				'type' => $submission->getType(null), // Localized
 				'source' =>$submission->getSource(null), // Localized
 				'rights' => $submission->getRights(null), // Localized
-				'citations' => $submission->getCitations()
+				'citations' => $submission->getCitations(),
+				'locale' => $submission->getLocale(),
 			);
 
 			foreach ($formData as $key => $data) {
@@ -107,7 +108,7 @@ class PKPSubmissionMetadataFormImplementation {
 	 */
 	function readInputData() {
 		// 'keywords' is a tagit catchall that contains an array of values for each keyword/locale combination on the form.
-		$userVars = array('title', 'prefix', 'subtitle', 'abstract', 'coverage', 'type', 'source', 'rights', 'keywords', 'citations');
+		$userVars = array('title', 'prefix', 'subtitle', 'abstract', 'coverage', 'type', 'source', 'rights', 'keywords', 'citations', 'locale');
 		$this->_parentForm->readUserVars($userVars);
 	}
 
@@ -139,6 +140,13 @@ class PKPSubmissionMetadataFormImplementation {
 		$submission->setSource($this->_parentForm->getData('source'), null); // Localized
 		$submission->setCitations($this->_parentForm->getData('citations'));
 
+		// Update submission locale
+		$newLocale = $this->_parentForm->getData('locale');
+		$context = $request->getContext();
+		$supportedSubmissionLocales = $context->getSetting('supportedSubmissionLocales');
+		if (empty($supportedSubmissionLocales)) $supportedSubmissionLocales = array($context->getPrimaryLocale());
+		if (in_array($newLocale, $supportedSubmissionLocales)) $submission->setLocale($newLocale);
+
 		// Save the submission
 		$submissionDao->updateObject($submission);
 
@@ -162,7 +170,7 @@ class PKPSubmissionMetadataFormImplementation {
 
 		if (is_array($tagitKeywords)) {
 			foreach ($locales as $locale) {
-				$keywords[$locale] = array_key_exists($locale . '-keyword', $tagitKeywords) ? $tagitKeywords[$locale . '-keyword'] : array();
+				$keywords[$locale] = array_key_exists($locale . '-keywords', $tagitKeywords) ? $tagitKeywords[$locale . '-keywords'] : array();
 				$agencies[$locale] = array_key_exists($locale . '-agencies', $tagitKeywords) ? $tagitKeywords[$locale . '-agencies'] : array();
 				$disciplines[$locale] = array_key_exists($locale . '-disciplines', $tagitKeywords) ? $tagitKeywords[$locale . '-disciplines'] : array();
 				$languages[$locale] = array_key_exists($locale . '-languages', $tagitKeywords) ? $tagitKeywords[$locale . '-languages'] : array();

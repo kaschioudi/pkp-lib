@@ -3,8 +3,8 @@
 /**
  * @file controllers/grid/files/review/AuthorReviewRevisionsGridHandler.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class AuthorReviewRevisionsGridHandler
@@ -19,9 +19,9 @@ class AuthorReviewRevisionsGridHandler extends FileListGridHandler {
 	/**
 	 * Constructor
 	 */
-	function AuthorReviewRevisionsGridHandler() {
+	function __construct() {
 		import('lib.pkp.controllers.grid.files.review.ReviewGridDataProvider');
-		parent::FileListGridHandler(
+		parent::__construct(
 			new ReviewGridDataProvider(SUBMISSION_FILE_REVIEW_REVISION),
 			null,
 			FILE_GRID_ADD|FILE_GRID_EDIT

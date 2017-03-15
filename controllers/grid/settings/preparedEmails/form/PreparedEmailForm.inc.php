@@ -3,8 +3,8 @@
 /**
  * @file controllers/grid/settings/preparedEmails/form/PreparedEmailForm.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class PreparedEmailForm
@@ -29,8 +29,8 @@ class PreparedEmailForm extends Form {
 	 * @param $emailKey string
 	 * @param $context Context
 	 */
-	function PreparedEmailForm($emailKey = null, $context) {
-		parent::Form('controllers/grid/settings/preparedEmails/form/emailTemplateForm.tpl');
+	function __construct($emailKey = null, $context) {
+		parent::__construct('controllers/grid/settings/preparedEmails/form/emailTemplateForm.tpl');
 
 		$this->_context = $context;
 		$this->setEmailKey($emailKey);

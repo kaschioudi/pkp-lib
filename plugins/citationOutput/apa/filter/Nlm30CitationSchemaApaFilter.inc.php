@@ -6,8 +6,8 @@
 /**
  * @file plugins/citationOutput/apa/filter/Nlm30CitationSchemaApaFilter.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class Nlm30CitationSchemaApaFilter
@@ -24,10 +24,10 @@ class Nlm30CitationSchemaApaFilter extends Nlm30CitationSchemaCitationOutputForm
 	 * Constructor
 	 * @param $filterGroup FilterGroup
 	 */
-	function Nlm30CitationSchemaApaFilter($filterGroup) {
+	function __construct($filterGroup) {
 		$this->setDisplayName('APA Citation Output');
 
-		parent::Nlm30CitationSchemaCitationOutputFormatFilter($filterGroup);
+		parent::__construct($filterGroup);
 	}
 
 	//

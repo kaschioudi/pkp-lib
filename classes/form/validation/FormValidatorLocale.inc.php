@@ -3,8 +3,8 @@
 /**
  * @file classes/form/validation/FormValidatorLocale.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class FormValidatorLocale
@@ -26,20 +26,10 @@ class FormValidatorLocale extends FormValidator {
 	 * @param $validator Validator the validator used to validate this form field (optional)
 	 * @param $requiredLocale The name of the required locale, i.e. en_US
 	 */
-	function FormValidatorLocale(&$form, $field, $type, $message, $requiredLocale = null, $validator = null) {
-		$this->_form =& $form;
-		$this->_field = $field;
-		$this->_type = $type;
-		$this->_message = $message;
-		$this->_validator =& $validator;
-
+	function __construct(&$form, $field, $type, $message, $requiredLocale = null, $validator = null) {
+		parent::__construct($form, $field, $type, $message, $validator);
 		if ($requiredLocale === null) $requiredLocale = AppLocale::getPrimaryLocale();
 		$this->_requiredLocale = $requiredLocale;
-
-		$form->cssValidation[$field] = array();
-		if ($type == FORM_VALIDATOR_REQUIRED_VALUE) {
-			array_push($form->cssValidation[$field], 'required');
-		}
 	}
 
 	//

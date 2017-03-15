@@ -3,8 +3,8 @@
 /**
  * @file classes/manager/form/ReviewFormElementForm.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class ReviewFormElementForm
@@ -31,8 +31,8 @@ class ReviewFormElementForm extends Form {
 	 * @param $reviewFormId int
 	 * @param $reviewFormElementId int
 	 */
-	function ReviewFormElementForm($reviewFormId, $reviewFormElementId = null) {
-		parent::Form('manager/reviewForms/reviewFormElementForm.tpl');
+	function __construct($reviewFormId, $reviewFormElementId = null) {
+		parent::__construct('manager/reviewForms/reviewFormElementForm.tpl');
 
 		$this->reviewFormId = $reviewFormId;
 		$this->reviewFormElementId = $reviewFormElementId;
@@ -55,19 +55,19 @@ class ReviewFormElementForm extends Form {
 
 	/**
 	 * Display the form.
+	 * @param $args array
+	 * @param $request PKPRequest
 	 */
 	function fetch($args, $request) {
-		$json = new JSONMessage();
-
 		$templateMgr = TemplateManager::getManager($request);
-		$templateMgr->assign('reviewFormId', $this->reviewFormId);
-		$templateMgr->assign('reviewFormElementId', $this->reviewFormElementId);
 		import('lib.pkp.classes.reviewForm.ReviewFormElement');
-		$templateMgr->assign('multipleResponsesElementTypes', ReviewFormElement::getMultipleResponsesElementTypes());
-		// in order to be able to search for an element in the array in the javascript function 'togglePossibleResponses':
-		$templateMgr->assign('multipleResponsesElementTypesString', ';'.implode(';', ReviewFormElement::getMultipleResponsesElementTypes()).';');
-		$templateMgr->assign('reviewFormElementTypeOptions', ReviewFormElement::getReviewFormElementTypeOptions());
-
+		$templateMgr->assign(array(
+			'reviewFormId' => $this->reviewFormId,
+			'reviewFormElementId' => $this->reviewFormElementId,
+			'multipleResponsesElementTypes' => ReviewFormElement::getMultipleResponsesElementTypes(),
+			'multipleResponsesElementTypesString' => ';'.implode(';', ReviewFormElement::getMultipleResponsesElementTypes()).';',
+			'reviewFormElementTypeOptions' => ReviewFormElement::getReviewFormElementTypeOptions(),
+		));
 		return parent::fetch($request);
 	}
 

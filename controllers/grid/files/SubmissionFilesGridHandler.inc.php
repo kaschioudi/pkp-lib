@@ -3,8 +3,8 @@
 /**
  * @file controllers/grid/files/SubmissionFilesGridHandler.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class SubmissionFilesGridHandler
@@ -41,8 +41,8 @@ class SubmissionFilesGridHandler extends GridHandler {
 	 * @param $capabilities integer A bit map with zero or more
 	 *  FILE_GRID_* capabilities set.
 	 */
-	function SubmissionFilesGridHandler($dataProvider, $stageId, $capabilities = 0) {
-		parent::GridHandler($dataProvider);
+	function __construct($dataProvider, $stageId, $capabilities = 0) {
+		parent::__construct($dataProvider);
 
 		if ($stageId) {
 			$this->_stageId = (int)$stageId;
@@ -104,10 +104,10 @@ class SubmissionFilesGridHandler extends GridHandler {
 	}
 
 	/**
-	 * @copydoc PKPHandler::initialize()
+	 * @copydoc GridHandler::initialize()
 	 */
-	function initialize($request) {
-		parent::initialize($request);
+	function initialize($request, $args = null) {
+		parent::initialize($request, $args);
 
 		// Load translations.
 		AppLocale::requireComponents(
@@ -123,7 +123,7 @@ class SubmissionFilesGridHandler extends GridHandler {
 		$capabilities = $this->getCapabilities();
 		$dataProvider = $this->getDataProvider();
 		if($capabilities->canAdd()) {
-			assert($dataProvider);
+			assert(isset($dataProvider));
 			$this->addAction($dataProvider->getAddFileAction($request));
 		}
 

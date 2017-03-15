@@ -10,8 +10,8 @@
 /**
  * @file classes/metadata/MetadataSchema.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class MetadataSchema
@@ -97,7 +97,7 @@ class MetadataSchema {
 	 *  this schema. A single association type can be given as
 	 *  a scalar.
 	 */
-	function MetadataSchema($name, $namespace, $classname, $assocTypes) {
+	function __construct($name, $namespace, $classname, $assocTypes) {
 		assert(is_string($name) && is_string($namespace) && is_string($classname));
 		assert(is_array($assocTypes) || is_integer($assocTypes));
 

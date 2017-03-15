@@ -3,8 +3,8 @@
 /**
  * @file classes/controllers/grid/feature/OrderGridItemsFeature.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class OrderGridItemsFeature
@@ -16,14 +16,14 @@
 
 import('lib.pkp.classes.controllers.grid.feature.OrderItemsFeature');
 
-class OrderGridItemsFeature extends OrderItemsFeature{
+class OrderGridItemsFeature extends OrderItemsFeature {
 
 	/**
 	 * Constructor.
 	 * @copydoc OrderItemsFeature::OrderItemsFeature()
 	 */
-	function OrderGridItemsFeature($overrideRowTemplate = true, $nonOrderableItemsMessage = null) {
-		parent::OrderItemsFeature($overrideRowTemplate, $nonOrderableItemsMessage);
+	function __construct($overrideRowTemplate = true, $nonOrderableItemsMessage = null) {
+		parent::__construct($overrideRowTemplate, $nonOrderableItemsMessage);
 	}
 
 

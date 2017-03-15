@@ -2,8 +2,8 @@
 {**
  * templates/controllers/grid/settings/submissionChecklist/form/submissionChecklists.tpl
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * SubmissionChecklists grid form
@@ -24,7 +24,7 @@
 
 {fbvFormArea id="checklist"}
 	{fbvFormSection title="grid.submissionChecklist.column.checklistItem" required="true" for="checklistItem"}
-		{fbvElement type="textarea" multilingual="true" name="checklistItem" id="checklistItem" value=$checklistItem}
+		{fbvElement type="textarea" multilingual="true" name="checklistItem" id="checklistItem" value=$checklistItem required="true"}
 	{/fbvFormSection}
 {/fbvFormArea}
 {if $gridId != null}

@@ -4,8 +4,8 @@
 <!--
   * locale/en_US/reviewer.xml
   *
-  * Copyright (c) 2014-2016 Simon Fraser University Library
-  * Copyright (c) 2000-2016 John Willinsky
+  * Copyright (c) 2014-2017 Simon Fraser University
+  * Copyright (c) 2000-2017 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * Localization strings
@@ -43,4 +43,5 @@
 	<message key="reviewer.aboutDueDates.text">The editor asks that you either accept or decline the review before the Response Due Date and complete the review by the Review Due Date.</message>
 	<message key="submission.comments.canShareWithAuthor">For author and editor</message>
 	<message key="submission.comments.cannotShareWithAuthor">For editor only</message>
+	<message key="user.authorization.submissionReviewer">The current user is not assigned as a reviewer for the requested document.</message>
 </locale>

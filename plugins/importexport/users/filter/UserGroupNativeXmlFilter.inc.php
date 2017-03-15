@@ -3,8 +3,8 @@
 /**
  * @file plugins/importexport/users/filter/UserGroupNativeXmlFilter.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class UserGroupNativeXmlFilter
@@ -20,9 +20,9 @@ class UserGroupNativeXmlFilter extends NativeExportFilter {
 	 * Constructor
 	 * @param $filterGroup FilterGroup
 	 */
-	function UserGroupNativeXmlFilter($filterGroup) {
+	function __construct($filterGroup) {
 		$this->setDisplayName('Native XML user group export');
-		parent::NativeExportFilter($filterGroup);
+		parent::__construct($filterGroup);
 	}
 
 
@@ -90,7 +90,7 @@ class UserGroupNativeXmlFilter extends NativeExportFilter {
 
 		$userGroupDao = DAORegistry::getDAO('UserGroupDAO');
 		$assignedStages = $userGroupDao->getAssignedStagesByUserGroupId($context->getId(), $userGroup->getId());
-		$userGroupNode->appendChild($doc->createElementNS($deployment->getNamespace(), 'stage_assignments', join(':', array_keys($assignedStages))));
+		$userGroupNode->appendChild($doc->createElementNS($deployment->getNamespace(), 'stage_assignments', htmlspecialchars(join(':', array_keys($assignedStages)), ENT_COMPAT, 'UTF-8')));
 		return $userGroupNode;
 	}
 }

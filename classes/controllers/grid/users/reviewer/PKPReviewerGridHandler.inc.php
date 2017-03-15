@@ -3,8 +3,8 @@
 /**
  * @file classes/controllers/grid/users/reviewer/PKPReviewerGridHandler.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class PKPReviewerGridHandler
@@ -37,8 +37,8 @@ class PKPReviewerGridHandler extends GridHandler {
 	/**
 	 * Constructor
 	 */
-	function PKPReviewerGridHandler() {
-		parent::GridHandler();
+	function __construct() {
+		parent::__construct();
 
 		$allOperations = array_merge($this->_getReviewAssignmentOps(), $this->_getReviewRoundOps());
 
@@ -100,12 +100,11 @@ class PKPReviewerGridHandler extends GridHandler {
 	//
 	// Overridden methods from PKPHandler
 	//
-	/*
-	 * Configure the grid
-	 * @param $request PKPRequest
+	/**
+	 * @copydoc GridHandler::initialize()
 	 */
-	function initialize($request) {
-		parent::initialize($request);
+	function initialize($request, $args = null) {
+		parent::initialize($request, $args);
 
 		// Load submission-specific translations
 		AppLocale::requireComponents(

@@ -3,8 +3,8 @@
 /**
  * @file classes/metadata/MetadataProperty.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class MetadataProperty
@@ -87,7 +87,7 @@ class MetadataProperty {
 	 * @param $validationMessage string A string that can be displayed in case a user tries to set an invalid value for this property.
 	 * @param $mandatory boolean Is this a mandatory property within the schema?
 	 */
-	function MetadataProperty($name, $assocTypes = array(), $allowedTypes = METADATA_PROPERTY_TYPE_STRING,
+	function __construct($name, $assocTypes = array(), $allowedTypes = METADATA_PROPERTY_TYPE_STRING,
 			$translated = false, $cardinality = METADATA_PROPERTY_CARDINALITY_ONE, $displayName = null, $validationMessage = null, $mandatory = false) {
 
 		// Validate name and assoc type array

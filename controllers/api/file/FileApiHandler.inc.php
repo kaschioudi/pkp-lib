@@ -6,8 +6,8 @@
 /**
  * @file controllers/api/file/FileApiHandler.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class FileApiHandler
@@ -27,8 +27,8 @@ class FileApiHandler extends Handler {
 	/**
 	 * Constructor.
 	 */
-	function FileApiHandler() {
-		parent::Handler();
+	function __construct() {
+		parent::__construct();
 		$this->addRoleAssignment(
 			array(ROLE_ID_MANAGER, ROLE_ID_SUB_EDITOR, ROLE_ID_ASSISTANT, ROLE_ID_REVIEWER, ROLE_ID_AUTHOR),
 			array('downloadFile', 'downloadLibraryFile', 'downloadAllFiles', 'recordDownload', 'enableLinkAction')
@@ -83,7 +83,7 @@ class FileApiHandler extends Handler {
 	 */
 	function downloadFile($args, $request) {
 		$submissionFile = $this->getAuthorizedContextObject(ASSOC_TYPE_SUBMISSION_FILE);
-		assert($submissionFile); // Should have been validated already
+		assert(isset($submissionFile)); // Should have been validated already
 		$context = $request->getContext();
 		$fileManager = $this->_getFileManager($context->getId(), $submissionFile->getSubmissionId());
 		if (!$fileManager->downloadFile($submissionFile->getFileId(), $submissionFile->getRevision(), false, $submissionFile->getClientFileName())) {

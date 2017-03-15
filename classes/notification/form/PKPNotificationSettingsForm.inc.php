@@ -6,8 +6,8 @@
 /**
  * @file classes/notification/form/NotificationSettingsForm.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class PKPNotificationSettingsForm
@@ -23,8 +23,8 @@ class PKPNotificationSettingsForm extends Form {
 	/**
 	 * Constructor.
 	 */
-	function PKPNotificationSettingsForm() {
-		parent::Form('user/notificationSettingsForm.tpl');
+	function __construct() {
+		parent::__construct('user/notificationSettingsForm.tpl');
 
 		// Validation checks for this form
 		$this->addCheck(new FormValidatorPost($this));
@@ -100,18 +100,15 @@ class PKPNotificationSettingsForm extends Form {
 	 */
 	function fetch($request) {
 		$context = $request->getContext();
-		$user = $request->getUser();
-		$userId = $user->getId();
-
+		$userId = $request->getUser()->getId();
 		$notificationSubscriptionSettingsDao = DAORegistry::getDAO('NotificationSubscriptionSettingsDAO');
-		$blockedNotifications = $notificationSubscriptionSettingsDao->getNotificationSubscriptionSettings('blocked_notification', $userId, $context->getId());
-		$emailSettings = $notificationSubscriptionSettingsDao->getNotificationSubscriptionSettings('blocked_emailed_notification', $userId, $context->getId());
-
 		$templateMgr = TemplateManager::getManager($request);
-		$templateMgr->assign('blockedNotifications', $blockedNotifications);
-		$templateMgr->assign('emailSettings', $emailSettings);
-		$templateMgr->assign('notificationSettingCategories', $this->getNotificationSettingCategories());
-		$templateMgr->assign('notificationSettings',  $this->getNotificationSettingsMap());
+		$templateMgr->assign(array(
+			'blockedNotifications' => $notificationSubscriptionSettingsDao->getNotificationSubscriptionSettings('blocked_notification', $userId, $context->getId()),
+			'emailSettings' => $notificationSubscriptionSettingsDao->getNotificationSubscriptionSettings('blocked_emailed_notification', $userId, $context->getId()),
+			'notificationSettingCategories' => $this->getNotificationSettingCategories(),
+			'notificationSettings' => $this->getNotificationSettingsMap(),
+		));
 		return parent::fetch($request);
 	}
 

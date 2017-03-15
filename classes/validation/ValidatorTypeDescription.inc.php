@@ -3,8 +3,8 @@
 /**
  * @file classes/validation/ValidatorTypeDescription.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class ValidatorTypeDescription
@@ -29,8 +29,8 @@ class ValidatorTypeDescription extends PrimitiveTypeDescription {
 	 * @param $typeName string Allowed primitive types are
 	 *  'integer', 'string', 'float' and 'boolean'.
 	 */
-	function ValidatorTypeDescription($typeName) {
-		parent::PrimitiveTypeDescription($typeName);
+	function __construct($typeName) {
+		parent::__construct($typeName);
 	}
 
 

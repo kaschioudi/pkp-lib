@@ -3,8 +3,8 @@
 /**
  * @file classes/filter/BooleanFilterSetting.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class BooleanFilterSetting
@@ -25,8 +25,8 @@ class BooleanFilterSetting extends FilterSetting {
 	 * @param $displayName string
 	 * @param $validationMessage string
 	 */
-	function BooleanFilterSetting($name, $displayName, $validationMessage) {
-		parent::FilterSetting($name, $displayName, $validationMessage, FORM_VALIDATOR_OPTIONAL_VALUE);
+	function __construct($name, $displayName, $validationMessage) {
+		parent::__construct($name, $displayName, $validationMessage, FORM_VALIDATOR_OPTIONAL_VALUE);
 	}
 
 

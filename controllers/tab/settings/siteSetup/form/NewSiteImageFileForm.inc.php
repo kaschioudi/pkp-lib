@@ -3,8 +3,8 @@
 /**
  * @file controllers/tab/settings/siteSetup/form/NewSiteImageFileForm.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class NewSiteImageFileForm
@@ -21,8 +21,8 @@ class NewSiteImageFileForm extends SettingsFileUploadForm {
 	 * Constructor.
 	 * @param $imageSettingName string
 	 */
-	function NewSiteImageFileForm($imageSettingName) {
-		parent::SettingsFileUploadForm('controllers/tab/settings/form/newImageFileUploadForm.tpl');
+	function __construct($imageSettingName) {
+		parent::__construct('controllers/tab/settings/form/newImageFileUploadForm.tpl');
 		$this->setFileSettingName($imageSettingName);
 	}
 

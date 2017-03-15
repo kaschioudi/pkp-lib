@@ -9,8 +9,8 @@
 /**
  * @file classes/citation/Citation.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class Citation
@@ -52,11 +52,11 @@ class Citation extends DataObject {
 	 * Constructor.
 	 * @param $rawCitation string an unparsed citation string
 	 */
-	function Citation($rawCitation = null) {
+	function __construct($rawCitation = null) {
 		// Switch on meta-data adapter support.
 		$this->setHasLoadableAdapters(true);
 
-		parent::DataObject();
+		parent::__construct();
 
 		$this->setRawCitation($rawCitation); // this will set state to CITATION_RAW
 	}

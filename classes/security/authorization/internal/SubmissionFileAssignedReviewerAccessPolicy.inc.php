@@ -2,8 +2,8 @@
 /**
  * @file classes/security/authorization/internal/SubmissionFileAssignedReviewerAccessPolicy.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class SubmissionFileAssignedReviewerAccessPolicy
@@ -21,8 +21,8 @@ class SubmissionFileAssignedReviewerAccessPolicy extends SubmissionFileBaseAcces
 	 * Constructor
 	 * @param $request PKPRequest
 	 */
-	function SubmissionFileAssignedReviewerAccessPolicy($request, $fileIdAndRevision = null) {
-		parent::SubmissionFileBaseAccessPolicy($request, $fileIdAndRevision);
+	function __construct($request, $fileIdAndRevision = null) {
+		parent::__construct($request, $fileIdAndRevision);
 	}
 
 
@@ -52,7 +52,6 @@ class SubmissionFileAssignedReviewerAccessPolicy extends SubmissionFileBaseAcces
 			if (
 				$submissionFile->getSubmissionId() == $reviewAssignment->getSubmissionId() &&
 				$submissionFile->getFileStage() == SUBMISSION_FILE_REVIEW_FILE &&
-				$submissionFile->getViewable() &&
 				$reviewFilesDao->check($reviewAssignment->getId(), $submissionFile->getFileId())
 			) {
 				return AUTHORIZATION_PERMIT;

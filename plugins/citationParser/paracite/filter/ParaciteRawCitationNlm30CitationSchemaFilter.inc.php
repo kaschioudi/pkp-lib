@@ -6,8 +6,8 @@
 /**
  * @file plugins/citationParser/paracite/filter/ParaciteRawCitationNlm30CitationSchemaFilter.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class ParaciteRawCitationNlm30CitationSchemaFilter
@@ -42,7 +42,7 @@ class ParaciteRawCitationNlm30CitationSchemaFilter extends Nlm30CitationSchemaFi
 	 * Constructor
 	 * @param $filterGroup FilterGroup
 	 */
-	function ParaciteRawCitationNlm30CitationSchemaFilter($filterGroup) {
+	function __construct($filterGroup) {
 		$this->setDisplayName('ParaCite');
 
 		// Instantiate the settings of this filter
@@ -52,7 +52,7 @@ class ParaciteRawCitationNlm30CitationSchemaFilter extends Nlm30CitationSchemaFi
 				ParaciteRawCitationNlm30CitationSchemaFilter::getSupportedCitationModules());
 		$this->addSetting($citationModuleSetting);
 
-		parent::Nlm30CitationSchemaFilter($filterGroup);
+		parent::__construct($filterGroup);
 	}
 
 	//
@@ -247,11 +247,11 @@ class ParaciteRawCitationNlm30CitationSchemaFilter extends Nlm30CitationSchemaFi
 					if (is_array($paraciteValue)) {
 						foreach($paraciteValue as $singleValue) {
 							$success = $openurl10Description->addStatement($openurl10PropertyName, $singleValue);
-							assert($success);
+							assert((boolean) $success);
 						}
 					} else {
 						$success = $openurl10Description->addStatement($openurl10PropertyName, $paraciteValue);
-						assert($success);
+						assert((boolean) $success);
 					}
 				}
 			}

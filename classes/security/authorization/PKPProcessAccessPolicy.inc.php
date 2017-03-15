@@ -2,8 +2,8 @@
 /**
  * @file classes/security/authorization/PKPProcessAccessPolicy.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class PKPProcessAccessPolicy
@@ -26,12 +26,12 @@ class PKPProcessAccessPolicy extends PKPPublicAccessPolicy {
 	 *  this policy is targeting.
 	 * @param $message string a message to be displayed if the authorization fails
 	 */
-	function PKPProcessAccessPolicy($request, $args, $operations, $message = 'user.authorization.processAuthenticationTokenRequired') {
+	function __construct($request, $args, $operations, $message = 'user.authorization.processAuthenticationTokenRequired') {
 		if (isset($args['authToken'])) {
 			$this->authToken = $args['authToken'];
 		}
 
-		parent::PKPPublicAccessPolicy($request, $operations, $message);
+		parent::__construct($request, $operations, $message);
 	}
 
 

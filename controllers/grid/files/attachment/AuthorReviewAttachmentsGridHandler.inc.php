@@ -3,8 +3,8 @@
 /**
  * @file controllers/grid/files/attachment/AuthorReviewAttachmentsGridHandler.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class AuthorReviewAttachmentsGridHandler
@@ -20,10 +20,10 @@ class AuthorReviewAttachmentsGridHandler extends FileListGridHandler {
 	/**
 	 * Constructor
 	 */
-	function AuthorReviewAttachmentsGridHandler() {
+	function __construct() {
 		import('lib.pkp.controllers.grid.files.review.ReviewGridDataProvider');
 		// Pass in null stageId to be set in initialize from request var.
-		parent::FileListGridHandler(
+		parent::__construct(
 			new ReviewGridDataProvider(SUBMISSION_FILE_REVIEW_ATTACHMENT, true),
 			null
 		);

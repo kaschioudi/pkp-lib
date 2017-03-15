@@ -3,8 +3,8 @@
 /**
  * @file classes/filter/EmailFilterSetting.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class EmailFilterSetting
@@ -26,8 +26,8 @@ class EmailFilterSetting extends FilterSetting {
 	 * @param $validationMessage string
 	 * @param $required boolean
 	 */
-	function EmailFilterSetting($name, $displayName, $validationMessage, $required = FORM_VALIDATOR_REQUIRED_VALUE) {
-		parent::FilterSetting($name, $displayName, $validationMessage, $required);
+	function __construct($name, $displayName, $validationMessage, $required = FORM_VALIDATOR_REQUIRED_VALUE) {
+		parent::__construct($name, $displayName, $validationMessage, $required);
 	}
 
 	//

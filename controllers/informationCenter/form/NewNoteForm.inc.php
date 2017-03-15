@@ -3,8 +3,8 @@
 /**
  * @file controllers/informationCenter/form/NewNoteForm.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class NewNoteForm
@@ -20,8 +20,8 @@ class NewNoteForm extends Form {
 	/**
 	 * Constructor.
 	 */
-	function NewNoteForm() {
-		parent::Form('controllers/informationCenter/notes.tpl');
+	function __construct() {
+		parent::__construct('controllers/informationCenter/notes.tpl');
 
 		$this->addCheck(new FormValidatorPost($this));
 		$this->addCheck(new FormValidatorCSRF($this));
@@ -66,13 +66,12 @@ class NewNoteForm extends Form {
 	 */
 	function fetch($request) {
 		$templateMgr = TemplateManager::getManager($request);
-
 		$noteDao = DAORegistry::getDAO('NoteDAO');
-		$notes = $noteDao->getByAssoc($this->getAssocType(), $this->getAssocId());
-		$templateMgr->assign('notes', $notes);
-		$templateMgr->assign('submitNoteText', $this->getSubmitNoteLocaleKey());
-		$templateMgr->assign('newNoteFormTemplate', $this->getNewNoteFormTemplate());
-
+		$templateMgr->assign(array(
+			'notes' => $noteDao->getByAssoc($this->getAssocType(), $this->getAssocId()),
+			'submitNoteText' => $this->getSubmitNoteLocaleKey(),
+			'newNoteFormTemplate' => $this->getNewNoteFormTemplate(),
+		));
 		return parent::fetch($request);
 	}
 

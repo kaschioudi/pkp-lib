@@ -2,8 +2,8 @@
 /**
  * @file classes/security/authorization/internal/ReviewAssignmentRequiredPolicy.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class ReviewAssignmentRequiredPolicy
@@ -22,8 +22,8 @@ class ReviewAssignmentRequiredPolicy extends DataObjectRequiredPolicy {
 	 * @param $submissionParameterName string the request parameter we
 	 *  expect the submission id in.
 	 */
-	function ReviewAssignmentRequiredPolicy($request, &$args, $parameterName = 'reviewAssignmentId', $operations = null) {
-		parent::DataObjectRequiredPolicy($request, $args, $parameterName, 'user.authorization.invalidReviewAssignment', $operations);
+	function __construct($request, &$args, $parameterName = 'reviewAssignmentId', $operations = null) {
+		parent::__construct($request, $args, $parameterName, 'user.authorization.invalidReviewAssignment', $operations);
 	}
 
 	//

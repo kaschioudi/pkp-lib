@@ -3,8 +3,8 @@
 /**
  * @file controllers/grid/users/reviewer/form/EditReviewForm.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class EditReviewForm
@@ -27,7 +27,7 @@ class EditReviewForm extends Form {
 	 * Constructor.
 	 * @param $reviewAssignment ReviewAssignment
 	 */
-	function EditReviewForm($reviewAssignment) {
+	function __construct($reviewAssignment) {
 		$this->_reviewAssignment = $reviewAssignment;
 		assert(is_a($this->_reviewAssignment, 'ReviewAssignment'));
 
@@ -35,7 +35,7 @@ class EditReviewForm extends Form {
 		$this->_reviewRound = $reviewRoundDao->getById($reviewAssignment->getReviewRoundId());
 		assert(is_a($this->_reviewRound, 'ReviewRound'));
 
-		parent::Form('controllers/grid/users/reviewer/form/editReviewForm.tpl');
+		parent::__construct('controllers/grid/users/reviewer/form/editReviewForm.tpl');
 
 		// Validation checks for this form
 		$this->addCheck(new FormValidator($this, 'responseDueDate', 'required', 'editor.review.errorAddingReviewer'));
@@ -63,13 +63,12 @@ class EditReviewForm extends Form {
 	 */
 	function fetch($request) {
 		$templateMgr = TemplateManager::getManager($request);
-
-		// Pass along various necessary parameters from request
-		$templateMgr->assign('stageId', $this->_reviewAssignment->getStageId());
-		$templateMgr->assign('reviewRoundId', $this->_reviewRound->getId());
-		$templateMgr->assign('submissionId', $this->_reviewAssignment->getSubmissionId());
-		$templateMgr->assign('reviewAssignmentId', $this->_reviewAssignment->getId());
-
+		$templateMgr->assign(array(
+			'stageId' => $this->_reviewAssignment->getStageId(),
+			'reviewRoundId' => $this->_reviewRound->getId(),
+			'submissionId' => $this->_reviewAssignment->getSubmissionId(),
+			'reviewAssignmentId' => $this->_reviewAssignment->getId(),
+		));
 		return parent::fetch($request);
 	}
 

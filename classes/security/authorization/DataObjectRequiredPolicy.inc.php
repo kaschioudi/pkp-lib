@@ -2,8 +2,8 @@
 /**
  * @file classes/security/authorization/DataObjectRequiredPolicy.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class DataObjectRequiredPolicy
@@ -54,8 +54,8 @@ class DataObjectRequiredPolicy extends AuthorizationPolicy {
 	 * @param $message string
 	 * @param $operations array Optional list of operations for which this check takes effect. If specified, operations outside this set will not be checked against this policy.
 	 */
-	function DataObjectRequiredPolicy($request, &$args, $parameterName, $message = null, $operations = null) {
-		parent::AuthorizationPolicy($message);
+	function __construct($request, &$args, $parameterName, $message = null, $operations = null) {
+		parent::__construct($message);
 		$this->_request = $request;
 		assert(is_array($args));
 		$this->_args =& $args;

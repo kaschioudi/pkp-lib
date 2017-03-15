@@ -3,8 +3,8 @@
 /**
  * @file controllers/wizard/fileUpload/FileUploadWizardHandler.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class FileUploadWizardHandler
@@ -19,11 +19,6 @@ import('classes.handler.Handler');
 
 // Import JSON class for use with all AJAX requests.
 import('lib.pkp.classes.core.JSONMessage');
-
-// The percentage of characters that the name of a file
-// has to share with an existing file for it to be
-// considered as a revision of that file.
-define('SUBMISSION_MIN_SIMILARITY_OF_REVISION', 70);
 
 class PKPFileUploadWizardHandler extends Handler {
 	/** @var integer */
@@ -54,8 +49,8 @@ class PKPFileUploadWizardHandler extends Handler {
 	/**
 	 * Constructor
 	 */
-	function PKPFileUploadWizardHandler() {
-		parent::Handler();
+	function __construct() {
+		parent::__construct();
 		$this->addRoleAssignment(
 			array(ROLE_ID_MANAGER, ROLE_ID_SUB_EDITOR, ROLE_ID_AUTHOR, ROLE_ID_REVIEWER, ROLE_ID_ASSISTANT),
 			array(
@@ -125,7 +120,7 @@ class PKPFileUploadWizardHandler extends Handler {
 
 	function authorize($request, &$args, $roleAssignments) {
 		// Allow both reviewers (if in review) and context roles.
-		import('classes.security.authorization.ReviewStageAccessPolicy');
+		import('lib.pkp.classes.security.authorization.ReviewStageAccessPolicy');
 
 		$this->addPolicy(new ReviewStageAccessPolicy($request, $args, $roleAssignments, 'submissionId', $request->getUserVar('stageId')), true);
 
@@ -230,40 +225,21 @@ class PKPFileUploadWizardHandler extends Handler {
 	 */
 	function startWizard($args, $request) {
 		$templateMgr = TemplateManager::getManager($request);
-
-		// Assign the submission.
-		$submission = $this->getSubmission();
-		$templateMgr->assign('submissionId', $submission->getId());
-
-		// Assign the workflow stage.
-		$templateMgr->assign('stageId', $this->getStageId());
-
-		// Assign the roles allowed to upload in the given context.
-		$templateMgr->assign('uploaderRoles', implode('-', (array) $this->getUploaderRoles()));
-
-		// Assign the roles allowed to upload in the given context.
-		$templateMgr->assign('uploaderGroupIds', implode('-', (array) $this->getUploaderGroupIds()));
-
-		// Assign the file stage.
-		$templateMgr->assign('fileStage', $this->getFileStage());
-
-		// Preserve the isReviewer flag
-		$templateMgr->assign('isReviewer', $request->getUserVar('isReviewer'));
-
-		// Configure the "revision only" feature.
-		$templateMgr->assign('revisionOnly', $this->getRevisionOnly());
 		$reviewRound = $this->getReviewRound();
-		if (is_a($reviewRound, 'ReviewRound')) {
-			$templateMgr->assign('reviewRoundId', $reviewRound->getId());
-		}
-		$templateMgr->assign('revisedFileId', $this->getRevisedFileId());
-		$templateMgr->assign('assocType', $this->getAssocType());
-		$templateMgr->assign('assocId', $this->getAssocId());
-
-		// only dependent file types?
-		$templateMgr->assign('dependentFilesOnly', $request->getUserVar('dependentFilesOnly'));
-
-		// Render the file upload wizard.
+		$templateMgr->assign(array(
+			'submissionId' => $this->getSubmission()->getId(),
+			'stageId' => $this->getStageId(),
+			'uploaderRoles' => implode('-', (array) $this->getUploaderRoles()),
+			'uploaderGroupIds' => implode('-', (array) $this->getUploaderGroupIds()),
+			'fileStage' => $this->getFileStage(),
+			'isReviewer' => $request->getUserVar('isReviewer'),
+			'revisionOnly' => $this->getRevisionOnly(),
+			'reviewRoundId' => is_a($reviewRound, 'ReviewRound')?$reviewRound->getId():null,
+			'revisedFileId' => $this->getRevisedFileId(),
+			'assocType' => $this->getAssocType(),
+			'assocId' => $this->getAssocId(),
+			'dependentFilesOnly' => $request->getUserVar('dependentFilesOnly'),
+		));
 		return $templateMgr->fetchJson('controllers/wizard/fileUpload/fileUploadWizard.tpl');
 	}
 
@@ -477,7 +453,7 @@ class PKPFileUploadWizardHandler extends Handler {
 		$uploadedFileName = $uploadedFile->getOriginalFileName();
 
 		// Start with the minimal required similarity.
-		$minPercentage = SUBMISSION_MIN_SIMILARITY_OF_REVISION;
+		$minPercentage = Config::getVar('files', 'filename_revision_match', 70);
 
 		// Find out whether one of the files belonging to the current
 		// file stage matches the given file name.

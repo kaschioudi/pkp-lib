@@ -9,8 +9,8 @@
 /**
  * @file classes/install/PKPInstall.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class Install
@@ -36,8 +36,8 @@ class PKPInstall extends Installer {
 	 * @param $params array installer parameters
 	 * @param $isPlugin boolean true iff a plugin is being installed
 	 */
-	function PKPInstall($xmlDescriptor, $params, $isPlugin) {
-		parent::Installer($xmlDescriptor, $params, $isPlugin);
+	function __construct($xmlDescriptor, $params, $isPlugin) {
+		parent::__construct($xmlDescriptor, $params, $isPlugin);
 	}
 
 	/**

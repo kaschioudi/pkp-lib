@@ -3,8 +3,8 @@
 /**
  * @file plugins/generic/usageStats/UsageStatsTemporaryRecordDAO.inc.php
  *
- * Copyright (c) 2013-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2013-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class UsageStatsTemporaryRecordDAO
@@ -25,8 +25,8 @@ class UsageStatsTemporaryRecordDAO extends DAO {
 	/**
 	 * Constructor
 	 */
-	function UsageStatsTemporaryRecordDAO() {
-		parent::DAO();
+	function __construct() {
+		parent::__construct();
 
 		$this->_result = false;
 		$this->_loadId = null;

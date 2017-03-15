@@ -3,8 +3,8 @@
 /**
  * @file classes/controllers/grid/feature/GeneralPagingFeature.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class GeneralPagingFeature
@@ -32,9 +32,9 @@ class GeneralPagingFeature extends GridFeature {
 	 * the first time. 
 	 * Constructor.
 	 */
-	function GeneralPagingFeature($id, $itemsPerPage = null) {
+	function __construct($id, $itemsPerPage = null) {
 		$this->_itemsPerPage = $itemsPerPage;
-		parent::GridFeature($id);
+		parent::__construct($id);
 	}
 
 

@@ -3,8 +3,8 @@
 /**
  * @file classes/controllers/tab/settings/form/ContextSettingsForm.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class ContextSettingsForm
@@ -32,12 +32,12 @@ class ContextSettingsForm extends Form {
 	 * @param $settings array An associative array with the setting names as keys and associated types as values.
 	 * @param $wizardMode boolean Whether or not to display in wizard mode
 	 */
-	function ContextSettingsForm($settings, $template, $wizardMode) {
+	function __construct($settings, $template, $wizardMode) {
 		$this->addCheck(new FormValidatorPost($this));
 		$this->addCheck(new FormValidatorCSRF($this));
 		$this->setSettings($settings);
 		$this->setWizardMode($wizardMode);
-		parent::Form($template);
+		parent::__construct($template);
 	}
 
 

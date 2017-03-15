@@ -3,8 +3,8 @@
 /**
  * @file controllers/grid/files/review/SelectableReviewRevisionsGridHandler.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class SelectableReviewRevisionsGridHandler
@@ -20,10 +20,10 @@ class SelectableReviewRevisionsGridHandler extends SelectableFileListGridHandler
 	/**
 	 * Constructor
 	 */
-	function SelectableReviewRevisionsGridHandler() {
+	function __construct() {
 		import('lib.pkp.controllers.grid.files.review.ReviewRevisionsGridDataProvider');
 		// Pass in null stageId to be set in initialize from request var.
-		parent::SelectableFileListGridHandler(
+		parent::__construct(
 			new ReviewRevisionsGridDataProvider(),
 			null,
 			FILE_GRID_DELETE|FILE_GRID_VIEW_NOTES|FILE_GRID_EDIT

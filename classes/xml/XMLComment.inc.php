@@ -3,8 +3,8 @@
 /**
  * @file classes/xml/XMLComment.inc.php
  *
- * Copyright (c) 2013-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2013-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class XMLComment
@@ -21,7 +21,8 @@ class XMLComment extends XMLNode {
 	 * Constructor.
 	 * @param $name element/tag name
 	 */
-	function XMLComment() {
+	function __construct() {
+		parent::__construct();
 		$this->name = '!--';
 		$this->parent = null;
 		$this->attributes = array();

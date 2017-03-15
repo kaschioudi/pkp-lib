@@ -4,8 +4,8 @@
 <!--
   * locale/en_US/manager.xml
   *
-  * Copyright (c) 2014-2016 Simon Fraser University Library
-  * Copyright (c) 2000-2016 John Willinsky
+  * Copyright (c) 2014-2017 Simon Fraser University
+  * Copyright (c) 2000-2017 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * Localization strings.
@@ -182,7 +182,7 @@
 	<message key="manager.roles">Roles</message>
 	<message key="manager.statistics"><![CDATA[Stats &amp; Reports]]></message>
 	<message key="manager.statistics.defaultMetricDescription">
-		Your {$contextObjectName} is configured to record more than one usage metric. Usage statistics will be displayed in severeral contexts.
+		Your {$contextObjectName} is configured to record more than one usage metric. Usage statistics will be displayed in several contexts.
 		There are cases where a single usage statistic must be used, e.g. to display an ordered list of most-used submissions or to rank
 		search results. Please select one of the configured metrics as a default.
 	</message>
@@ -214,7 +214,7 @@
 	<message key="manager.statistics.reports.cities.label">One or more city names, comma separated (e.g. City Name 1,City Name 2)</message>
 	<message key="manager.statistics.reports.form.columnsRequired">You have to select at least one column to generate the report.</message>
 	<message key="manager.statistics.reports.reportUrl">Report URL</message>
-	<message key="manager.statistics.reports.reportUrl.label">The following url can be used to generate the report with this current form settings. Just copy it, paste into your browser and enter. You can use your favorites to store your custom report url generator.</message>
+	<message key="manager.statistics.reports.reportUrl.label">The following url can be used to generate the report with the current form settings. Just copy it and open it in your browser. You can also store it as your custom report url generator in your bookmarks.</message>
 	<message key="manager.statistics.reports.filters.byContext">By context</message>
 	<message key="manager.statistics.reports.filters.byObject">By object type and/or object id</message>
 	<message key="manager.statistics.reports.filters.byTime">Select report range</message>
@@ -282,13 +282,12 @@
 	<message key="manager.setup.layout.theme">Theme</message>
 	<message key="manager.setup.layout.themeDescription">New themes may be installed from the Plugins tab at the top of this page.</message>
 	<message key="manager.setup.layout.blockManagement">Sidebar management</message>
-	<message key="manager.setup.layout.leftSidebar">Sidebar</message>
+	<message key="manager.setup.layout.sidebar">Sidebar</message>
 	<message key="manager.setup.layout.unselected">Unselected</message>
 	<message key="manager.setup.loggingAndAuditing">Logging and Auditing</message>
 	<message key="manager.setup.logo">Logo</message>
 	<message key="manager.setup.metaCitationsDescription">Activate the following checkbox to enable citation and reference editing. This will allow authors to include raw citations with submissions. Editors will also have access to a citation markup assistant which can check raw citations against external databases, such as WorldCat, ISBNdb, PubMed and others, for accuracy. Approved citations can be exported into final galley files.</message>
 	<message key="manager.setup.notifications">Notification of Author Submission</message>
-	<message key="manager.setup.notifications.copyPrimaryContact">Send a copy to the primary contact, identified in Setup Step 1.</message>
 	<message key="manager.setup.notifications.copySpecifiedAddress">Send a copy to this email address</message>
 	<message key="manager.setup.notifications.description">Authors are automatically sent an email acknowledging their submission. You may have copies of this email sent to the following:</message>
 	<message key="manager.setup.openAccessPolicy">Open Access Policy</message>
@@ -369,11 +368,13 @@
 	<message key="manager.plugins.pluginGallery.installation">Installation</message>
 	<message key="manager.plugins.pluginGallery.latestCompatible">Latest Compatible Release</message>
 	<message key="manager.plugins.pluginGallery.certifications.official">Official</message>
+	<message key="manager.plugins.pluginGallery.certifications.official.description">This plugin is developed and maintained by the Public Knowledge Project team.</message>
 	<message key="manager.plugins.pluginGallery.certifications.reviewed">Reviewed</message>
+	<message key="manager.plugins.pluginGallery.certifications.reviewed.description">This plugin has been reviewed and approved by the Public Knowledge Project team.</message>
 	<message key="manager.plugins.pluginGallery.certifications.partner">Partner</message>
+	<message key="manager.plugins.pluginGallery.certifications.partner.description">This plugin is provided by one of our development partners.</message>
 	<message key="manager.plugins.pluginGallery.maintainer">Maintainer</message>
-	<message key="manager.plugins.pluginGallery.version">Version: {$version}</message>
-	<message key="manager.plugins.pluginGallery.date">Release Date: {$date}</message>
+	<message key="manager.plugins.pluginGallery.version">v{$version} released on {$date}</message>
 	<message key="manager.plugins.pluginGallery.homepage">Homepage</message>
 	<message key="manager.plugins.pluginGallery.summary">Summary</message>
 	<message key="manager.plugins.pluginGallery.status">Status</message>
@@ -520,4 +521,10 @@
 	<message key="manager.setup.metadata.submission">Submission Form</message>
 	<!--  common importexport keys -->
 	<message key="plugins.importexport.common.validationErrors">Validation errors:</message>
+	<message key="plugins.importexport.common.errorsOccured">Errors occured:</message>
+	<message key="plugins.importexport.common.error.unknownElement">Unknown element {$param}</message>
+	<message key="plugins.importexport.common.error.unknownGenre">Unknown genre {$param}</message>
+	<message key="plugins.importexport.common.error.unknownEncoding">Unknown encoding {$param}</message>
+	<message key="plugins.importexport.common.error.unknownUserGroup">Unknown user group {$param}</message>
+	<message key="plugins.importexport.common.error.unknownUploader">Unknown uploader {$param}</message>
 </locale>

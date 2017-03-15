@@ -3,8 +3,8 @@
 /**
  * @file classes/citation/TemplateBasedReferencesListFilter.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class TemplateBasedReferencesListFilter
@@ -22,13 +22,13 @@ class TemplateBasedReferencesListFilter extends TemplateBasedFilter {
 	 * Constructor
 	 * @param $filterGroup FilterGroup
 	 */
-	function TemplateBasedReferencesListFilter($filterGroup) {
+	function __construct($filterGroup) {
 		// Add the persistable filter settings.
 		import('lib.pkp.classes.filter.FilterSetting');
 		$this->addSetting(new FilterSetting('citationOutputFilterName', null, null));
 		$this->addSetting(new FilterSetting('metadataSchemaName', null, null));
 
-		parent::TemplateBasedFilter($filterGroup);
+		parent::__construct($filterGroup);
 	}
 
 
@@ -85,7 +85,7 @@ class TemplateBasedReferencesListFilter extends TemplateBasedFilter {
 	 * @param $request Request
 	 * @param $locale AppLocale
 	 */
-	function addTemplateVars($templateMgr, $submission, $request, &$locale) {
+	function addTemplateVars($templateMgr, &$submission, $request, &$locale) {
 		// Retrieve approved citations for this assoc object.
 		$citationDao = DAORegistry::getDAO('CitationDAO');
 		$citationResults = $citationDao->getObjectsByAssocId(ASSOC_TYPE_SUBMISSION, $submission->getId(), CITATION_APPROVED);

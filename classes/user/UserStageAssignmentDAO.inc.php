@@ -3,8 +3,8 @@
 /**
  * @file classes/user/UserStageAssignmentDAO.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class UserStageAssignmentDAO
@@ -20,8 +20,8 @@ class UserStageAssignmentDAO extends UserDAO {
 	/**
 	 * Constructor
 	 */
-	function UserStageAssignmentDAO() {
-		parent::UserDAO();
+	function __construct() {
+		parent::__construct();
 	}
 
 	/**
@@ -89,7 +89,8 @@ class UserStageAssignmentDAO extends UserDAO {
 				JOIN user_group_stage ugs ON (uug.user_group_id = ugs.user_group_id AND ugs.stage_id = ?)
 			WHERE	uug.user_group_id = ? AND
 				s.user_group_id IS NULL'
-				. ($name !== null ? ' AND (u.first_name LIKE ? OR u.middle_name LIKE ? OR u.last_name LIKE ? OR u.username LIKE ? OR u.email LIKE ?)' : ''),
+				. ($name !== null ? ' AND (u.first_name LIKE ? OR u.middle_name LIKE ? OR u.last_name LIKE ? OR u.username LIKE ? OR u.email LIKE ?)' : '')
+			. ' ORDER BY u.last_name',
 				$params,
 				$rangeInfo);
 		return new DAOResultFactory($result, $this, '_returnUserFromRowWithData');

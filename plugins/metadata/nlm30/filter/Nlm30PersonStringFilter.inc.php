@@ -3,8 +3,8 @@
 /**
  * @file plugins/metadata/nlm30/filter/Nlm30PersonStringFilter.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class Nlm30PersonStringFilter
@@ -35,9 +35,9 @@ class Nlm30PersonStringFilter extends Filter {
 	 * @param $outputType string
 	 * @param $filterMode integer one of the PERSON_STRING_FILTER_* constants
 	 */
-	function Nlm30PersonStringFilter($inputType, $outputType, $filterMode = PERSON_STRING_FILTER_SINGLE) {
+	function __construct($inputType, $outputType, $filterMode = PERSON_STRING_FILTER_SINGLE) {
 		$this->_filterMode = $filterMode;
-		parent::Filter($inputType, $outputType);
+		parent::__construct($inputType, $outputType);
 	}
 
 

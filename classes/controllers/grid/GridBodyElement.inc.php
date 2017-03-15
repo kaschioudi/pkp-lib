@@ -3,8 +3,8 @@
 /**
  * @file classes/controllers/grid/GridBodyElement.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class GridBodyElement
@@ -32,7 +32,7 @@ class GridBodyElement {
 	/**
 	 * Constructor
 	 */
-	function GridBodyElement($id = '', $cellProvider = null, $flags = array()) {
+	function __construct($id = '', $cellProvider = null, $flags = array()) {
 		$this->_id = $id;
 		$this->_cellProvider = $cellProvider;
 		$this->_flags = $flags;

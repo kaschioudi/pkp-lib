@@ -3,8 +3,8 @@
 /**
  * @file controllers/grid/files/final/FinalDraftFilesGridHandler.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class FinalDraftFilesGridHandler
@@ -20,9 +20,9 @@ class FinalDraftFilesGridHandler extends FileListGridHandler {
 	 * Constructor
 	 *  FILE_GRID_* capabilities set.
 	 */
-	function FinalDraftFilesGridHandler() {
+	function __construct() {
 		import('lib.pkp.controllers.grid.files.final.FinalDraftFilesGridDataProvider');
-		parent::FileListGridHandler(
+		parent::__construct(
 			new FinalDraftFilesGridDataProvider(),
 			null,
 			FILE_GRID_DELETE|FILE_GRID_EDIT|FILE_GRID_MANAGE|FILE_GRID_VIEW_NOTES

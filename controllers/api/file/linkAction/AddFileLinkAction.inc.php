@@ -3,8 +3,8 @@
 /**
  * @file controllers/api/file/linkAction/AddFileLinkAction.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class AddFileLinkAction
@@ -40,7 +40,7 @@ class AddFileLinkAction extends BaseAddFileLinkAction {
 	 * @param $dependentFilesOnly bool whether to only include dependent
 	 *  files in the Genres dropdown.
 	 */
-	function AddFileLinkAction($request, $submissionId, $stageId, $uploaderRoles,
+	function __construct($request, $submissionId, $stageId, $uploaderRoles,
 			$uploaderGroupIds, $fileStage, $assocType = null, $assocId = null, $reviewRoundId = null, $revisedFileId = null, $dependentFilesOnly = false) {
 
 		// Create the action arguments array.
@@ -59,7 +59,7 @@ class AddFileLinkAction extends BaseAddFileLinkAction {
 		$textLabels = AddFileLinkAction::_getTextLabels($fileStage);
 
 		// Call the parent class constructor.
-		parent::BaseAddFileLinkAction(
+		parent::__construct(
 			$request, $submissionId, $stageId, $uploaderRoles, $uploaderGroupIds, $actionArgs,
 			__($textLabels['wizardTitle']), __($textLabels['buttonLabel'])
 		);

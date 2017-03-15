@@ -3,8 +3,8 @@
 /**
  * @file classes/form/validation/FormValidatorListbuilder.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class FormValidatorListbuilder
@@ -28,8 +28,8 @@ class FormValidatorListbuilder extends FormValidator {
 	 * @param $field string the name of the associated field
 	 * @param $message string the error message for validation failures (i18n key)
 	 */
-	function FormValidatorListbuilder(&$form, $field, $message) {
-		parent::FormValidator($form, $field, FORM_VALIDATOR_OPTIONAL_VALUE, $message);
+	function __construct(&$form, $field, $message) {
+		parent::__construct($form, $field, FORM_VALIDATOR_OPTIONAL_VALUE, $message);
 	}
 
 	//

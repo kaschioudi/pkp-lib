@@ -3,8 +3,8 @@
 /**
  * @file classes/cache/MemcacheCache.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class MemcacheCache
@@ -46,8 +46,8 @@ class MemcacheCache extends GenericCache {
 	/**
 	 * Instantiate a cache.
 	 */
-	function MemcacheCache($context, $cacheId, $fallback, $hostname, $port) {
-		parent::GenericCache($context, $cacheId, $fallback);
+	function __construct($context, $cacheId, $fallback, $hostname, $port) {
+		parent::__construct($context, $cacheId, $fallback);
 		$this->connection = new Memcache;
 
 		if (!$this->connection->connect($hostname, $port)) {

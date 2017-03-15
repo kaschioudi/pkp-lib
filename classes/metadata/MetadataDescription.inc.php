@@ -3,8 +3,8 @@
 /**
  * @file classes/metadata/MetadataDescription.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class MetadataDescription
@@ -134,9 +134,9 @@ class MetadataDescription extends DataObject {
 	/**
 	 * Constructor
 	 */
-	function MetadataDescription($metadataSchemaName, $assocType) {
+	function __construct($metadataSchemaName, $assocType) {
 		assert(is_string($metadataSchemaName) && is_integer($assocType));
-		parent::DataObject();
+		parent::__construct();
 		$this->_metadataSchemaName = $metadataSchemaName;
 		$this->_assocType = $assocType;
 	}

@@ -6,8 +6,8 @@
 /**
  * @file controllers/wizard/fileUpload/form/SupplementaryFileMetadataForm.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class SupplementaryFileMetadataForm
@@ -25,8 +25,8 @@ class SupplementaryFileMetadataForm extends SubmissionFilesMetadataForm {
 	 * @param $stageId integer One of the WORKFLOW_STAGE_ID_* constants.
 	 * @param $reviewRound ReviewRound (optional) Current review round, if any.
 	 */
-	function SupplementaryFileMetadataForm($submissionFile, $stageId, $reviewRound = null) {
-		parent::SubmissionFilesMetadataForm($submissionFile, $stageId, $reviewRound, 'controllers/wizard/fileUpload/form/supplementaryFileMetadataForm.tpl');
+	function __construct($submissionFile, $stageId, $reviewRound = null) {
+		parent::__construct($submissionFile, $stageId, $reviewRound, 'controllers/wizard/fileUpload/form/supplementaryFileMetadataForm.tpl');
 		AppLocale::requireComponents(LOCALE_COMPONENT_PKP_GRID);
 	}
 

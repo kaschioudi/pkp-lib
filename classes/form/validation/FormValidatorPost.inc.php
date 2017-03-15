@@ -3,8 +3,8 @@
 /**
  * @file classes/form/validation/FormValidatorPost.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class FormValidatorPost
@@ -21,8 +21,8 @@ class FormValidatorPost extends FormValidator {
 	 * @param $form Form
 	 * @param $message string the locale key to use (optional)
 	 */
-	function FormValidatorPost(&$form, $message = 'form.postRequired') {
-		parent::FormValidator($form, 'dummy', FORM_VALIDATOR_REQUIRED_VALUE, $message);
+	function __construct(&$form, $message = 'form.postRequired') {
+		parent::__construct($form, 'dummy', FORM_VALIDATOR_REQUIRED_VALUE, $message);
 	}
 
 

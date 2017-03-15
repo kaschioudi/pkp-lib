@@ -3,8 +3,8 @@
 /**
  * @file controllers/confirmationModal/linkAction/ViewCompetingInterestGuidelinesLinkAction.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class ViewCompetingInterestGuidelinesLinkAction
@@ -21,7 +21,7 @@ class ViewCompetingInterestGuidelinesLinkAction extends LinkAction {
 	 * Constructor
 	 * @param $request Request
 	 */
-	function ViewCompetingInterestGuidelinesLinkAction($request) {
+	function __construct($request) {
 		$context = $request->getContext();
 		// Instantiate the view competing interests modal.
 		import('lib.pkp.classes.linkAction.request.ConfirmationModal');
@@ -33,7 +33,7 @@ class ViewCompetingInterestGuidelinesLinkAction extends LinkAction {
 		);
 
 		// Configure the link action.
-		parent::LinkAction('viewCompetingInterestGuidelines', $viewCompetingInterestsModal, __('reviewer.submission.competingInterests'));
+		parent::__construct('viewCompetingInterestGuidelines', $viewCompetingInterestsModal, __('reviewer.submission.competingInterests'));
 	}
 }
 

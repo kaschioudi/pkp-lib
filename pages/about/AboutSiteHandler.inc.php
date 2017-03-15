@@ -3,8 +3,8 @@
 /**
  * @file pages/about/AboutSiteHandler.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class AboutSiteHandler
@@ -19,9 +19,9 @@ class AboutSiteHandler extends Handler {
 	/**
 	 * Constructor
 	 */
-	function AboutSiteHandler() {
-		parent::Handler();
-		AppLocale::requireComponents(LOCALE_COMPONENT_APP_COMMON);
+	function __construct() {
+		parent::__construct();
+		AppLocale::requireComponents(LOCALE_COMPONENT_APP_COMMON, LOCALE_COMPONENT_PKP_USER);
 	}
 
 	/**

@@ -3,8 +3,8 @@
 /**
  * @file classes/webservice/WebServiceRequest.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class WebServiceRequest
@@ -44,7 +44,7 @@ class WebServiceRequest {
 	 * @param $method string GET or POST
 	 * @param $useProxy boolean Whether the proxy settings from config.inc.php should be considered
 	 */
-	function WebServiceRequest($url, $params, $method = 'GET', $useProxy = true) {
+	function __construct($url, $params, $method = 'GET', $useProxy = true) {
 		$this->_url = $url;
 		$this->_params = $params;
 		$this->_method = $method;

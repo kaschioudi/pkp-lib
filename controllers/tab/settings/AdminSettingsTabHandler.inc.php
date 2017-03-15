@@ -3,8 +3,8 @@
 /**
  * @file controllers/tab/settings/AdminSettingsTabHandler.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class AdminSettingsTabHandler
@@ -22,7 +22,7 @@ class AdminSettingsTabHandler extends SettingsTabHandler {
 	 * Constructor
 	 * @param $additionalTabs array Optional additional ('tabname' => 'class/template name') mappings
 	 */
-	function AdminSettingsTabHandler($additionalTabs = array()) {
+	function __construct($additionalTabs = array()) {
 		$role = array(ROLE_ID_SITE_ADMIN);
 
 		$this->addRoleAssignment(ROLE_ID_MANAGER,
@@ -35,7 +35,7 @@ class AdminSettingsTabHandler extends SettingsTabHandler {
 			)
 		);
 
-		parent::SettingsTabHandler($role);
+		parent::__construct($role);
 		$this->setPageTabs(array_merge($additionalTabs, array(
 			'siteSetup' => 'lib.pkp.controllers.tab.settings.siteSetup.form.SiteSetupForm',
 			'languages' => 'controllers/tab/admin/languages/languages.tpl',

@@ -2,8 +2,8 @@
 /**
  * @file classes/security/authorization/AuthorDashboardAccessPolicy.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class AuthorDashboardAccessPolicy
@@ -22,8 +22,8 @@ class AuthorDashboardAccessPolicy extends ContextPolicy {
 	 * @param $args array request arguments
 	 * @param $roleAssignments array
 	 */
-	function AuthorDashboardAccessPolicy($request, &$args, $roleAssignments) {
-		parent::ContextPolicy($request);
+	function __construct($request, &$args, $roleAssignments) {
+		parent::__construct($request);
 
 		$authorDashboardPolicy = new PolicySet(COMBINING_DENY_OVERRIDES);
 

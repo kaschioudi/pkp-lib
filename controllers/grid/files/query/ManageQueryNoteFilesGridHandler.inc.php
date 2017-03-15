@@ -3,8 +3,8 @@
 /**
  * @file controllers/grid/files/query/ManageQueryNoteFilesGridHandler.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class ManageQueryNoteFilesGridHandler
@@ -19,11 +19,11 @@ class ManageQueryNoteFilesGridHandler extends SelectableSubmissionFileListCatego
 	/**
 	 * Constructor
 	 */
-	function ManageQueryNoteFilesGridHandler() {
+	function __construct() {
 		import('lib.pkp.controllers.grid.files.query.QueryNoteFilesCategoryGridDataProvider');
 		$request = Application::getRequest();
 		$stageId = $request->getUservar('stageId'); // authorized by data provider.
-		parent::SelectableSubmissionFileListCategoryGridHandler(
+		parent::__construct(
 			new QueryNoteFilesCategoryGridDataProvider(),
 			$stageId,
 			FILE_GRID_DELETE|FILE_GRID_VIEW_NOTES|FILE_GRID_EDIT

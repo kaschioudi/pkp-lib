@@ -3,8 +3,8 @@
 /**
  * @file plugins/generic/usageStats/UsageStatsOptoutBlockPlugin.inc.php
  *
- * Copyright (c) 2013-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2013-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class UsageStatsOptoutBlockPlugin
@@ -25,9 +25,9 @@ class UsageStatsOptoutBlockPlugin extends BlockPlugin {
 	 * Constructor
 	 * @param $parentPluginName string
 	 */
-	function UsageStatsOptoutBlockPlugin($parentPluginName) {
+	function __construct($parentPluginName) {
 		$this->_parentPluginName = $parentPluginName;
-		parent::BlockPlugin();
+		parent::__construct();
 	}
 
 
@@ -115,7 +115,7 @@ class UsageStatsOptoutBlockPlugin extends BlockPlugin {
 
 		// Place the block on the right by default.
 		if (!in_array($blockContext, $this->getSupportedContexts())) {
-			$blockContext = BLOCK_CONTEXT_LEFT_SIDEBAR;
+			$blockContext = BLOCK_CONTEXT_SIDEBAR;
 		}
 
 		return $blockContext;

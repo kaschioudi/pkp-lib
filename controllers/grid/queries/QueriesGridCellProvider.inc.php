@@ -3,8 +3,8 @@
 /**
  * @file controllers/grid/queries/QueriesGridCellProvider.inc.php
  *
- * Copyright (c) 2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2016-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class QueriesGridCellProvider
@@ -31,8 +31,8 @@ class QueriesGridCellProvider extends DataObjectGridCellProvider {
 	 * @param $stageId int
 	 * @param $queriesAccessHelper QueriesAccessHelper
 	 */
-	function QueriesGridCellProvider($submission, $stageId, $queriesAccessHelper) {
-		parent::DataObjectGridCellProvider();
+	function __construct($submission, $stageId, $queriesAccessHelper) {
+		parent::__construct();
 		$this->_submission = $submission;
 		$this->_stageId = $stageId;
 		$this->_queriesAccessHelper = $queriesAccessHelper;

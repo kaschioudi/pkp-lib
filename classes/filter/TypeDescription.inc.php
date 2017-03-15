@@ -2,8 +2,8 @@
 /**
  * @file classes/filter/TypeDescription.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class TypeDescription
@@ -70,7 +70,7 @@ class TypeDescription {
 	 *  If you do not know the exact count of an array then you can leave the
 	 *  parentheses empty ([]).
 	 */
-	function TypeDescription($typeName) {
+	function __construct($typeName) {
 		$this->_typeName = $typeName;
 		if (!$this->_parseTypeNameInternally($typeName)) {
 			// Invalid type

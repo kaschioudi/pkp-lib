@@ -3,8 +3,8 @@
 /**
  * @file classes/core/PKPApplication.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class PKPApplication
@@ -115,7 +115,7 @@ abstract class PKPApplication implements iPKPApplicationInfoProvider {
 	/**
 	 * Constructor
 	 */
-	function PKPApplication() {
+	function __construct() {
 		// Seed random number generator
 		mt_srand(((double) microtime()) * 1000000);
 
@@ -134,7 +134,7 @@ abstract class PKPApplication implements iPKPApplicationInfoProvider {
 
 		import('lib.pkp.classes.cache.CacheManager');
 
-		import('classes.security.RoleDAO');
+		import('lib.pkp.classes.security.RoleDAO');
 		import('lib.pkp.classes.security.Validation');
 		import('lib.pkp.classes.session.SessionManager');
 		import('classes.template.TemplateManager');
@@ -300,7 +300,7 @@ abstract class PKPApplication implements iPKPApplicationInfoProvider {
 			}
 
 			$versionDao = DAORegistry::getDAO('VersionDAO'); /* @var $versionDao VersionDAO */
-			$this->enabledProducts =& $versionDao->getCurrentProducts($settingContext);
+			$this->enabledProducts = $versionDao->getCurrentProducts($settingContext);
 		}
 
 		if (is_null($category)) {

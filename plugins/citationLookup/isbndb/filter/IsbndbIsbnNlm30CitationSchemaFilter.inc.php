@@ -3,8 +3,8 @@
 /**
  * @file plugins/citationLookup/isbndb/filter/IsbndbIsbnNlm30CitationSchemaFilter.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class IsbndbIsbnNlm30CitationSchemaFilter
@@ -22,10 +22,10 @@ class IsbndbIsbnNlm30CitationSchemaFilter extends IsbndbNlm30CitationSchemaFilte
 	 * Constructor
 	 * @param $filterGroup FilterGroup
 	 */
-	function IsbndbIsbnNlm30CitationSchemaFilter($filterGroup) {
+	function __construct($filterGroup) {
 		$this->setDisplayName('ISBNdb');
 
-		parent::IsbndbNlm30CitationSchemaFilter($filterGroup);
+		parent::__construct($filterGroup);
 	}
 
 	//
@@ -59,7 +59,7 @@ class IsbndbIsbnNlm30CitationSchemaFilter extends IsbndbNlm30CitationSchemaFilte
 	 * @return MetadataDescription a looked up citation description
 	 *  or null if the filter fails
 	 */
-	function &process($isbn) {
+	function &process(&$isbn) {
 		$nullVar = null;
 
 		// Instantiate the web service request

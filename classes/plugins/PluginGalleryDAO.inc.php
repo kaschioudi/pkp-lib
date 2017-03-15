@@ -3,8 +3,8 @@
 /**
  * @file classes/plugins/PluginGalleryDAO.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class PluginGalleryDAO
@@ -15,6 +15,7 @@
  */
 
 import('lib.pkp.classes.plugins.GalleryPlugin');
+import('lib.pkp.classes.file.FileWrapper');
 
 define('PLUGIN_GALLERY_XML_URL', 'http://pkp.sfu.ca/ojs/xml/plugins.xml');
 
@@ -22,8 +23,8 @@ class PluginGalleryDAO extends DAO {
 	/**
 	 * Constructor
 	 */
-	function PluginGalleryDAO() {
-		parent::DAO();
+	function __construct() {
+		parent::__construct();
 	}
 
 	/**
@@ -43,7 +44,7 @@ class PluginGalleryDAO extends DAO {
 			// apply search filters if any supplied.
 			if (
 				$plugin &&
-				($category == '' || $plugin->getCategory() == $category) &&
+				($category == '' || $category == PLUGIN_GALLERY_ALL_CATEGORY_SEARCH_VALUE || $plugin->getCategory() == $category) &&
 				($search == '' || PKPString::strpos(PKPString::strtolower(serialize($plugin)), PKPString::strtolower($search)) !== false)
 			) {
 				$plugins[] = $plugin;
@@ -58,7 +59,8 @@ class PluginGalleryDAO extends DAO {
 	 */
 	private function _getDocument() {
 		$doc = new DOMDocument('1.0');
-		$doc->load(PLUGIN_GALLERY_XML_URL);
+		$gallery = FileWrapper::wrapper(PLUGIN_GALLERY_XML_URL);
+		$doc->loadXML($gallery->contents());
 		return $doc;
 	}
 

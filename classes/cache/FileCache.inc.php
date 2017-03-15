@@ -8,8 +8,8 @@
 /**
  * @file classes/cache/FileCache.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2000-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2000-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class FileCache
@@ -35,8 +35,8 @@ class FileCache extends GenericCache {
 	/**
 	 * Instantiate a cache.
 	 */
-	function FileCache($context, $cacheId, $fallback, $path) {
-		parent::GenericCache($context, $cacheId, $fallback);
+	function __construct($context, $cacheId, $fallback, $path) {
+		parent::__construct($context, $cacheId, $fallback);
 
 		$this->filename = $path . DIRECTORY_SEPARATOR . "fc-$context-" . str_replace('/', '.', $cacheId) . '.php';
 

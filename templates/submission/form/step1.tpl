@@ -1,8 +1,8 @@
 {**
  * templates/submission/form/step1.tpl
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * Step 1 of author submission process.
@@ -47,18 +47,7 @@
 
 	{$additionalFormContent1}
 
-	{* There is only one supported submission locale; choose it invisibly *}
-	{if count($supportedSubmissionLocaleNames) == 1}
-		{foreach from=$supportedSubmissionLocaleNames item=localeName key=locale}
-			{fbvElement type="hidden" id="locale" value=$locale}
-		{/foreach}
-
-	{* There are several submission locales available; allow choice *}
-	{else}
-		{fbvFormSection title="submission.submit.submissionLocale" size=$fbvStyles.size.MEDIUM for="locale"}
-			{fbvElement label="submission.submit.submissionLocaleDescription" required="true" type="select" id="locale" from=$supportedSubmissionLocaleNames selected=$locale translate=false}
-		{/fbvFormSection}
-	{/if}
+	{include file="core:submission/submissionLocale.tpl"}
 
 	{$additionalFormContent2}
 

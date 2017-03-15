@@ -3,8 +3,8 @@
 /**
  * @file classes/plugins/LazyLoadPlugin.inc.php
  *
- * Copyright (c) 2014-2016 Simon Fraser University Library
- * Copyright (c) 2003-2016 John Willinsky
+ * Copyright (c) 2014-2017 Simon Fraser University
+ * Copyright (c) 2003-2017 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class CachedPlugin
@@ -20,8 +20,8 @@ abstract class LazyLoadPlugin extends Plugin {
 	/**
 	 * Constructor
 	 */
-	function LazyLoadPlugin() {
-		parent::Plugin();
+	function __construct() {
+		parent::__construct();
 	}
 
 
@@ -61,7 +61,7 @@ abstract class LazyLoadPlugin extends Plugin {
 	 * @return boolean
 	 */
 	function getEnabled() {
-		return $this->getContextSpecificSetting($this->getSettingMainContext(), 'enabled');
+		return $this->getSetting($this->getCurrentContextId(), 'enabled');
 	}
 
 	/**
@@ -69,7 +69,7 @@ abstract class LazyLoadPlugin extends Plugin {
 	 * @param $enabled boolean
 	 */
 	function setEnabled($enabled) {
-		$this->updateContextSpecificSetting($this->getSettingMainContext(), 'enabled', $enabled, 'bool');
+		$this->updateSetting($this->getCurrentContextId(), 'enabled', $enabled, 'bool');
 	}
 
 	/**
@@ -84,6 +84,15 @@ abstract class LazyLoadPlugin extends Plugin {
 	 */
 	function getCanDisable() {
 		return true;
+	}
+
+	/**
+	 * Get the current context ID or the site-wide context ID (0) if no context
+	 * can be found.
+	 */
+	function getCurrentContextId() {
+		$context = PKPApplication::getRequest()->getContext();
+		return is_null($context) ? 0 : $context->getId();
 	}
 }
 
