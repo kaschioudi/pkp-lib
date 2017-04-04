@@ -21,15 +21,49 @@ class APIHandler extends PKPHandler {
 	protected $_app;
 	protected $_request;
 	protected $_endpoints = array();
+	protected $_slimRequest = null;
 
 	/**
 	 * Constructor
 	 */
 	public function __construct() {
 		parent::__construct();
-		$this->_app = new \Slim\App;
+		import('lib.pkp.classes.security.authorization.internal.ApiAuthorizationMiddleware');
+		$this->_app = new \Slim\App(array(
+			'settings' => array(
+				// we need access to route within middleware
+				'determineRouteBeforeAppMiddleware' => true,
+			)
+		));
+		$this->_app->add(new ApiAuthorizationMiddleware($this));
 		$this->_request = Application::getRequest();
 		$this->setupEndpoints();
+	}
+
+	/**
+	 * Return PKP request object
+	 *
+	 * @return PKPRequest
+	 */
+	public function getRequest() {
+		return $this->_request;
+	}
+
+	/**
+	 * Return Slim request object
+	 *
+	 * @return SlimRequest|null
+	 */
+	public function getSlimRequest() {
+		return $this->_slimRequest;
+	}
+
+	/**
+	 * Set Slim request object
+	 *
+	 */
+	public function setSlimRequest($slimRequest) {
+		return $this->_slimRequest = $slimRequest;
 	}
 
 	/**
@@ -77,6 +111,28 @@ class APIHandler extends PKPHandler {
 	 */
 	public function getEndpoints() {
 		return $this->_endpoints;
+	}
+
+	/**
+	 * Fetches parameter value
+	 * @param string $parameterName
+	 */
+	public function getParameter($parameterName) {
+		if ($this->_slimRequest == null) {
+			return null;
+		}
+
+		$arguments = $this->_slimRequest->getAttribute('route')->getArguments();
+		if (isset($arguments[$parameterName])) {
+			return $arguments[$parameterName];
+		}
+
+		$queryParams = $this->_slimRequest->getQueryParams();
+		if (isset($queryParams[$parameterName])) {
+			return $queryParams[$parameterName];
+		}
+
+		return null;
 	}
 }
 
