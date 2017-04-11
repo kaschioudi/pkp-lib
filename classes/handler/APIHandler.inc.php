@@ -96,7 +96,7 @@ class APIHandler extends PKPHandler {
 				$pattern = $parameters['pattern'];
 				$handler = $parameters['handler'];
 				$roles = isset($parameters['roles']) ? $parameters['roles'] : null;
-				$app->$method($pattern, $handler);
+				$app->$method($pattern, $handler)->setName($handler[1]);
 				if (!is_null($roles) && is_array($roles)) {
 					$this->addRoleAssignment($roles, $handler[1]);
 				}
@@ -118,16 +118,17 @@ class APIHandler extends PKPHandler {
 	 * @param string $parameterName
 	 */
 	public function getParameter($parameterName) {
-		if ($this->_slimRequest == null) {
+		$slimRequest = $this->getSlimRequest();
+		if ($slimRequest == null) {
 			return null;
 		}
 
-		$arguments = $this->_slimRequest->getAttribute('route')->getArguments();
+		$arguments = $slimRequest->getAttribute('route')->getArguments();
 		if (isset($arguments[$parameterName])) {
 			return $arguments[$parameterName];
 		}
 
-		$queryParams = $this->_slimRequest->getQueryParams();
+		$queryParams = $slimRequest->getQueryParams();
 		if (isset($queryParams[$parameterName])) {
 			return $queryParams[$parameterName];
 		}
