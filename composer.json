@@ -10,7 +10,7 @@
 		"tinymce/tinymce": "4.1.7",
 		"ircmaxell/password-compat": "v1.0.4",
 		"michelf/php-markdown": "1.5.0",
-		"slim/slim": "^3.0"
+		"slim/slim": "^3.0",
 		"alex198710/pnotify": "dev-master",
 		"pimple/pimple": "^3.0"
 	},
