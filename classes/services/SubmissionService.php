@@ -15,6 +15,12 @@
 
 namespace App\Services;
 
+use \DBResultRange;
+use \Application;
+use \DAOResultFactory;
+
+import('lib.pkp.classes.db.DBResultRange');
+
 class SubmissionService {
 	
 	/**
@@ -22,6 +28,61 @@ class SubmissionService {
 	 */
 	public function __construct() {}
 	
+	/**
+	 * Get submissions
+	 *
+	 * @param int $contextId
+	 * @param string $orderColumn
+	 * @param string $orderDirection
+	 * @param int $count
+	 * @param int $page
+	 * @param int $assignedTo
+	 * @param int|array $statuses
+	 * @param string $searchPhrase
+	 *
+	 * @return array
+	 */
+	public function retrieveSubmissionList($contextId, $orderColumn = 'id', $orderDirection = 'DESC', $count = 10, $page = 1, 
+			$assignedTo = null, $statuses = null, $searchPhrase = null) {
+
+		$submissionListQB = new QueryBuilders\SubmissionListQueryBuilder($contextId);
+		$submissionListQB->orderBy($orderColumn, $orderDirection);
+
+		if (!is_null(($assignedTo))) {
+			$submissionListQB->assignedTo($assignedTo);
+		}
+
+		if (!is_null($statuses)) {
+			$submissionListQB->filterByStatus($statuses);
+		}
+
+		if (!is_null($searchPhrase)) {
+			$submissionListQB->searchPhrase($searchPhrase);
+		}
+
+		$submissionListQO = $submissionListQB->get();
+		$range = new DBResultRange($count, $page);
+
+		$submissionDao = Application::getSubmissionDAO();
+		$result = $submissionDao->retrieveRange($submissionListQO->getSql(), $submissionListQO->getBindings(), $range);
+		$queryResults = new DAOResultFactory($result, $submissionDao, '_fromRow');
+
+		$items = array();
+		$submissions = $queryResults->toArray();
+		foreach($submissions as $submission) {
+			$items[] = $submission;
+		}
+
+		$data = array(
+			'items' => $items,
+			'maxItems' => (int) $queryResults->getCount(),
+			'page' => $queryResults->getPage(),
+			'pageCount' => $queryResults->getPageCount(),
+		);
+
+		return $data;
+	}
+
 	/**
 	 * Submission service method
 	 */
