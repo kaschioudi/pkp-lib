@@ -64,7 +64,7 @@ class SubmissionService {
 		$range = new DBResultRange($count, $page);
 
 		$submissionDao = Application::getSubmissionDAO();
-		$result = $submissionDao->retrieveRange($submissionListQO->getSql(), $submissionListQO->getBindings(), $range);
+		$result = $submissionDao->retrieveRange($submissionListQO->toSql(), $submissionListQO->getBindings(), $range);
 		$queryResults = new DAOResultFactory($result, $submissionDao, '_fromRow');
 
 		$items = array();

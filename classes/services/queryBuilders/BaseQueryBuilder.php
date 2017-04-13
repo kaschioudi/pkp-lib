@@ -15,31 +15,34 @@
 
 namespace App\Services\QueryBuilders;
 
+use Illuminate\Database\Capsule\Manager as Capsule;
 use \Config;
 
 abstract class BaseQueryBuilder {
 
-	/** @var array connection configuration */
-	protected $config = null;
-
-	/** @var object connection  */
-	protected $dbconn = null;
+	/** @var object capsule  */
+	protected $capsule = null;
 
 	/**
 	 * Constructor
 	 */
 	public function __construct() {
-		$driver = Config::getVar('database', 'driver');
-		
-		$this->config = array (
-			'driver'    => $driver,
-			'host'      => Config::getVar('database', 'host'),
-			'database'  => Config::getVar('database', 'name'),
-			'username'  => Config::getVar('database', 'username'),
-			'password'  => Config::getVar('database', 'password'),
-			'charset'   => Config::getVar('i18n', 'connection_charset'),
-		);
+		$this->bootstrap();
+	}
 
-		$this->dbconn = new \Pixie\Connection($driver, $this->config, 'QB');
+	/**
+	 * bootstrap query builder
+	 */
+	protected function bootstrap() {
+		$capsule = new Capsule;
+		$capsule->addConnection(array(
+				'driver'    => Config::getVar('database', 'driver'),
+				'host'      => Config::getVar('database', 'host'),
+				'database'  => Config::getVar('database', 'name'),
+				'username'  => Config::getVar('database', 'username'),
+				'password'  => Config::getVar('database', 'password'),
+				'charset'   => Config::getVar('i18n', 'connection_charset'),
+		));
+		$capsule->setAsGlobal();
 	}
 }

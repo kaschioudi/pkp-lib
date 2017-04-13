@@ -15,12 +15,15 @@
 
 namespace App\Services\QueryBuilders;
 
-use \QB;
+use Illuminate\Database\Capsule\Manager as Capsule;
 
 class SubmissionListQueryBuilder extends BaseQueryBuilder {
 
 	/** @var int Context ID */
 	protected $contextId = null;
+
+	/** @var array list of columns for query */
+	protected $columns = array();
 
 	/** @var string order by column */
 	protected $orderColumn = 's.date_submitted';
@@ -122,17 +125,17 @@ class SubmissionListQueryBuilder extends BaseQueryBuilder {
 	 * @return object Query object
 	 */
 	public function get() {
-		$q = QB::table(array('submissions' => 's'))
-				->select('s.*')
-				->where('s.context_id','=',$this->contextId)
-				->orderBy($this->orderColumn, $this->orderDirection)
-				->groupBy('s.submission_id');
+		$this->columns[] = 's.*';
+		$q = Capsule::table('submissions as s')
+					->where('s.context_id','=',$this->contextId)
+					->orderBy($this->orderColumn, $this->orderDirection)
+					->groupBy('s.submission_id');
 
 		// statuses
 		if (!is_null($this->statuses)) {
 			if (in_array(STATUS_PUBLISHED, $this->statuses)) {
-				$q->select('ps.date_published')
-					->leftJoin(array('published_submissions', 'ps'),'ps.submission_id','=','s.submission_id')
+				$this->columns[] = 'ps.date_published';
+				$q->leftJoin('published_submissions as ps','ps.submission_id','=','s.submission_id')
 					->groupBy('ps.date_published');
 			}
 			$q->whereIn('s.status', $this->statuses);
@@ -142,34 +145,35 @@ class SubmissionListQueryBuilder extends BaseQueryBuilder {
 		if (!is_null($this->assigneeId) && ($this->assigneeId !== -1)) {
 			$assigneeId = $this->assigneeId;
 			// Stage assignments
-			$q->leftJoin(array('stage_assignments','sa'), function($table) use ($assigneeId) {
+			$q->leftJoin('stage_assignments as sa', function($table) use ($assigneeId) {
 				$table->on('s.submission_id', '=', 'sa.submission_id');
-				$table->on('sa.user_id', '=', QB::raw($assigneeId));
+				$table->on('sa.user_id', '=', Capsule::raw($assigneeId));
 			});
 			// sa2 to prevent dupes
-			$q->leftJoin(array('stage_assignments','sa2'), function($table) use ($assigneeId) {
+			$q->leftJoin('stage_assignments as sa2', function($table) use ($assigneeId) {
 				$table->on('s.submission_id', '=', 'sa2.submission_id');
-				$table->on('sa.user_id', '=', QB::raw($assigneeId));
+				$table->on('sa.user_id', '=', Capsule::raw($assigneeId));
 				$table->on('sa2.stage_assignment_id', '>', 'sa.stage_assignment_id');
 			});
 		}
 		elseif ($this->assigneeId === -1) {
-			$sub = QB::table('stage_assignments')
-					->select(QB::Raw('count(stage_assignments.stage_assignment_id)'))
-					->leftJoin('user_groups','stage_assignments.user_group_id','=','user_groups.user_group_id')
-					->where('stage_assignments.submission_id','=','s.submission_id')
-					->whereIn('user_groups.role_id', array(ROLE_ID_MANAGER, ROLE_ID_SUB_EDITOR));
+			$sub = Capsule::table('stage_assignments')
+						->select(Capsule::Raw('count(stage_assignments.stage_assignment_id)'))
+						->leftJoin('user_groups','stage_assignments.user_group_id','=','user_groups.user_group_id')
+						->where('stage_assignments.submission_id','=','s.submission_id')
+						->whereIn('user_groups.role_id', array(ROLE_ID_MANAGER, ROLE_ID_SUB_EDITOR));
 	
-			$q->whereNotNull('s.date_submitted');
-			$q->where(QB::raw(QB::subQuery($sub) . ' = 0'));
+			$q->whereNotNull('s.date_submitted')
+				->mergeBindings($sub)
+				->where(Capsule::raw('(' . $sub->toSql() . ')'),'=','0');
 		}
 
 		// search phrase
 		if (!is_null($this->searchPhrase)) {
 			$words = explode(' ', $this->searchPhrase);
 			if (count($words)) {
-				$q->leftJoin(array('submission_settings','ss'),'s.submission_id','=','ss.submission_id')
-					->leftJoin(array('authors','au'),'s.submission_id','=','au.submission_id');
+				$q->leftJoin('submission_settings as ss','s.submission_id','=','ss.submission_id')
+					->leftJoin('authors as au','s.submission_id','=','au.submission_id');
 
 				foreach ($words as $word) {
 					$q->where(function($q) use ($word)  {
@@ -188,6 +192,8 @@ class SubmissionListQueryBuilder extends BaseQueryBuilder {
 			}
 		}
 
-		return $q->getQuery();
+		$q->select($this->columns);
+
+		return $q;
 	}
 }
