@@ -34,17 +34,17 @@ class SubmissionService {
 	 * @param int $contextId
 	 * @param string $orderColumn
 	 * @param string $orderDirection
-	 * @param int $count
-	 * @param int $page
 	 * @param int $assignedTo
 	 * @param int|array $statuses
 	 * @param string $searchPhrase
-	 *
+	 * @param int $count
+	 * @param int $page
+	 * 
 	 * @return array
 	 */
-	public function retrieveSubmissionList($contextId, $orderColumn = 'id', $orderDirection = 'DESC', $count = 10, $page = 1, 
-			$assignedTo = null, $statuses = null, $searchPhrase = null) {
-
+	public function retrieveSubmissionList($contextId, $orderColumn = 'id', $orderDirection = 'DESC',  
+			$assignedTo = null, $statuses = null, $searchPhrase = null, $count = 10, $page = 1) {
+		
 		$submissionListQB = new QueryBuilders\SubmissionListQueryBuilder($contextId);
 		$submissionListQB->orderBy($orderColumn, $orderDirection);
 
