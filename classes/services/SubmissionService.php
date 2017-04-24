@@ -18,6 +18,7 @@ namespace App\Services;
 use \DBResultRange;
 use \Application;
 use \DAOResultFactory;
+use \DAORegistry;
 
 import('lib.pkp.classes.db.DBResultRange');
 
@@ -32,33 +33,38 @@ class SubmissionService {
 	 * Get submissions
 	 *
 	 * @param int $contextId
-	 * @param string $orderColumn
-	 * @param string $orderDirection
-	 * @param int $assignedTo
-	 * @param int|array $statuses
-	 * @param string $searchPhrase
-	 * @param int $count
-	 * @param int $page
+	 * @param $args array {
+	 * 		@option string orderColumn
+	 * 		@option string orderDirection
+	 * 		@option int assignedTo
+	 * 		@option int|array statuses
+	 * 		@option string searchPhrase
+	 * 		@option int count
+	 * 		@option int page
+	 * }
 	 * 
 	 * @return array
 	 */
-	public function retrieveSubmissionList($contextId, $orderColumn = 'id', $orderDirection = 'DESC',  
-			$assignedTo = null, $statuses = null, $searchPhrase = null, $count = 10, $page = 1) {
-		
+	public function retrieveSubmissionList($contextId, $args = array()) {
+
+		$defaultArgs = array(
+			'orderColumn' => 'id',
+			'orderDirection' => 'DESC',
+			'assignedTo' => null,
+			'statuses' => null,
+			'searchPhrase' => null,
+			'count' => 10,
+			'page' => 1,
+		);
+
+		$args = array_merge($defaultArgs, $args);
+
 		$submissionListQB = new QueryBuilders\SubmissionListQueryBuilder($contextId);
-		$submissionListQB->orderBy($orderColumn, $orderDirection);
-
-		if (!is_null(($assignedTo))) {
-			$submissionListQB->assignedTo($assignedTo);
-		}
-
-		if (!is_null($statuses)) {
-			$submissionListQB->filterByStatus($statuses);
-		}
-
-		if (!is_null($searchPhrase)) {
-			$submissionListQB->searchPhrase($searchPhrase);
-		}
+		$submissionListQB
+			->orderBy($orderColumn, $orderDirection)
+			->assignedTo($args['assignedTo'])
+			->filterByStatus($args['statuses'])
+			->searchPhrase($args['searchPhrase']);
 
 		$submissionListQO = $submissionListQB->get();
 		$range = new DBResultRange($count, $page);
@@ -81,21 +87,6 @@ class SubmissionService {
 		);
 
 		return $data;
-	}
-
-	/**
-	 * Submission service method
-	 */
-	public function makeItFly() {
-		error_log("Alright.. let's make submission (#{$this->submissionId}) fly!!!!".PHP_EOL,3,'/tmp/pimple.out');
-	}
-	
-	/**
-	 * Another submission service method
-	 * @param int $fileId ID of file to attach
-	 */
-	public function attachFile($submissionId, $fileId) {
-		error_log("Attaching File (#{$fileId}) to submission (#{$submissionId}) !!!!".PHP_EOL,3,'/tmp/pimple.out');
 	}
 	
 }
