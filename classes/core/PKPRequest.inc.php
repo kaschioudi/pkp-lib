@@ -588,6 +588,18 @@ class PKPRequest {
 	function getUserVar($key) {
 		$_this = PKPRequest::_checkThis();
 
+		if (is_a($this, 'Request')) {
+			// special treatment for APIRouter. APIHandler gets to fetch parameter first
+			$router = $this->getRouter();
+			if (is_a($router, 'APIRouter') && (!is_null($handler = $router->getHandler()))) {
+				$handler = $router->getHandler();
+				$value = $handler->getParameter($key);
+				if (!is_null($value)) {
+					return $value;
+				}
+			}
+		}
+
 		// Get all vars (already cleaned)
 		$vars = $_this->getUserVars();
 
