@@ -115,25 +115,34 @@ class APIHandler extends PKPHandler {
 
 	/**
 	 * Fetches parameter value
+	 *
 	 * @param string $parameterName
+	 * @param mixed $default
+	 *
+	 * @return mixed
 	 */
-	public function getParameter($parameterName) {
+	public function getParameter($parameterName, $default = null) {
 		$slimRequest = $this->getSlimRequest();
 		if ($slimRequest == null) {
-			return null;
+			return $default;
 		}
 
-		$arguments = $slimRequest->getAttribute('route')->getArguments();
-		if (isset($arguments[$parameterName])) {
-			return $arguments[$parameterName];
+		$route = $slimRequest->getAttribute('route');
+
+		// we probably have an invalid url if route is null
+		if (!is_null($route)) {
+			$arguments = $route->getArguments();
+			if (isset($arguments[$parameterName])) {
+				return $arguments[$parameterName];
+			}
+
+			$queryParams = $slimRequest->getQueryParams();
+			if (isset($queryParams[$parameterName])) {
+				return $queryParams[$parameterName];
+			}
 		}
 
-		$queryParams = $slimRequest->getQueryParams();
-		if (isset($queryParams[$parameterName])) {
-			return $queryParams[$parameterName];
-		}
-
-		return null;
+		return $default;
 	}
 }
 
