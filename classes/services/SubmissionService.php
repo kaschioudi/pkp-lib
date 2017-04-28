@@ -59,14 +59,13 @@ class SubmissionService {
 
 		$args = array_merge($defaultArgs, $args);
 
-		$submissionListQB = new QueryBuilders\SubmissionListQueryBuilder($contextId);
-		$submissionListQB
-			->orderBy($orderColumn, $orderDirection)
+		$submissionListQO = with(new QueryBuilders\SubmissionListQueryBuilder($contextId))
+			->orderBy($args['orderColumn'], $args['orderDirection'])
 			->assignedTo($args['assignedTo'])
 			->filterByStatus($args['statuses'])
-			->searchPhrase($args['searchPhrase']);
+			->searchPhrase($args['searchPhrase'])
+			->get();
 
-		$submissionListQO = $submissionListQB->get();
 		$range = new DBResultRange($count, $page);
 
 		$submissionDao = Application::getSubmissionDAO();
@@ -87,6 +86,26 @@ class SubmissionService {
 		);
 
 		return $data;
+	}
+
+	/**
+	 * Retrieve all submission files
+	 *
+	 * @param int $contextId
+	 * @param int $submissionId
+	 * @param int $fileStage Limit to a specific file stage
+	 *
+	 * @return array
+	 */
+	public function getFiles($contextId, $submissionId, $fileStage = null) {
+		$submissionDao = Application::getSubmissionDAO();
+		$submission = $submissionDao->getById($submissionId, $contextId);
+		if (!$submission) {
+			throw new Exceptions\InvalidSubmissionException($contextId, $submissionId);
+		}
+		$submissionFileDao = DAORegistry::getDAO('SubmissionFileDAO');
+		$submissionFiles = $submissionFileDao->getLatestRevisions($submission->getId(), $fileStage);
+		return $submissionFiles;
 	}
 	
 }
