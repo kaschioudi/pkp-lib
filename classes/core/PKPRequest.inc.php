@@ -564,7 +564,7 @@ class PKPRequest {
 		PKPRequest::_checkThis();
 
 		// Reference required
-		if (is_a($this->getRouter(), 'APIRouter') && ($token = $this->getUserVar('apiToken'))) {
+		if (is_a($this, 'PKPRequest') && is_a($this->getRouter(), 'APIRouter') && ($token = $this->getUserVar('apiToken'))) {
 			$userDao = DAORegistry::getDAO('UserDAO');
 			$user = $userDao->getBySetting('apiKey', $token);
 			if (!$user->getData('apiKeyEnabled')) return null;
