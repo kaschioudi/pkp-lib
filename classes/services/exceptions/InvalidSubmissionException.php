@@ -1,7 +1,7 @@
 <?php 
 
 /**
- * @file classes/services/SubmissionNotFoundException.php
+ * @file classes/services/InvalidSubmissionException.php
  *
  * Copyright (c) 2014-2017 Simon Fraser University
  * Copyright (c) 2000-2017 John Willinsky
@@ -14,8 +14,6 @@
  */
 
 namespace App\Services\Exceptions;
-
-use \Exception;
 
 class InvalidSubmissionException extends ServiceException {
 	
