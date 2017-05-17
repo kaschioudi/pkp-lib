@@ -198,14 +198,17 @@ class SubmissionService {
 		$galleyDao = DAORegistry::getDAO('ArticleGalleyDAO');
 		$galleys = $galleyDao->getBySubmissionId($submission->getId());
 		while ($galley = $galleys->next()) {
+			$submissionFile = $galley->getFile();
 			$data[] = array(
 				'id'				=> $galley->getId(),
 				'submissionId'		=> $galley->getSubmissionId(),
 				'locale'			=> $galley->getLocale(),
-				'label'				=> $galley->getLabel(),
+				'label'				=> $galley->getGalleyLabel(),
 				'seq'				=> $galley->getSequence(),
 				'remoteUrl'			=> $galley->getremoteUrl(),
 				'fileId'			=> $galley->getFileId(),
+				'revision'			=> $submissionFile->getRevision(),
+				'fileType'			=> $galley->getFileType(),
 			);
 		}
 
