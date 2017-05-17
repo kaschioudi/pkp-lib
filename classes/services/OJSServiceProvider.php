@@ -33,6 +33,11 @@ class OJSServiceProvider implements \Pimple\ServiceProviderInterface {
 			return new SubmissionService();
 		};
 		
+		// Issue service
+		$pimple['issue'] = function() {
+			return new IssueService();
+		};
+
 		// File service
 		$pimple['file'] = $pimple->protect(function($fileId) {
 			return new FileService($fileId);
