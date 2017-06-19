@@ -233,6 +233,11 @@ export default {
 				}
 			}
 
+			// Incomplete submissions
+			if (this.submission.submissionProgress > 0) {
+				notice = this.i18n.incompleteSubmissionNotice;
+			}
+
 			return notice;
 		},
 
