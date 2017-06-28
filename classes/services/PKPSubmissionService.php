@@ -140,32 +140,35 @@ abstract class PKPSubmissionService {
 				$authorDashboard = true;
 			}
 		}
-		if ($authorDashboard) {
 
-			// Send authors of incomplete submissions to the wizard
-			if ($submission->getSubmissionProgress() > 0) {
-				return $dispatcher->url(
-					$request,
-					ROUTE_PAGE,
-					$submissionContext->getPath(),
-					'submission',
-					'wizard',
-					$submission->getSubmissionProgress(),
-					array('submissionId' => $submission->getId())
-				);
-			} else {
-				return $dispatcher->url(
-					$request,
-					ROUTE_PAGE,
-					$submissionContext->getPath(),
-					'authorDashboard',
-					'submission',
-					$submission->getId()
-				);
-			}
+		// Send authors, journal managers and site admins to the submission
+		// wizard for incomplete submissions
+		if ($submission->getSubmissionProgress() > 0 &&
+				($authorDashboard || $user->hasRole(array(ROLE_ID_MANAGER, ROLE_ID_SITE_ADMIN), $submissionContext->getId()))) {
+			return $dispatcher->url(
+				$request,
+				ROUTE_PAGE,
+				$submissionContext->getPath(),
+				'submission',
+				'wizard',
+				$submission->getSubmissionProgress(),
+				array('submissionId' => $submission->getId())
+			);
 		}
 
-		// Check if the user is a reviewer of this submission
+		// Send authors to author dashboard
+		if ($authorDashboard) {
+			return $dispatcher->url(
+				$request,
+				ROUTE_PAGE,
+				$submissionContext->getPath(),
+				'authorDashboard',
+				'submission',
+				$submission->getId()
+			);
+		}
+
+		// Send reviewers to review wizard
 		$reviewAssignment = DAORegistry::getDAO('ReviewAssignmentDAO')->getLastReviewRoundReviewAssignmentByReviewer($submission->getId(), $user->getId());
 		if ($reviewAssignment) {
 			return $dispatcher->url(
@@ -195,9 +198,9 @@ abstract class PKPSubmissionService {
 	 *
 	 * @param $submissionId int
 	 */
-	public function deleteSubmission(int $id) {
+	public function deleteSubmission($id) {
 		Application::getSubmissionDAO()
-				->deleteById($id);
+				->deleteById((int) $id);
 	}
 
 	/**
@@ -275,9 +278,11 @@ abstract class PKPSubmissionService {
 	 * component or returned with a REST API endpoint
 	 *
 	 * @param $submissions Submission|array One or more Submission objects
+	 * @param $params array Optional array of role permissions to effect what is
+	 *  returned.
 	 * @param return array
 	 */
-	public function toArray($submissions, $params = null) {
+	public function toArray($submissions, $params = array()) {
 
 		if (is_a($submissions, 'Submission')) {
 			$submissions = array($submissions);
@@ -337,9 +342,7 @@ abstract class PKPSubmissionService {
 
 		$output = array();
 		foreach ($submissions as $submission) {
-			if (!is_a($submission, 'Submission')) {
-				error_log('Could not convert item to array because it is not a submission. ' . __LINE__);
-			}
+			assert(is_a($submission, 'Submission'));
 
 			$compiled = array();
 			foreach ($params as $param => $val) {
@@ -528,11 +531,8 @@ abstract class PKPSubmissionService {
 				case WORKFLOW_STAGE_ID_PRODUCTION:
 					import('lib.pkp.classes.submission.SubmissionFile'); // Import constants
 					$submissionFileDao = DAORegistry::getDAO('SubmissionFileDAO');
-					$submissionFiles = $submissionFileDao->getAllRevisionsByAssocId(
-						ASSOC_TYPE_WORKFLOW_STAGE,
-						$stageId,
-						SUBMISSION_FILE_REVIEW_REVISION
-					);
+					$fileStageIId = $stageId === WORKFLOW_STAGE_ID_EDITING ? SUBMISSION_FILE_COPYEDIT : SUBMISSION_FILE_PROOF;
+					$submissionFiles = $submissionFileDao->getLatestRevisions($submission->getId(), $fileStageIId);
 					$stage['files'] = array(
 						'count' => count($submissionFiles),
 					);
@@ -615,12 +615,12 @@ abstract class PKPSubmissionService {
 	 * the user does not have permission to access.
 	 *
 	 * @params array $defaultParams The default param settings
-	 * @params array|null $params The param settings for this request
+	 * @params array $params The param settings for this request
 	 * @return array
 	 */
-	public function compileToArrayParams($defaultParams, $params = null) {
+	public function compileToArrayParams($defaultParams, $params = array()) {
 
-		$compiled = is_null($params) ? $defaultParams : array_merge($defaultParams, $params);
+		$compiled = array_merge($defaultParams, $params);
 
 		$result = array_filter($compiled, function($param) {
 			$currentUser = \Application::getRequest()->getUser();

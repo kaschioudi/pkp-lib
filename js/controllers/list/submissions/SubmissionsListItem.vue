@@ -17,18 +17,18 @@
 		<div v-if="currentUserIsReviewer" class="pkpListPanelItem--submission__stage pkpListPanelItem--submission__stage--reviewer">
 			<a :href="submission.urlWorkflow" tabindex="-1">
 				<div v-if="currentUserLatestReviewAssignment.responsePending" class="pkpListPanelItem--submission__dueDate">
-					<div class="pkpListPanelItem--submission__dueDateValue">
+					<div :aria-labelledby="responseDueLabelId" class="pkpListPanelItem--submission__dueDateValue">
 						{{ currentUserLatestReviewAssignment.responseDue }}
 					</div>
-					<div class="pkpListPanelItem--submission__dueDateLabel">
+					<div :id="responseDueLabelId" class="pkpListPanelItem--submission__dueDateLabel">
 						{{ i18n.responseDue }}
 					</div>
 				</div>
 				<div v-if="currentUserLatestReviewAssignment.reviewPending" class="pkpListPanelItem--submission__dueDate">
-					<div class="pkpListPanelItem--submission__dueDateValue">
+					<div :aria-labelledby="reviewDueLabelId" class="pkpListPanelItem--submission__dueDateValue">
 						{{ currentUserLatestReviewAssignment.due }}
 					</div>
-					<div class="pkpListPanelItem--submission__dueDateLabel">
+					<div :id="reviewDueLabelId" class="pkpListPanelItem--submission__dueDateLabel">
 						{{ i18n.reviewDue }}
 					</div>
 				</div>
@@ -48,14 +48,17 @@
 					</template>
 				</div>
 				<div class="pkpListPanelItem--submission__flags">
-					<span v-if="isReviewStage"  class="pkpListPanelItem--submission__flags--reviews" :class="classHighlightReviews">
-						<span class="count">{{ completedReviewsCount }} / {{ currentReviewAssignments.length }}</span>
+					<span v-if="isReviewStage"  class="pkpListPanelItem--submission__flags--reviews">
+						<span :aria-labelledby="reviewsCompletedLabelId" class="count">{{ completedReviewsCount }} / {{ currentReviewAssignments.length }}</span>
+						<span :id="reviewsCompletedLabelId" class="pkp_screen_reader">{{ i18n.reviewsCompleted }}</span>
 					</span>
-					<span v-if="activeStage.files.count" class="pkpListPanelItem--submission__flags--files" :class="classHighlightFiles">
-						<span class="count">{{ activeStage.files.count }}</span>
+					<span v-if="activeStage.files.count" class="pkpListPanelItem--submission__flags--files">
+						<span :aria-labelledby="filesPreparedLabelId" class="count">{{ activeStage.files.count }}</span>
+						<span :id="filesPreparedLabelId" class="pkp_screen_reader">{{ i18n.filesPrepared }}</span>
 					</span>
 					<span v-if="openQueryCount" class="pkpListPanelItem--submission__flags--discussions">
-						<span class="count">{{ openQueryCount }}</span>
+						<span :aria-labelledby="discussionsLabelId" class="count">{{ openQueryCount }}</span>
+						<span :id="discussionsLabelId" class="pkp_screen_reader">{{ i18n.discussions }}</span>
 					</span>
 				</div>
 			</div>
@@ -63,7 +66,7 @@
 				<a v-if="currentUserCanDelete" href="#" class="delete" @click.prevent="deleteSubmissionPrompt" @focus="focusItem" @blur="blurItem">
 					{{ i18n.delete }}
 				</a>
-				<a v-if="currentUserCanViewInfoCenter" href="#" @click.prevent="openInfoCenter" @focus="focusItem" @blur="blurItem">
+				<a v-if="currentUserCanViewInfoCenter" class="pkpListPanelItem__openInfoCenter" href="#" @click.prevent="openInfoCenter" @focus="focusItem" @blur="blurItem">
 					{{ i18n.infoCenter }}
 				</a>
 			</div>
@@ -91,15 +94,16 @@
 <script>
 import ListPanelItem from '../ListPanelItem.vue';
 
-export default _.extend({}, ListPanelItem, {
+export default {
+	extends: ListPanelItem,
 	name: 'SubmissionsListItem',
 	props: ['submission', 'i18n', 'apiPath', 'infoUrl'],
 	data: function() {
-		return _.extend({}, ListPanelItem.data(), {
+		return {
 			mask: null,
-		});
+		};
 	},
-	computed: _.extend({}, ListPanelItem.computed, {
+	computed: {
 		/**
 		 * Map the submission id to the list item id
 		 */
@@ -183,7 +187,10 @@ export default _.extend({}, ListPanelItem, {
 				if (this.activeStage.id === 1) {
 					switch (this.activeStage.statusId) {
 						case 1: // @todo this should be a global
-							notice = this.activeStage.status;
+							// Only display unassigned notice for completed submissions
+							if (this.submission.submissionProgress === 0) {
+								notice = this.activeStage.status;
+							}
 							break;
 					}
 				}
@@ -224,6 +231,11 @@ export default _.extend({}, ListPanelItem, {
 					notice = this.currentUserLatestReviewAssignment.status;
 					break;
 				}
+			}
+
+			// Incomplete submissions
+			if (this.submission.submissionProgress > 0) {
+				notice = this.i18n.incompleteSubmissionNotice;
 			}
 
 			return notice;
@@ -323,48 +335,6 @@ export default _.extend({}, ListPanelItem, {
 		},
 
 		/**
-		 * Return a class to highlight the reviews icon
-		 *
-		 * @return string
-		 */
-		classHighlightReviews: function() {
-			if (!this.isReviewStage) {
-				return '';
-			}
-
-			// REVIEW_ROUND_STATUS_REVIEWS_OVERDUE
-			if (this.activeStage.statusId == 10) {
-				return '--warning';
-			}
-
-			// No reviews have been assigned
-			if (!this.currentReviewAssignments.length) {
-				return '--warning';
-			}
-
-			// REVIEW_ROUND_STATUS_REVIEWS_READY
-			if (this.activeStage.statusId == 8) {
-				return '--notice';
-			}
-
-			return '';
-		},
-
-		/**
-		 * Return a class to highlight the files icon when revisions have been
-		 * submitted.
-		 *
-		 * @return string
-		 */
-		classHighlightFiles: function() {
-			if (this.activeStage.files.count) {
-				return '--notice';
-			}
-
-			return '';
-		},
-
-		/**
 		 * Return a class to toggle the item mask
 		 *
 		 * @return string
@@ -382,8 +352,58 @@ export default _.extend({}, ListPanelItem, {
 
 			return classes.join(' ');
 		},
-	}),
-	methods: _.extend({}, ListPanelItem.methods, {
+
+		/**
+		 * ID attribute to use in aria-labelledby linking the reponse due date
+		 * with it's label
+		 *
+		 * @return string
+		 */
+		responseDueLabelId: function() {
+			return 'responseDueLabel' + this._uid;
+		},
+
+		/**
+		 * ID attribute to use in aria-labelledby linking the review due date
+		 * with it's label
+		 *
+		 * @return string
+		 */
+		reviewDueLabelId: function() {
+			return 'reviewDueLabel' + this._uid;
+		},
+
+		/**
+		 * ID attribute to use in aria-labelledby linking the reviews completed
+		 * icons with their label
+		 *
+		 * @return string
+		 */
+		reviewsCompletedLabelId: function() {
+			return 'reviewsCompletedLabel' + this._uid;
+		},
+
+		/**
+		 * ID attribute to use in aria-labelledby linking the files prepared
+		 * icons with their label
+		 *
+		 * @return string
+		 */
+		filesPreparedLabelId: function() {
+			return 'filesPreparedLabel' + this._uid;
+		},
+
+		/**
+		 * ID attribute to use in aria-labelledby linking the discussion icons
+		 * with their label
+		 *
+		 * @return string
+		 */
+		discussionsLabelId: function() {
+			return 'discussionsLabel' + this._uid;
+		},
+	},
+	methods: {
 
 		/**
 		 * Load a modal displaying history and notes of a submission
@@ -393,11 +413,20 @@ export default _.extend({}, ListPanelItem, {
 			var opts = {
 				title: this.submission.title,
 				url: this.infoUrl.replace('__id__', this.submission.id),
+				closeCallback: this.resetFocusInfoCenter,
 			};
 
 			$('<div id="' + $.pkp.classes.Helper.uuid() + '" ' +
 					'class="pkp_modal pkpModalWrapper" tabindex="-1"></div>')
 				.pkpHandler('$.pkp.controllers.modal.AjaxModalHandler', opts);
+		},
+
+		/**
+		 * Reset the focus on the info center link when the modal has been
+		 * closed. This is a callback function passed into ModalHandler.js
+		 */
+		resetFocusInfoCenter: function() {
+			this.$el.querySelector('.pkpListPanelItem__openInfoCenter').focus();
 		},
 
 		/**
@@ -442,6 +471,6 @@ export default _.extend({}, ListPanelItem, {
 		cancelDeleteRequest: function() {
 			this.mask = null;
 		},
-	}),
-});
+	},
+};
 </script>

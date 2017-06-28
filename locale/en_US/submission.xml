@@ -515,7 +515,7 @@
 	<message key="editor.submission.roundStatus.sentToExternal">Sent to external review.</message>
 	<message key="editor.submission.roundStatus.accepted">Submission accepted.</message>
 	<message key="editor.submission.roundStatus.declined">Submission declined.</message>
-	<message key="editor.submission.roundStatus.pendingReviewers">Waiting for reviewers to be selected.</message>
+	<message key="editor.submission.roundStatus.pendingReviewers">Waiting for reviewers to be assigned.</message>
 	<message key="editor.submission.roundStatus.pendingReviews">Awaiting responses from reviewers.</message>
 	<message key="editor.submission.roundStatus.reviewsReady">New reviews have been submitted.</message>
 	<message key="editor.submission.roundStatus.reviewsCompleted">All reviews are in and a decision is needed.</message>
@@ -546,6 +546,7 @@
 	<message key="editor.submission.decision.approveProofsDescription">The page proof file must be checked as approved to be made Available. Do you want to approve it?</message>
 	<message key="editor.submission.decision.approveProofs">Approve Proofs</message>
 	<message key="editor.submission.decision.disapproveProofsDescription">This file proof will no longer be publicly available for download or purchase. Do you want to disapprove it?</message>
+	<message key="editor.submission.decision.noDecisionsAvailable">Assign an editor to enable the editorial decisions for this stage.</message>
 
 	<!-- workflow navigation keys -->
 	<message key="submission.currentStage">Current stage</message>
@@ -670,4 +671,9 @@
 	<message key="submission.list.filterRemove">Clear filter: {$filterTitle}</message>
 	<message key="submission.list.itemOrdererUp">Increase position of {$itemTitle}</message>
 	<message key="submission.list.itemOrdererDown">Decrease position of {$itemTitle}</message>
+	<message key="submission.list.clearSearch">Clear search phrase</message>
+	<message key="submission.list.reviewsCompleted">Reviews completed</message>
+	<message key="submission.list.filesPrepared">Files prepared</message>
+	<message key="submission.list.discussions">Discussions</message>
+	<message key="submission.list.incompleteSubmissionNotice">This submission must be completed before an editor will review it.</message>
 </locale>

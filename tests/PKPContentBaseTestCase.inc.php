@@ -120,6 +120,7 @@ abstract class PKPContentBaseTestCase extends WebTestCase {
 
 		// Page 4
 		$this->waitForElementPresent($selector='//form[@id=\'submitStep4Form\']//button[text()=\'Finish Submission\']');
+		$this->waitJQuery();
 		$this->click($selector);
 		$this->waitForElementPresent($selector="//a[text()='OK']");
 		$this->click($selector);
@@ -228,9 +229,7 @@ abstract class PKPContentBaseTestCase extends WebTestCase {
 		$this->logIn($username, $password);
 		$this->waitForElementPresent('css=#dashboardTabs');
 		$this->click('css=[name=active]');
-		$this->waitForElementPresent('css=[id^=component-grid-submissions-activesubmissions-activesubmissionslistgrid-]');
-		$this->scrollPageDown();
-		$xpath = '//span[contains(text(),' . $this->quoteXpath($title) .')]/../../..//a[contains(@id, "-stage-itemWorkflow-button-")]';
+		$xpath = '//div[contains(text(),' . $this->quoteXPath($title) . ')]';
 		$this->waitForElementPresent($xpath);
 		$this->click($xpath);
 	}
@@ -315,8 +314,7 @@ abstract class PKPContentBaseTestCase extends WebTestCase {
 
 		// Use an xpath concat to permit apostrophes to appear in titles
 		// http://kushalm.com/the-perils-of-xpath-expressions-specifically-escaping-quotes
-		$this->scrollGridDown('assignedSubmissionsListGridContainer');
-		$xpath = '//span[contains(text(),' . $this->quoteXpath($title) .')]/../../..//a[contains(@id, "-stage-itemWorkflow-button-")]';
+		$xpath = '//div[contains(text(),' . $this->quoteXPath($title) . ')]';
 		$this->waitForElementPresent($xpath);
 		$this->click($xpath);
 

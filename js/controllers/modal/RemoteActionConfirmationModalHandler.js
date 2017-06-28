@@ -20,8 +20,11 @@
 	 *
 	 * @param {jQueryObject} $handledElement The clickable element
 	 *  the modal will be attached to.
-	 * @param {Object} options Non-default options to configure
-	 *  the modal.
+	 * @param {{
+	 *  remoteAction: string,
+	 *  postData: Object,
+	 *  csrfToken: string
+	 *  }} options Non-default options to configure the modal.
 	 *
 	 *  Options are:
 	 *  - remoteAction string An action to be executed when the confirmation
@@ -67,7 +70,7 @@
 	/**
 	 * Data params to send with the post request
 	 * @private
-	 * @type {?object}
+	 * @type {?Object}
 	 */
 	$.pkp.controllers.modal.RemoteActionConfirmationModalHandler.prototype.
 			postData_ = null;

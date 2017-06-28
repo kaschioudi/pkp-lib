@@ -104,6 +104,7 @@ class SubmissionsListHandler extends ListHandler {
 		$config['i18n']['title'] = __($this->_title);
 		$config['i18n']['add'] = __('submission.submit.newSubmissionSingle');
 		$config['i18n']['search'] = __('common.search');
+		$config['i18n']['clearSearch'] = __('submission.list.clearSearch');
 		$config['i18n']['itemCount'] = __('submission.list.count');
 		$config['i18n']['itemsOfTotal'] = __('submission.list.itemsOfTotal');
 		$config['i18n']['loadMore'] = __('grid.action.moreItems');
@@ -121,6 +122,10 @@ class SubmissionsListHandler extends ListHandler {
 		$config['i18n']['filterRemove'] = __('submission.list.filterRemove');
 		$config['i18n']['itemOrdererUp'] = __('submission.list.itemOrdererUp');
 		$config['i18n']['itemOrdererDown'] = __('submission.list.itemOrdererDown');
+		$config['i18n']['reviewsCompleted'] = __('submission.list.reviewsCompleted');
+		$config['i18n']['filesPrepared'] = __('submission.list.filesPrepared');
+		$config['i18n']['discussions'] = __('submission.list.discussions');
+		$config['i18n']['incompleteSubmissionNotice'] = __('submission.list.incompleteSubmissionNotice');
 
 		// Attach a CSRF token for post requests
 		$config['csrfToken'] = $request->getSession()->getCSRFToken();
