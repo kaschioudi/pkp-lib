@@ -546,6 +546,7 @@
 	<message key="editor.submission.decision.approveProofsDescription">The page proof file must be checked as approved to be made Available. Do you want to approve it?</message>
 	<message key="editor.submission.decision.approveProofs">Approve Proofs</message>
 	<message key="editor.submission.decision.disapproveProofsDescription">This file proof will no longer be publicly available for download or purchase. Do you want to disapprove it?</message>
+	<message key="editor.submission.decision.noDecisionsAvailable">Assign an editor to enable the editorial decisions for this stage.</message>
 
 	<!-- workflow navigation keys -->
 	<message key="submission.currentStage">Current stage</message>
@@ -674,4 +675,5 @@
 	<message key="submission.list.reviewsCompleted">Reviews completed</message>
 	<message key="submission.list.filesPrepared">Files prepared</message>
 	<message key="submission.list.discussions">Discussions</message>
+	<message key="submission.list.incompleteSubmissionNotice">This submission must be completed before an editor will review it.</message>
 </locale>
