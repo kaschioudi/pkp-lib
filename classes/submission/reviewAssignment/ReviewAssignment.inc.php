@@ -21,6 +21,12 @@ define('SUBMISSION_REVIEWER_RECOMMENDATION_RESUBMIT_ELSEWHERE', 4);
 define('SUBMISSION_REVIEWER_RECOMMENDATION_DECLINE', 5);
 define('SUBMISSION_REVIEWER_RECOMMENDATION_SEE_COMMENTS', 6);
 
+define('SUBMISSION_REVIEWER_RATING_VERY_GOOD', 5);
+define('SUBMISSION_REVIEWER_RATING_GOOD', 4);
+define('SUBMISSION_REVIEWER_RATING_AVERAGE', 3);
+define('SUBMISSION_REVIEWER_RATING_POOR', 2);
+define('SUBMISSION_REVIEWER_RATING_VERY_POOR', 1);
+
 define('SUBMISSION_REVIEW_METHOD_BLIND', 1);
 define('SUBMISSION_REVIEW_METHOD_DOUBLEBLIND', 2);
 define('SUBMISSION_REVIEW_METHOD_OPEN', 3);
@@ -571,7 +577,7 @@ class ReviewAssignment extends DataObject {
 				return 'submission.review.status.thanked';
 		}
 
-		error_log('No status key could be found for ' . get_class($this) . ' on ' . __LINE__);
+		assert(false, 'No status key could be found for ' . get_class($this) . ' on ' . __LINE__);
 
 		return '';
 	}
