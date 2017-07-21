@@ -63,6 +63,25 @@ class APIHandler extends PKPHandler {
 			}
 			return $next($request, $response);
 		});
+		// if pathinfo is disabled, rewrite URI to match Slim's expectation
+		$this->_app->add(function ($request, $response, $next) {
+			$uri = $request->getUri();
+			$endpoint = trim($request->getQueryParam('endpoint'));
+			$pathInfoEnabled = Config::getVar('general', 'disable_path_info') ? false : true;
+			$path = $uri->getPath();
+			if (!$pathInfoEnabled && !is_null($endpoint) && !isset($_SERVER['PATH_INFO']) && ($path == '/')) {
+				$basePath = $uri->getBasePath();
+				$url = $basePath . $endpoint;
+				$uri = $uri->withPath($url);
+				if($request->getMethod() == 'GET') {
+					return $response->withRedirect((string)$uri, 301);
+				}
+				else {
+					return $next($request->withUri($uri), $response);
+				}
+			}
+			return $next($request, $response);
+		});
 		$this->_request = Application::getRequest();
 		$this->setupEndpoints();
 	}
