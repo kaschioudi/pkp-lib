@@ -19,6 +19,9 @@ use \DBResultRange;
 use \Application;
 use \DAOResultFactory;
 use \DAORegistry;
+use \User;
+use \SubmissionFileManager;
+use \Exception;
 
 import('lib.pkp.classes.db.DBResultRange');
 
@@ -739,5 +742,66 @@ abstract class PKPSubmissionService {
 			);
 		}
 		return $data;
+	}
+
+	/**
+	 * Save submission file
+	 *
+	 * @param int $contextId
+	 * @param int $submissionId
+	 * @param User $user
+	 * @param array $uploadData
+	 *     $uploadData['revisedFileId']
+	 *     $uploadData['fileGenre']
+	 *     $uploadData['uploaderUserGroupId']
+	 *     $uploadData['assocType']
+	 *     $uploadData['assocId']
+	 *     $uploadData['fileStage']
+	 *
+	 * @return \SubmissionFile|null
+	 */
+	public function saveUploadedFile($contextId, $submissionId, User $user, $uploadData) {
+
+		if (!isset($uploadData['uploaderUserGroupId'])) {
+			throw new Exception('Invalid uploader user group (uploaderUserGroupId).');
+		}
+
+		if (!isset($uploadData['fileStage'])) {
+			throw new Exception('Submission file stage (fileStage) is required.');
+		}
+
+		if ((!isset($uploadData['revisedFileId']) && !isset($uploadData['genreId']))
+			|| (!$uploadData['revisedFileId'] && !$uploadData['genreId'])) {
+			throw new Exception('File genre (genreId) or revised file ID (revisedFileId) must be specified.');
+		}
+		$defaults = array(
+			'revisedFileId'	=> null,
+			'genreId'	=> null,
+			'assocType'	=> null,
+			'assocId'	=> null,
+		);
+
+		$uploadData = array_merge($defaults, $uploadData);
+
+		// Upload the file.
+		import('lib.pkp.classes.file.SubmissionFileManager');
+		$submissionFileManager = new SubmissionFileManager(
+			$contextId,
+			$submissionId
+		);
+		$submissionFile = $submissionFileManager->uploadSubmissionFile(
+			'uploadedFile',
+			$uploadData['fileStage'],
+			$user->getId(),
+			$uploadData['uploaderUserGroupId'],
+			$uploadData['revisedFileId'],
+			$uploadData['genreId'],
+			$uploadData['assocType'],
+			$uploadData['assocId']
+		);
+
+		if (!$submissionFile) return null;
+
+		return $submissionFile;
 	}
 }

@@ -247,6 +247,16 @@ class Dispatcher {
 		header('HTTP/1.0 404 Not Found');
 		fatalError('404 Not Found');
 	}
+
+	/**
+	 * Handle a 403 error (access forbidden).
+	 */
+	function handle403() {
+		PKPRequest::_checkThis();
+
+		header('HTTP/1.0 403 Forbidden');
+		fatalError('403 Forbidden');
+	}
 }
 
 ?>
